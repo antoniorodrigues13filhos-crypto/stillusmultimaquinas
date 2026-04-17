@@ -50,6 +50,7 @@
             filter: brightness(0.5) saturate(0.85);
             will-change: transform;
             backface-visibility: hidden;
+            transform-style: preserve-3d;
         }
 
         /* ── LOADER ── */
@@ -64,7 +65,7 @@
         #loader-pct { font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 0.2em; color: rgba(255,255,255,0.25); }
 
         /* ── NAV ── */
-        nav { position: fixed; top: 0; width: 100%; z-index: 50; padding: 20px 24px; transition: padding 0.4s ease; }
+        nav { position: fixed; top: 0; width: 100%; z-index: 50; padding: 20px 24px; transition: padding 0.4s ease; will-change: background-color; }
         .nav-inner {
             max-width: 1200px; margin: 0 auto;
             display: flex; justify-content: space-between; align-items: center;
@@ -87,10 +88,10 @@
         .hero-sticky { position: sticky; top: 0; height: 100vh; width: 100%; overflow: hidden; }
 
         .scroll-dots { position: fixed; right: 40px; top: 50%; transform: translateY(-50%); z-index: 60; display: flex; flex-direction: column; gap: 24px; pointer-events: none; }
-        .dot { width: 4px; height: 4px; background: #fff; border-radius: 50%; opacity: 0.15; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .dot { width: 4px; height: 4px; background: #fff; border-radius: 50%; opacity: 0.15; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform, opacity; }
         .dot.active { opacity: 1; transform: scale(2.5); background: var(--brand-orange); box-shadow: 0 0 15px var(--brand-orange); }
 
-        .hero-block { position: absolute; left: 8%; right: 8%; z-index: 20; pointer-events: none; }
+        .hero-block { position: absolute; left: 8%; right: 8%; z-index: 20; pointer-events: none; will-change: transform; }
         
         .word-wrap { 
             overflow: hidden; 
@@ -102,16 +103,16 @@
             margin-bottom: -0.1em;
         }
 
-        .hero-word { display: inline-block; transform: translateY(110%); opacity: 0; transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1); }
-        .hero-block.active .hero-word { transform: translateY(0%); opacity: 1; }
+        .hero-word { display: inline-block; transform: translate3d(0, 110%, 0); opacity: 0; transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform, opacity; }
+        .hero-block.active .hero-word { transform: translate3d(0, 0, 0); opacity: 1; }
         .hero-word:nth-child(1) { transition-delay: 0s; } .hero-word:nth-child(2) { transition-delay: 0.07s; } .hero-word:nth-child(3) { transition-delay: 0.14s; }
-        .hero-sub { opacity: 0; transform: translateY(18px); transition: opacity 0.8s ease 0.35s, transform 0.8s ease 0.35s; }
-        .hero-block.active .hero-sub { opacity: 1; transform: translateY(0); }
-        .hero-block.exiting .hero-word { transform: translateY(-110%); opacity: 0; transition-duration: 0.5s; }
-        .hero-block.exiting .hero-sub { opacity: 0; transform: translateY(-12px); transition-duration: 0.4s; transition-delay: 0s; }
+        .hero-sub { opacity: 0; transform: translate3d(0, 18px, 0); transition: opacity 0.8s ease 0.35s, transform 0.8s ease 0.35s; will-change: transform, opacity; }
+        .hero-block.active .hero-sub { opacity: 1; transform: translate3d(0, 0, 0); }
+        .hero-block.exiting .hero-word { transform: translate3d(0, -110%, 0); opacity: 0; transition-duration: 0.5s; }
+        .hero-block.exiting .hero-sub { opacity: 0; transform: translate3d(0, -12px, 0); transition-duration: 0.4s; transition-delay: 0s; }
 
         .animated-stroke { color: transparent; -webkit-text-stroke: 1.5px rgba(255,255,255,0.18); position: relative; display: inline-block; }
-        .animated-stroke::after { content: "LUCRO ZERO."; position: absolute; left: 0; top: 0; width: var(--fill-width); height: 100%; color: var(--brand-orange); -webkit-text-stroke: 1.5px var(--brand-orange); overflow: hidden; white-space: nowrap; filter: drop-shadow(0 0 14px rgba(211,123,66,0.5)); transition: width 0.08s linear; }
+        .animated-stroke::after { content: "LUCRO ZERO."; position: absolute; left: 0; top: 0; width: var(--fill-width); height: 100%; color: var(--brand-orange); -webkit-text-stroke: 1.5px var(--brand-orange); overflow: hidden; white-space: nowrap; filter: drop-shadow(0 0 14px rgba(211,123,66,0.5)); transition: width 0.08s linear; will-change: width; }
 
         .h-display { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.02em; line-height: 0.92; font-size: clamp(52px, 11vw, 120px); color: #F8F8F8; display: block; margin-bottom: 28px; }
         .accent { color: #D37B42; }
@@ -124,15 +125,15 @@
 
         /* ── PRODUCTS ── */
         #produtos { position: relative; z-index: 40; margin-top: -100vh; padding-top: 25vh; background: linear-gradient(to bottom, transparent, #080808 15%, #080808 100%); }
-        .product-card { opacity: 0; transform: translate3d(0, 40px, 0); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1), border 0.3s ease, box-shadow 0.3s ease; cursor: pointer; background: rgba(255,255,255,0.03); backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%); border: 0.5px solid rgba(255,255,255,0.08); }
-        .product-card:hover { transform: translate3d(0, -5px, 0) scale(1.02) !important; border-color: rgba(211,123,66,0.35); box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 24px rgba(211,123,66,0.12); background: rgba(255,255,255,0.05); }
+        .product-card { opacity: 0; transform: translate3d(0, 40px, 0); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1), border 0.3s ease, box-shadow 0.3s ease; cursor: pointer; background: rgba(255,255,255,0.03); backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%); border: 0.5px solid rgba(255,255,255,0.08); will-change: transform, opacity; }
+        .product-card:hover { transform: translate3d(0, -5px, 0) scale3d(1.02, 1.02, 1) !important; border-color: rgba(211,123,66,0.35); box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 24px rgba(211,123,66,0.12); background: rgba(255,255,255,0.05); }
         .product-card.revealed { opacity: 1; transform: translate3d(0,0,0); }
 
         .section-label { font-size: 10px; letter-spacing: 0.5em; color: #D37B42; text-transform: uppercase; font-weight: 500; display: block; margin-bottom: 16px; }
         .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(40px, 8vw, 88px); letter-spacing: 0.02em; line-height: 0.92; color: #F8F8F8; }
         .section-body { font-size: clamp(14px, 1.6vw, 16px); color: rgba(255,255,255,0.38); font-weight: 300; line-height: 1.7; }
-        .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal { opacity: 0; transform: translate3d(0, 32px, 0); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); will-change: transform, opacity; }
+        .reveal.visible { opacity: 1; transform: translate3d(0, 0, 0); }
         .reveal-delay-1 { transition-delay: 0.1s; } .reveal-delay-2 { transition-delay: 0.2s; } .reveal-delay-3 { transition-delay: 0.3s; } .reveal-delay-4 { transition-delay: 0.4s; }
 
         /* ── ESTRUTURAS ORIGINAIS ── */
@@ -146,7 +147,7 @@
         .service-name { font-family: 'Bebas Neue', sans-serif; font-size: clamp(22px, 3.5vw, 38px); letter-spacing: 0.03em; color: #F8F8F8; margin-bottom: 8px; }
         .service-desc { font-size: 13px; color: rgba(255,255,255,0.3); font-weight: 300; line-height: 1.6; max-width: 500px; }
         .service-arrow { color: rgba(255,255,255,0.15); transition: color 0.2s ease, transform 0.2s ease; padding-top: 6px; }
-        .service-item:hover .service-arrow { color: #D37B42; transform: translate(4px, -4px); }
+        .service-item:hover .service-arrow { color: #D37B42; transform: translate3d(4px, -4px, 0); }
 
         .process-line-h { position: absolute; top: 16px; left: calc(10% + 16px); right: calc(10% + 16px); height: 0.5px; background: rgba(255,255,255,0.07); z-index: 0; }
 
@@ -162,9 +163,9 @@
         .brand-strip::before, .brand-strip::after { content: ''; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2; }
         .brand-strip::before { left: 0; background: linear-gradient(to right, #080808, transparent); }
         .brand-strip::after  { right: 0; background: linear-gradient(to left, #080808, transparent); }
-        .brand-track { display: flex; gap: 64px; align-items: center; width: max-content; animation: marquee 28s linear infinite; padding: 20px 0; }
+        .brand-track { display: flex; gap: 64px; align-items: center; width: max-content; animation: marquee 28s linear infinite; padding: 20px 0; will-change: transform; }
         .brand-track:hover { animation-play-state: paused; }
-        @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        @keyframes marquee { from { transform: translate3d(0,0,0); } to { transform: translate3d(-50%,0,0); } }
         .brand-item { font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 0.3em; color: rgba(255,255,255,0.12); white-space: nowrap; transition: color 0.2s ease; }
         .brand-item:hover { color: rgba(255,255,255,0.35); }
         .brand-dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(211,123,66,0.35); flex-shrink: 0; }
@@ -194,7 +195,7 @@
         .footer-link { font-size: 12px; color: rgba(255,255,255,0.25); text-decoration: none; display: block; margin-bottom: 12px; transition: color 0.2s ease; }
         .footer-link:hover { color: rgba(255,255,255,0.6); }
 
-        #scroll-top, #whatsapp-float { position: fixed; right: 32px; z-index: 100; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; pointer-events: none; transition: opacity 0.3s ease, transform 0.2s ease, background 0.2s ease; }
+        #scroll-top, #whatsapp-float { position: fixed; right: 32px; z-index: 100; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; pointer-events: none; transition: opacity 0.3s ease, transform 0.2s ease, background 0.2s ease; will-change: opacity; }
         #scroll-top { bottom: 32px; background: rgba(211,123,66,0.15); border: 0.5px solid rgba(211,123,66,0.3); color: #D37B42; }
         #whatsapp-float { bottom: 88px; background: rgba(37,211,102,0.15); border: 0.5px solid rgba(37,211,102,0.3); color: #25D366; }
         .visible { opacity: 1 !important; pointer-events: all !important; }
@@ -605,6 +606,20 @@
         const ctx    = canvas.getContext('2d', { alpha: false, desynchronized: true });
         let cW, cH, dpr, drawX, drawY, drawW, drawH;
 
+        // Caching DOM elements for performance
+        const blocks = [
+            { id: 'copy-1', dot: 'dot-1', start: 0.04, end: 0.26, el: null, dotEl: null },
+            { id: 'copy-2', dot: 'dot-2', start: 0.33, end: 0.57, el: null, dotEl: null },
+            { id: 'copy-3', dot: 'dot-3', start: 0.69, end: IS_MOBILE ? 2.0 : 0.98, el: null, dotEl: null } 
+        ];
+
+        function initBlocks() {
+            blocks.forEach(b => {
+                b.el = document.getElementById(b.id);
+                b.dotEl = document.getElementById(b.dot);
+            });
+        }
+
         function recalcLayout() {
             dpr = Math.min(window.devicePixelRatio || 1, IS_MOBILE ? 1.5 : 2);
             cW  = document.documentElement.clientWidth; 
@@ -644,47 +659,40 @@
 
             if (fraction > 0.88 && !IS_MOBILE) {
                 const zp = (fraction - 0.88) / 0.12;
-                canvas.style.transform = `scale(${1 - zp * 0.04})`;
+                canvas.style.transform = `scale3d(${1 - zp * 0.04}, ${1 - zp * 0.04}, 1)`;
             } else {
-                canvas.style.transform = 'scale(1)';
+                canvas.style.transform = 'scale3d(1, 1, 1)';
             }
         }
 
-        const blocks = [
-            { id: 'copy-1', dot: 'dot-1', start: 0.04, end: 0.26 },
-            { id: 'copy-2', dot: 'dot-2', start: 0.33, end: 0.57 },
-            { id: 'copy-3', dot: 'dot-3', start: 0.69, end: IS_MOBILE ? 2.0 : 0.98 } 
-        ];
-
         function applyText(fraction) {
-            blocks.forEach(({ id, dot, start, end }) => {
-                const el = document.getElementById(id);
-                const dotEl = document.getElementById(dot);
-                if (!el) return;
+            blocks.forEach((b) => {
+                if (!b.el) return;
 
-                const inRange = fraction >= start && fraction <= end;
+                const inRange = fraction >= b.start && fraction <= b.end;
                 if (inRange) {
-                    el.classList.remove('exiting');
-                    el.classList.add('active');
-                    if (dotEl) dotEl.classList.add('active');
+                    b.el.classList.remove('exiting');
+                    b.el.classList.add('active');
+                    if (b.dotEl) b.dotEl.classList.add('active');
                     
                     let calcFraction = fraction;
-                    if (IS_MOBILE && id === 'copy-3' && fraction > 0.85) {
+                    if (IS_MOBILE && b.id === 'copy-3' && fraction > 0.85) {
                         calcFraction = 0.85; 
                     }
                     
-                    const drift = (calcFraction - start) * (window.innerHeight * 0.55);
-                    el.style.transform = `translateY(${-drift | 0}px)`;
+                    const drift = (calcFraction - b.start) * (window.innerHeight * 0.55);
+                    // Sub-pixel rendering (toFixed(2)) prevents jitter
+                    b.el.style.transform = `translate3d(0, ${-drift.toFixed(2)}px, 0)`;
                     
-                    if (id === 'copy-1') {
-                        const fill = Math.min(100, ((fraction - start) / 0.14) * 100);
+                    if (b.id === 'copy-1') {
+                        const fill = Math.min(100, ((fraction - b.start) / 0.14) * 100);
                         document.documentElement.style.setProperty('--fill-width', fill.toFixed(1) + '%');
                     }
                 } else {
-                    if (dotEl) dotEl.classList.remove('active');
-                    if (el.classList.contains('active')) {
-                        el.classList.add('exiting');
-                        setTimeout(() => { el.classList.remove('active', 'exiting'); el.style.transform = ''; }, 520);
+                    if (b.dotEl) b.dotEl.classList.remove('active');
+                    if (b.el.classList.contains('active')) {
+                        b.el.classList.add('exiting');
+                        setTimeout(() => { b.el.classList.remove('active', 'exiting'); b.el.style.transform = ''; }, 520);
                     }
                 }
             });
@@ -697,8 +705,8 @@
             const delta = targetFraction - currentFraction;
 
             if (Math.abs(delta) > 0.00005) {
-                const base = IS_MOBILE ? 0.28 : 0.10;
-                const lerp = Math.min(IS_MOBILE ? 0.45 : 0.25, base + velocity * 0.0012);
+                const base = IS_MOBILE ? 0.20 : 0.08; // Softer base for smoother drag
+                const lerp = Math.min(IS_MOBILE ? 0.35 : 0.15, base + velocity * 0.0008);
                 currentFraction += delta * lerp;
                 render(currentFraction);
                 applyText(currentFraction);
@@ -706,7 +714,7 @@
                 applyText(currentFraction);
             }
             
-            // Garante que os cards revelem no desktop sempre que visíveis no scroll
+            // Checks card reveal smoothly
             document.querySelectorAll('.product-card').forEach((card, i) => {
                 if (!card.classList.contains('revealed') && card.getBoundingClientRect().top < window.innerHeight * 0.9) {
                     setTimeout(() => card.classList.add('revealed'), (i % 3) * 100);
@@ -740,6 +748,7 @@
         const loaderEl  = document.getElementById('loader');
 
         async function loadAll() {
+            initBlocks(); // Init DOM cache
             const CONCURRENCY = IS_MOBILE ? 4 : 8;
             const queue = [];
             for (let i = 0; i < FRAME_COUNT; i++) queue.push(i);
