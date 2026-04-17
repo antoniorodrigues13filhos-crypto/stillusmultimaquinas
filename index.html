@@ -28,7 +28,6 @@
             overflow-x: hidden;
         }
 
-        /* TEXTURA NOISE OVERLAY */
         body::before {
             content: "";
             position: fixed;
@@ -42,15 +41,13 @@
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        h1,
-        h2 {
+        h1, h2 {
             font-weight: 900;
             letter-spacing: -0.05em;
             text-transform: uppercase;
             line-height: 0.9;
         }
 
-        /* EFEITO LUCRO ZERO */
         .animated-stroke {
             color: transparent;
             -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
@@ -73,7 +70,6 @@
             transition: width 0.1s ease-out;
         }
 
-        /* AJUSTE MÁXIMA EFICIÊNCIA */
         .title-monumental {
             line-height: 1.1 !important;
             letter-spacing: -0.02em !important;
@@ -84,7 +80,6 @@
             position: relative;
         }
 
-        /* LINHA DE TRANSIÇÃO PARA PRODUTOS */
         .scroll-connector {
             width: 1px;
             height: 0px;
@@ -94,9 +89,7 @@
             box-shadow: 0 0 15px rgba(211, 123, 66, 0.4);
         }
 
-        .hero-text-block.active .scroll-connector {
-            height: 80px;
-        }
+        .hero-text-block.active .scroll-connector { height: 80px; }
 
         .glass-premium {
             background: rgba(255, 255, 255, 0.03);
@@ -158,10 +151,7 @@
             background: rgba(255, 255, 255, 0.05);
         }
 
-        .product-card.revealed {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .product-card.revealed { opacity: 1; transform: translateY(0); }
 
         @keyframes slow-rotate {
             from { transform: rotate(0deg); }
@@ -253,7 +243,6 @@
                 <span class="text-[10px] tracking-[0.5em] text-[#D37B42] uppercase font-bold mb-4">Menos parada. Mais produção.</span>
                 <h2 class="text-5xl md:text-7xl text-white font-black italic">Soluções completas para manter seus equipamentos sempre ativos</h2>
             </div>
-
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="product-card glass-premium p-8 rounded-3xl group">
                     <div class="h-64 bg-white/5 rounded-2xl mb-6 overflow-hidden flex items-center justify-center">
@@ -291,8 +280,8 @@
 
             let currentFraction = 0;
             let targetFraction = 0;
-            // Sensibilidade aumentada para 0.2 (mais rápido no toque)
-            const lerpFactor = window.innerWidth < 768 ? 0.2 : 1; 
+            // Sensibilidade aumentada para 0.4 para hero "colado" no toque
+            const lerpFactor = window.innerWidth < 768 ? 0.4 : 1; 
 
             window.addEventListener('load', () => {
                 if(window.lucide) lucide.createIcons();
@@ -303,7 +292,9 @@
                 const loader = document.getElementById('loader');
 
                 function updateCanvas(fraction) {
-                    const index = Math.min(state.frameCount - 1, Math.floor(fraction * (state.frameCount - 1)));
+                    // Mapeamento acelerado: libera os 30 frames nos primeiros 40% do scroll do hero
+                    const acceleratedFraction = Math.min(1, fraction / 0.4);
+                    const index = Math.min(state.frameCount - 1, Math.floor(acceleratedFraction * (state.frameCount - 1)));
                     const img = state.images[index];
                     if (!img || !img.complete) return;
 
@@ -320,6 +311,7 @@
                 }
 
                 function applyParallax(fraction) {
+                    // Mantém o ritmo original dos textos (distribuídos ao longo de todo o scroll)
                     const blocks = [
                         { id: 'copy-1', start: 0.05, end: 0.25 },
                         { id: 'copy-2', start: 0.32, end: 0.58 },
@@ -397,7 +389,5 @@
             });
         }
     </script>
-
 </body>
-
 </html>
