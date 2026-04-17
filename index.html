@@ -19,7 +19,7 @@
             --fill-width: 0%;
         }
 
-        /* ── TRAVA CONTRA TELA TREMENDO ── */
+        /* ── TRAVA CONTRA TELA TREMENDO SEM QUEBRAR O STICKY ── */
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         
         html { 
@@ -88,8 +88,8 @@
         .hero-sticky { 
             position: sticky; 
             top: 0; 
-            height: 100vh;
-            height: 100svh; /* O segredo do mobile: Ignora a barra do navegador que some/aparece */
+            height: 100vh; 
+            height: 100svh;
             width: 100%; 
             overflow: hidden; 
             background-color: #121212; 
@@ -168,9 +168,9 @@
         #produtos { 
             position: relative; 
             z-index: 40; 
-            margin-top: -100vh; /* Faz a seção sobrepor a tela anterior... */
-            margin-top: -100svh; /* ...usando svh para ser perfeito no mobile */
-            padding-top: 15vh; /* O degradê cria o fade-in sobre o canvas */
+            margin-top: -100vh;
+            margin-top: -100svh; 
+            padding-top: 15vh; 
             background: linear-gradient(to bottom, transparent, #080808 15vh, #080808 100%); 
         }
 
@@ -287,7 +287,7 @@
 
     <nav id="main-nav">
         <div class="nav-inner">
-            <span class="nav-logo">Stillus <span>Multi</span></span>
+            <span class="nav-logo">Stillus <span>Multimáquinas</span></span>
             <div class="nav-links">
                 <a href="#produtos">Produtos</a>
                 <a href="#servicos">Serviços</a>
@@ -601,7 +601,7 @@
         <div style="max-width:1200px;margin:0 auto;">
             <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px;" class="footer-grid">
                 <div>
-                    <div class="footer-logo" style="margin-bottom:16px;">Stillus <span>Multi</span></div>
+                    <div class="footer-logo" style="margin-bottom:16px;">Stillus <span>Multimáquinas</span></div>
                     <p style="font-size:13px;color:rgba(255,255,255,0.25);font-weight:300;line-height:1.7;max-width:280px;margin-bottom:24px;">Engenharia industrial de alta performance para manter sua operação sempre no limite máximo de produtividade.</p>
                     <div style="display:flex;gap:10px;">
                         <a href="#" class="social-icon" aria-label="Instagram"><i data-lucide="instagram" style="width:14px;height:14px;"></i></a>
