@@ -151,6 +151,10 @@
             height: 100%;
             object-fit: cover;
             transition: transform 0.1s ease-out, filter 0.1s ease-out;
+            /* Otimização Mobile GPU */
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            perspective: 1000;
         }
 
         /* TRANSIÇÃO PREMIUM PRODUTOS */
@@ -361,7 +365,12 @@
 
             let currentFraction = 0;
             let targetFraction = 0;
-            const lerpFactor = window.innerWidth < 768 ? 0.2 : 1; 
+            
+            // AJUSTE MOBILE/TABLET: LERP Otimizado
+            // Se for mobile/tablet, usamos um lerp mais suave (0.075) para esconder o jitter do toque.
+            // No Desktop, mantemos a resposta direta (1.0) para máxima fidelidade ao scroll do mouse.
+            const isSmallDevice = window.innerWidth <= 1024;
+            const lerpFactor = isSmallDevice ? 0.075 : 1.0; 
 
             window.addEventListener('load', () => {
                 if(window.lucide) lucide.createIcons();
@@ -404,7 +413,9 @@
                             el.classList.add('active');
                             const progress = (fraction - block.start);
                             const moveY = progress * (window.innerHeight * speed * 3);
-                            el.style.transform = `translateY(${-moveY}px)`;
+                            
+                            // MOBILE: Uso de transform3d para performance de camada
+                            el.style.transform = `translate3d(0, ${-moveY}px, 0)`;
 
                             if(block.id === 'copy-1') {
                                 const fillPercent = Math.min(100, (progress / 0.12) * 100);
@@ -413,7 +424,7 @@
                         } else {
                             el.classList.remove('active');
                             if (fraction < block.start) {
-                                el.style.transform = `translateY(40px)`;
+                                el.style.transform = `translate3d(0, 40px, 0)`;
                             }
                         }
                     });
@@ -421,10 +432,10 @@
                     if (fraction > 0.85) {
                         const zoomProgress = (fraction - 0.85) / 0.15;
                         const scale = 1 - (zoomProgress * 0.05);
-                        canvas.style.transform = `scale(${scale})`;
+                        canvas.style.transform = `scale(${scale}) translateZ(0)`;
                         canvas.style.filter = `brightness(${0.55 - (zoomProgress * 0.3)}) blur(${zoomProgress * 10}px)`;
                     } else {
-                        canvas.style.transform = `scale(1)`;
+                        canvas.style.transform = `scale(1) translateZ(0)`;
                         canvas.style.filter = `brightness(0.55) blur(0px)`;
                     }
 
@@ -439,12 +450,21 @@
                     });
                 }
 
+                // LOOP DE RENDERIZAÇÃO CONTÍNUA (Smoothing Proxy)
                 function renderLoop() {
-                    if (Math.abs(currentFraction - targetFraction) > 0.0001) {
-                        currentFraction += (targetFraction - currentFraction) * lerpFactor;
+                    // Calcula a diferença entre onde o scroll está e onde a animação está
+                    const delta = targetFraction - currentFraction;
+                    
+                    // Se houver diferença perceptível, suavemente move o 'current' em direção ao 'target'
+                    if (Math.abs(delta) > 0.0001) {
+                        currentFraction += delta * lerpFactor;
                         updateCanvas(currentFraction);
                         applyParallax(currentFraction);
+                    } else {
+                        // Garante que chegue ao valor exato no final do movimento
+                        currentFraction = targetFraction;
                     }
+                    
                     requestAnimationFrame(renderLoop);
                 }
 
@@ -457,6 +477,8 @@
                         if (state.loadedCount === state.frameCount) {
                             loader.style.opacity = '0';
                             setTimeout(() => loader.style.display = 'none', 800);
+                            
+                            // Inicia os valores e o loop
                             updateCanvas(0);
                             renderLoop();
                         }
@@ -467,6 +489,7 @@
                 window.addEventListener('scroll', () => {
                     const scrollPos = window.scrollY;
                     const total = heroSection.offsetHeight - window.innerHeight;
+                    // Atualiza apenas o alvo (target), o renderLoop cuida da suavização
                     targetFraction = Math.max(0, Math.min(1, scrollPos / (total || 1)));
                 }, { passive: true });
             });
