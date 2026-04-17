@@ -26,6 +26,8 @@
             margin: 0;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
+            /* Melhora a rolagem tátil no iOS/Android */
+            -webkit-overflow-scrolling: touch;
         }
 
         body::before {
@@ -105,17 +107,17 @@
             left: 10%;
             opacity: 0;
             filter: blur(10px);
-            transform: translateY(40px);
+            transform: translate3d(0, 40px, 0);
             transition: opacity 1s ease, transform 1s ease, filter 1s ease;
             pointer-events: none;
             z-index: 20;
-            will-change: transform, opacity, filter;
+            will-change: transform, opacity;
         }
 
         .hero-text-block.active {
             opacity: 1;
             filter: blur(0px);
-            transform: translateY(0);
+            transform: translate3d(0, 0, 0);
             pointer-events: auto;
         }
 
@@ -124,9 +126,10 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.1s ease-out, filter 0.1s ease-out;
-            transform: translateZ(0); /* GPU Acceleration */
+            /* Força renderização via hardware no mobile */
+            transform: translate3d(0,0,0);
             will-change: transform, filter;
+            backface-visibility: hidden;
         }
 
         #produtos {
@@ -141,19 +144,19 @@
 
         .product-card {
             opacity: 0;
-            transform: translateY(40px);
+            transform: translate3d(0, 40px, 0);
             transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1), border 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
         }
 
         .product-card:hover {
-            transform: translateY(-5px) scale(1.02) !important;
+            transform: translate3d(0, -5px, 0) scale(1.02);
             border-color: rgba(211, 123, 66, 0.4);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(211, 123, 66, 0.1);
             background: rgba(255, 255, 255, 0.05);
         }
 
-        .product-card.revealed { opacity: 1; transform: translateY(0); }
+        .product-card.revealed { opacity: 1; transform: translate3d(0, 0, 0); }
 
         @keyframes slow-rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         .icon-spin { animation: slow-rotate 8s linear infinite; }
@@ -279,10 +282,8 @@
                 loadedCount: 0
             };
 
-            // MOTION ENGINE STATE
             let currentFraction = 0;
             let targetFraction = 0;
-            let velocity = 0;
             let lastScrollY = window.scrollY;
 
             window.addEventListener('load', () => {
@@ -294,7 +295,8 @@
                 const loader = document.getElementById('loader');
 
                 function updateCanvas(fraction) {
-                    const index = Math.min(state.frameCount - 1, Math.floor(fraction * (state.frameCount - 1)));
+                    // Mobile-Optimized Mapping: 90% do hero dedicado ao movimento da máquina
+                    const index = Math.min(state.frameCount - 1, Math.floor(Math.min(1, fraction / 0.9) * (state.frameCount - 1)));
                     const img = state.images[index];
                     if (!img || !img.complete) return;
 
@@ -304,12 +306,13 @@
                     const sw = img.width * ratio, sh = img.height * ratio;
                     ctx.drawImage(img, (canvas.width - sw) / 2, (canvas.height - sh) / 2, sw, sh);
 
+                    // Efeito de saída (End-of-Hero)
                     if (fraction > 0.85) {
                         const zoomProgress = (fraction - 0.85) / 0.15;
-                        canvas.style.transform = `scale(${1 - (zoomProgress * 0.05)})`;
+                        canvas.style.transform = `scale(${1 - (zoomProgress * 0.05)}) translate3d(0,0,0)`;
                         canvas.style.filter = `brightness(${0.55 - (zoomProgress * 0.3)}) blur(${zoomProgress * 10}px)`;
                     } else {
-                        canvas.style.transform = `scale(1)`;
+                        canvas.style.transform = `scale(1) translate3d(0,0,0)`;
                         canvas.style.filter = `brightness(0.55) blur(0px)`;
                     }
                 }
@@ -330,7 +333,8 @@
                             el.classList.add('active');
                             const progress = (fraction - block.start);
                             const moveY = progress * (window.innerHeight * speed * 3);
-                            el.style.transform = `translateY(${-moveY}px)`;
+                            // Hardware-accelerated translate3d
+                            el.style.transform = `translate3d(0, ${-moveY}px, 0)`;
 
                             if(block.id === 'copy-1') {
                                 const fillPercent = Math.min(100, (progress / 0.12) * 100);
@@ -338,30 +342,31 @@
                             }
                         } else {
                             el.classList.remove('active');
-                            if (fraction < block.start) el.style.transform = `translateY(40px)`;
+                            if (fraction < block.start) el.style.transform = `translate3d(0, 40px, 0)`;
                         }
                     });
 
                     document.querySelectorAll('.product-card').forEach((card, index) => {
                         const rect = card.getBoundingClientRect();
-                        if (rect.top < window.innerHeight * 0.85) {
+                        if (rect.top < window.innerHeight * 0.9) {
                             setTimeout(() => card.classList.add('revealed'), index * 100);
                         }
                     });
                 }
 
-                // MOTION ENGINE: ADAPTIVE DAMPING LOOP
                 function renderLoop() {
                     const currentY = window.scrollY;
-                    velocity = Math.abs(currentY - lastScrollY);
+                    const velocity = Math.abs(currentY - lastScrollY);
                     lastScrollY = currentY;
 
-                    // Damping adaptativo: scroll rápido = lerpFactor alto (responsivo), scroll lento = lerpFactor baixo (suave)
-                    const baseLerp = window.innerWidth <= 1024 ? 0.06 : 0.15;
+                    // MOTION ENGINE: Suavização adaptativa baseada na largura da tela e velocidade
+                    const isSmall = window.innerWidth <= 1024;
+                    const baseLerp = isSmall ? 0.07 : 0.15;
                     const adaptiveLerp = Math.min(0.3, baseLerp + (velocity * 0.001));
                     
                     const delta = targetFraction - currentFraction;
                     
+                    // Só renderiza se houver mudança significativa para poupar CPU Mobile
                     if (Math.abs(delta) > 0.0001) {
                         currentFraction += delta * adaptiveLerp;
                         updateCanvas(currentFraction);
@@ -378,9 +383,9 @@
                     img.onload = () => {
                         state.loadedCount++;
                         if (state.loadedCount === state.frameCount) {
-                            loader.style.opacity = '0';
+                            document.getElementById('loader').style.opacity = '0';
                             setTimeout(() => {
-                                loader.style.display = 'none';
+                                document.getElementById('loader').style.display = 'none';
                                 updateCanvas(0);
                                 renderLoop();
                             }, 800);
@@ -405,5 +410,4 @@
     </a>
 
 </body>
-
 </html>
