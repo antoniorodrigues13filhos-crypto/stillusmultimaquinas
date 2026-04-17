@@ -538,9 +538,9 @@
                     loaderPct.textContent = pct + '%';
 
                     /* kick off layout after first bitmap arrives */
-                    if (loaded === 1) {
+                    if (loaded === 1 && bitmaps[i]) {
                         recalcLayout();
-                        computeDraw(bitmaps[0]);
+                        computeDraw(bitmaps[i]);
                         render(0);
                     }
                 }
