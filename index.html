@@ -3,1595 +3,302 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stillus Multimáquinas | Engenharia de Elite</title>
-
+    <title>Layout Responsivo Elite | Estabilidade Total</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
-
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --brand-orange: #D37B42;
-            --brand-dark: #080808;
-            --fill-width: 0%;
+            --primary: #D37B42;
+            --bg: #080808;
+            --surface: #121212;
+            --text: #F8F8F8;
+            --text-muted: rgba(255, 255, 255, 0.6);
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --container-padding: clamp(1rem, 5vw, 5rem);
         }
 
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        /* Reset & Base */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-        html { scroll-behavior: smooth; }
+        html {
+            scroll-behavior: smooth;
+            font-size: 100%; /* 16px */
+        }
 
         body {
-            background-color: #080808;
-            color: #F8F8F8;
-            font-family: 'DM Sans', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
             overflow-x: hidden;
-            -webkit-overflow-scrolling: touch;
+            -webkit-font-smoothing: antialiased;
         }
 
-        body::before {
-            content: "";
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Layout Structure */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--container-padding);
+        }
+
+        /* Header & Navigation */
+        header {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            opacity: 0.04; z-index: 9998; pointer-events: none;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(8, 8, 8, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            height: 70px;
+            display: flex;
+            align-items: center;
         }
 
-        /* ── CANVAS ── */
-        #hero-canvas {
-            position: absolute; inset: 0;
-            width: 100%; height: 100%;
-            filter: brightness(0.5) saturate(0.85);
-            will-change: transform;
-            backface-visibility: hidden;
-        }
-
-        /* ── LOADER ── */
-        #loader {
-            position: fixed; inset: 0; background: #080808; z-index: 9999;
-            display: flex; flex-direction: column; gap: 20px;
-            justify-content: center; align-items: center;
-            transition: opacity 0.6s ease;
-        }
-        #loader-bar-track {
-            width: 160px; height: 1px; background: rgba(255,255,255,0.08);
-            position: relative; overflow: hidden;
-        }
-        #loader-bar {
-            position: absolute; left: 0; top: 0; height: 100%;
-            background: #D37B42; width: 0%;
-            transition: width 0.15s ease;
-        }
-        #loader-pct {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 13px; letter-spacing: 0.2em;
-            color: rgba(255,255,255,0.25);
-        }
-
-        /* ── NAV ── */
         nav {
-            position: fixed; top: 0; width: 100%; z-index: 50;
-            padding: 20px 24px;
-            transition: padding 0.4s ease;
-        }
-        .nav-inner {
-            max-width: 1200px; margin: 0 auto;
-            display: flex; justify-content: space-between; align-items: center;
-            background: rgba(255,255,255,0.03);
-            backdrop-filter: blur(20px) saturate(160%);
-            -webkit-backdrop-filter: blur(20px) saturate(160%);
-            border: 0.5px solid rgba(255,255,255,0.08);
-            padding: 14px 28px; border-radius: 100px;
-            transition: background 0.4s ease, border-color 0.4s ease;
-        }
-        nav.scrolled .nav-inner {
-            background: rgba(8,8,8,0.85);
-            border-color: rgba(255,255,255,0.12);
-        }
-        .nav-logo {
-            font-family: 'Bebas Neue', sans-serif;
-            letter-spacing: 0.15em; font-size: 15px;
-            color: rgba(255,255,255,0.9);
-        }
-        .nav-logo span { color: #D37B42; }
-        .nav-links {
-            display: flex; gap: 32px; align-items: center;
-        }
-        .nav-links a {
-            font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
-            color: rgba(255,255,255,0.35); text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s ease;
-        }
-        .nav-links a:hover { color: rgba(255,255,255,0.8); }
-        .nav-cta {
-            background: rgba(211,123,66,0.15);
-            border: 0.5px solid rgba(211,123,66,0.35);
-            color: #D37B42 !important;
-            padding: 8px 20px;
-            border-radius: 100px;
-            transition: background 0.2s ease, border-color 0.2s ease !important;
-        }
-        .nav-cta:hover {
-            background: rgba(211,123,66,0.25) !important;
-            border-color: rgba(211,123,66,0.6) !important;
-            color: #D37B42 !important;
-        }
-        .nav-icons {
-            display: flex; gap: 16px; color: rgba(255,255,255,0.3);
-        }
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-        }
-
-        /* ── HERO SECTION ── */
-        #scroll-hero { height: 600vh; position: relative; }
-        .hero-sticky {
-            position: sticky; top: 0;
-            height: 100vh; width: 100%; overflow: hidden;
-        }
-
-        /* ── PROGRESS INDICATOR ── */
-        .scroll-dots {
-            position: fixed; right: 40px; top: 50%; transform: translateY(-50%);
-            z-index: 60; display: flex; flex-direction: column; gap: 24px;
-            pointer-events: none;
-        }
-        .dot {
-            width: 4px; height: 4px; background: #fff; border-radius: 50%;
-            opacity: 0.15; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .dot.active {
-            opacity: 1; transform: scale(2.5);
-            background: var(--brand-orange);
-            box-shadow: 0 0 15px var(--brand-orange);
-        }
-        @media (max-width: 768px) { .scroll-dots { right: 20px; } }
-
-        /* ── TEXT BLOCKS ── */
-        .hero-block {
-            position: absolute;
-            left: 8%; right: 8%;
-            z-index: 20;
-            pointer-events: none;
-        }
-
-        .word-wrap { overflow: hidden; display: inline-block; vertical-align: bottom; }
-
-        .hero-word {
-            display: inline-block;
-            transform: translateY(110%);
-            opacity: 0;
-            transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-                        opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .hero-block.active .hero-word { transform: translateY(0%); opacity: 1; }
-
-        .hero-word:nth-child(1) { transition-delay: 0s; }
-        .hero-word:nth-child(2) { transition-delay: 0.07s; }
-        .hero-word:nth-child(3) { transition-delay: 0.14s; }
-        .hero-word:nth-child(4) { transition-delay: 0.21s; }
-        .hero-word:nth-child(5) { transition-delay: 0.28s; }
-
-        .hero-sub {
-            opacity: 0;
-            transform: translateY(18px);
-            transition: opacity 0.8s ease 0.35s, transform 0.8s ease 0.35s;
-        }
-        .hero-block.active .hero-sub { opacity: 1; transform: translateY(0); }
-
-        .hero-block.exiting .hero-word {
-            transform: translateY(-110%);
-            opacity: 0;
-            transition-duration: 0.5s;
-        }
-        .hero-block.exiting .hero-sub {
-            opacity: 0;
-            transform: translateY(-12px);
-            transition-duration: 0.4s;
-            transition-delay: 0s;
-        }
-
-        .animated-stroke {
-            color: transparent;
-            -webkit-text-stroke: 1.5px rgba(255,255,255,0.18);
-            position: relative; display: inline-block;
-        }
-        .animated-stroke::after {
-            content: "LUCRO ZERO.";
-            position: absolute; left: 0; top: 0;
-            width: var(--fill-width); height: 100%;
-            color: var(--brand-orange);
-            -webkit-text-stroke: 1.5px var(--brand-orange);
-            overflow: hidden; white-space: nowrap;
-            filter: drop-shadow(0 0 14px rgba(211,123,66,0.5));
-            transition: width 0.08s linear;
-        }
-
-        .h-display {
-            font-family: 'Bebas Neue', sans-serif;
-            letter-spacing: 0.02em;
-            line-height: 0.92;
-            font-size: clamp(52px, 11vw, 120px);
-            color: #F8F8F8;
-            display: block;
-            margin-bottom: 28px;
-        }
-
-        .accent { color: #D37B42; }
-
-        .side-line {
-            border-left: 2px solid #D37B42;
-            padding-left: 20px;
-            font-size: clamp(13px, 1.8vw, 17px);
-            color: rgba(255,255,255,0.38);
-            font-weight: 300;
-            line-height: 1.6;
-            max-width: 420px;
-        }
-
-        .cta-btn {
-            display: inline-block;
-            background: linear-gradient(135deg, #D37B42, #B58D67);
-            color: #fff;
-            padding: 18px 44px;
-            border-radius: 100px;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 10px;
-            font-weight: 500;
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
-            cursor: pointer;
-            border: none;
-            box-shadow: 0 0 40px rgba(211,123,66,0.25);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            text-decoration: none;
-        }
-        .cta-btn:hover {
-            transform: scale(1.04);
-            box-shadow: 0 0 60px rgba(211,123,66,0.4);
-        }
-        .cta-btn-outline {
-            display: inline-block;
-            background: transparent;
-            color: rgba(255,255,255,0.7);
-            padding: 18px 44px;
-            border-radius: 100px;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 10px;
-            font-weight: 500;
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
-            cursor: pointer;
-            border: 0.5px solid rgba(255,255,255,0.2);
-            transition: all 0.2s ease;
-            text-decoration: none;
-        }
-        .cta-btn-outline:hover {
-            border-color: rgba(255,255,255,0.45);
-            color: #fff;
-        }
-
-        /* ── PRODUCTS ── */
-        #produtos {
-            position: relative; z-index: 40;
-            margin-top: -100vh; padding-top: 25vh;
-            background: linear-gradient(to bottom, transparent, #080808 15%, #080808 100%);
-        }
-
-        .product-card {
-            opacity: 0; transform: translate3d(0, 40px, 0);
-            transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1),
-                        transform 0.8s cubic-bezier(0.16,1,0.3,1),
-                        border 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-            background: rgba(255,255,255,0.03);
-            backdrop-filter: blur(20px) saturate(160%);
-            -webkit-backdrop-filter: blur(20px) saturate(160%);
-            border: 0.5px solid rgba(255,255,255,0.08);
-        }
-
-        .product-card:hover {
-            transform: translate3d(0, -5px, 0) scale(1.02) !important;
-            border-color: rgba(211,123,66,0.35);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 24px rgba(211,123,66,0.12);
-            background: rgba(255,255,255,0.05);
-        }
-
-        .product-card.revealed { opacity: 1; transform: translate3d(0,0,0); }
-
-        /* ── SECTION BASE ── */
-        .section-label {
-            font-size: 10px; letter-spacing: 0.5em; color: #D37B42;
-            text-transform: uppercase; font-weight: 500;
-            display: block; margin-bottom: 16px;
-        }
-        .section-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(40px, 8vw, 88px);
-            letter-spacing: 0.02em; line-height: 0.92;
-            color: #F8F8F8;
-        }
-        .section-body {
-            font-size: clamp(14px, 1.6vw, 16px);
-            color: rgba(255,255,255,0.38);
-            font-weight: 300;
-            line-height: 1.7;
-        }
-
-        /* ── REVEAL ANIMATIONS ── */
-        .reveal {
-            opacity: 0;
-            transform: translateY(32px);
-            transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1),
-                        transform 0.9s cubic-bezier(0.16,1,0.3,1);
-        }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
-        .reveal-delay-1 { transition-delay: 0.1s; }
-        .reveal-delay-2 { transition-delay: 0.2s; }
-        .reveal-delay-3 { transition-delay: 0.3s; }
-        .reveal-delay-4 { transition-delay: 0.4s; }
-
-        /* ── DIVIDER ── */
-        .divider {
-            border: none;
-            border-top: 0.5px solid rgba(255,255,255,0.07);
-            margin: 0;
-        }
-
-        /* ── STATS ── */
-        .stat-num {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(48px, 8vw, 80px);
-            letter-spacing: 0.02em;
-            line-height: 1;
-            color: #F8F8F8;
-        }
-        .stat-num span { color: #D37B42; }
-
-        /* ── SERVICES ── */
-        .service-item {
-            border-top: 0.5px solid rgba(255,255,255,0.07);
-            padding: 32px 0;
-            display: grid;
-            grid-template-columns: 40px 1fr auto;
-            gap: 32px;
-            align-items: start;
-            cursor: pointer;
-            transition: padding 0.3s ease;
-        }
-        .service-item:hover { padding-left: 8px; }
-        .service-item:last-child { border-bottom: 0.5px solid rgba(255,255,255,0.07); }
-        .service-num {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 13px; letter-spacing: 0.1em;
-            color: rgba(255,255,255,0.2);
-            padding-top: 4px;
-        }
-        .service-name {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(22px, 3.5vw, 38px);
-            letter-spacing: 0.03em;
-            color: #F8F8F8;
-            margin-bottom: 8px;
-        }
-        .service-desc {
-            font-size: 13px;
-            color: rgba(255,255,255,0.3);
-            font-weight: 300;
-            line-height: 1.6;
-            max-width: 500px;
-        }
-        .service-arrow {
-            color: rgba(255,255,255,0.15);
-            transition: color 0.2s ease, transform 0.2s ease;
-            padding-top: 6px;
-        }
-        .service-item:hover .service-arrow {
-            color: #D37B42;
-            transform: translate(4px, -4px);
-        }
-
-        /* ── PROCESS ── */
-        .process-step {
-            display: flex;
-            gap: 24px;
-            align-items: flex-start;
-        }
-        .process-line {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0;
-        }
-        .process-dot {
-            width: 32px; height: 32px;
-            border-radius: 50%;
-            border: 0.5px solid rgba(211,123,66,0.35);
-            background: rgba(211,123,66,0.08);
-            display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0;
-        }
-        .process-dot-inner {
-            width: 8px; height: 8px;
-            border-radius: 50%;
-            background: #D37B42;
-        }
-        .process-connector {
-            width: 0.5px;
-            flex: 1;
-            background: rgba(255,255,255,0.07);
-            min-height: 40px;
-        }
-
-        /* ── TESTIMONIALS ── */
-        .testimonial-card {
-            background: rgba(255,255,255,0.03);
-            border: 0.5px solid rgba(255,255,255,0.08);
-            border-radius: 20px;
-            padding: 32px;
-            transition: border-color 0.3s ease;
-        }
-        .testimonial-card:hover {
-            border-color: rgba(211,123,66,0.25);
-        }
-        .testimonial-quote {
-            font-size: clamp(14px, 1.6vw, 16px);
-            color: rgba(255,255,255,0.6);
-            font-weight: 300;
-            line-height: 1.7;
-            margin-bottom: 24px;
-            font-style: italic;
-        }
-        .testimonial-author {
-            font-size: 13px;
-            font-weight: 500;
-            color: rgba(255,255,255,0.8);
-        }
-        .testimonial-role {
-            font-size: 11px;
-            color: rgba(255,255,255,0.3);
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            margin-top: 4px;
-        }
-        .stars { color: #D37B42; font-size: 12px; letter-spacing: 2px; margin-bottom: 20px; }
-
-        /* ── CONTACT / CTA FINAL ── */
-        #contato {
-            background: linear-gradient(to bottom, #080808, #0d0d0d);
-        }
-        .contact-form-input {
-            width: 100%;
-            background: rgba(255,255,255,0.03);
-            border: 0.5px solid rgba(255,255,255,0.1);
-            border-radius: 12px;
-            padding: 16px 20px;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 14px;
-            color: #F8F8F8;
-            outline: none;
-            transition: border-color 0.2s ease, background 0.2s ease;
-        }
-        .contact-form-input::placeholder {
-            color: rgba(255,255,255,0.2);
-        }
-        .contact-form-input:focus {
-            border-color: rgba(211,123,66,0.4);
-            background: rgba(255,255,255,0.05);
-        }
-        textarea.contact-form-input { resize: vertical; min-height: 120px; }
-        .contact-form-label {
-            font-size: 11px;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: rgba(255,255,255,0.3);
-            display: block;
-            margin-bottom: 8px;
-        }
-
-        /* ── FOOTER ── */
-        footer {
-            background: #050505;
-            border-top: 0.5px solid rgba(255,255,255,0.06);
-        }
-        .footer-logo {
-            font-family: 'Bebas Neue', sans-serif;
-            letter-spacing: 0.15em;
-            font-size: 22px;
-            color: rgba(255,255,255,0.8);
-        }
-        .footer-logo span { color: #D37B42; }
-        .footer-link {
-            font-size: 12px;
-            color: rgba(255,255,255,0.25);
-            text-decoration: none;
-            transition: color 0.2s ease;
-            display: block;
-            margin-bottom: 12px;
-        }
-        .footer-link:hover { color: rgba(255,255,255,0.6); }
-        .footer-col-title {
-            font-size: 10px;
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
-            color: rgba(255,255,255,0.2);
-            margin-bottom: 20px;
-            font-weight: 500;
-        }
-        .footer-divider {
-            border: none;
-            border-top: 0.5px solid rgba(255,255,255,0.05);
-            margin: 48px 0 32px;
-        }
-        .social-icon {
-            width: 36px; height: 36px;
-            border-radius: 50%;
-            border: 0.5px solid rgba(255,255,255,0.1);
-            display: flex; align-items: center; justify-content: center;
-            color: rgba(255,255,255,0.3);
-            text-decoration: none;
-            transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
-        }
-        .social-icon:hover {
-            border-color: rgba(211,123,66,0.4);
-            color: #D37B42;
-            background: rgba(211,123,66,0.08);
-        }
-
-        /* ── BRAND STRIP ── */
-        .brand-strip {
-            border-top: 0.5px solid rgba(255,255,255,0.06);
-            border-bottom: 0.5px solid rgba(255,255,255,0.06);
-            overflow: hidden;
-            position: relative;
-        }
-        .brand-strip::before, .brand-strip::after {
-            content: '';
-            position: absolute;
-            top: 0; bottom: 0;
-            width: 80px;
-            z-index: 2;
-        }
-        .brand-strip::before { left: 0; background: linear-gradient(to right, #080808, transparent); }
-        .brand-strip::after  { right: 0; background: linear-gradient(to left, #080808, transparent); }
-        .brand-track {
-            display: flex;
-            gap: 64px;
-            align-items: center;
-            width: max-content;
-            animation: marquee 28s linear infinite;
-            padding: 20px 0;
-        }
-        .brand-track:hover { animation-play-state: paused; }
-        @keyframes marquee {
-            from { transform: translateX(0); }
-            to   { transform: translateX(-50%); }
-        }
-        .brand-item {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 13px; letter-spacing: 0.3em;
-            color: rgba(255,255,255,0.12);
-            white-space: nowrap;
-            transition: color 0.2s ease;
-        }
-        .brand-item:hover { color: rgba(255,255,255,0.35); }
-        .brand-dot {
-            width: 4px; height: 4px;
-            border-radius: 50%;
-            background: rgba(211,123,66,0.35);
-            flex-shrink: 0;
-        }
-
-        /* ── BADGE ── */
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(211,123,66,0.1);
-            border: 0.5px solid rgba(211,123,66,0.25);
-            border-radius: 100px;
-            padding: 6px 14px;
-            font-size: 10px;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: #D37B42;
-            font-weight: 500;
-        }
-        .badge-dot {
-            width: 5px; height: 5px;
-            border-radius: 50%;
-            background: #D37B42;
-            animation: pulse-dot 2s ease infinite;
-        }
-        @keyframes pulse-dot {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.4; transform: scale(0.7); }
-        }
-
-        /* ── ACCORDION FAQ ── */
-        .faq-item {
-            border-top: 0.5px solid rgba(255,255,255,0.07);
-        }
-        .faq-item:last-child {
-            border-bottom: 0.5px solid rgba(255,255,255,0.07);
-        }
-        .faq-trigger {
-            width: 100%;
-            background: none;
-            border: none;
-            cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 24px 0;
-            text-align: left;
-            gap: 24px;
-        }
-        .faq-question {
-            font-family: 'DM Sans', sans-serif;
-            font-size: clamp(15px, 1.8vw, 18px);
-            font-weight: 400;
-            color: rgba(255,255,255,0.75);
-            transition: color 0.2s ease;
-        }
-        .faq-trigger:hover .faq-question { color: #fff; }
-        .faq-icon {
-            width: 24px; height: 24px;
-            border-radius: 50%;
-            border: 0.5px solid rgba(255,255,255,0.15);
-            flex-shrink: 0;
-            display: flex; align-items: center; justify-content: center;
-            color: rgba(255,255,255,0.4);
-            transition: border-color 0.2s ease, color 0.2s ease, transform 0.3s ease;
-        }
-        .faq-trigger:hover .faq-icon { border-color: rgba(211,123,66,0.4); color: #D37B42; }
-        .faq-item.open .faq-icon { transform: rotate(45deg); border-color: rgba(211,123,66,0.4); color: #D37B42; }
-        .faq-body {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s cubic-bezier(0.16,1,0.3,1);
-        }
-        .faq-item.open .faq-body { max-height: 300px; }
-        .faq-answer {
-            font-size: 14px;
-            color: rgba(255,255,255,0.38);
-            font-weight: 300;
-            line-height: 1.7;
-            padding-bottom: 24px;
-            max-width: 680px;
+            width: 100%;
         }
 
-        /* ── SCROLL TO TOP ── */
-        #scroll-top {
-            position: fixed;
-            bottom: 32px; right: 32px;
-            z-index: 100;
-            width: 44px; height: 44px;
-            border-radius: 50%;
-            background: rgba(211,123,66,0.15);
-            border: 0.5px solid rgba(211,123,66,0.3);
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer;
-            color: #D37B42;
-            opacity: 0; pointer-events: none;
-            transition: opacity 0.3s ease, transform 0.2s ease, background 0.2s ease;
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -1px;
         }
-        #scroll-top.visible { opacity: 1; pointer-events: all; }
-        #scroll-top:hover { transform: translateY(-3px); background: rgba(211,123,66,0.25); }
 
-        /* ── WHATSAPP FLOAT ── */
-        #whatsapp-float {
-            position: fixed;
-            bottom: 88px; right: 32px;
-            z-index: 100;
-            width: 44px; height: 44px;
-            border-radius: 50%;
-            background: rgba(37,211,102,0.15);
-            border: 0.5px solid rgba(37,211,102,0.3);
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer;
-            color: #25D366;
-            opacity: 0; pointer-events: none;
-            transition: opacity 0.3s ease 0.1s, transform 0.2s ease, background 0.2s ease;
+        .logo span { color: var(--primary); }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-link {
             text-decoration: none;
-        }
-        #whatsapp-float.visible { opacity: 1; pointer-events: all; }
-        #whatsapp-float:hover { transform: translateY(-3px); background: rgba(37,211,102,0.25); }
-
-        /* ── PARALLAX STRIPE ── */
-        .orange-stripe {
-            position: relative;
-            background: linear-gradient(135deg, #D37B42 0%, #B55A22 100%);
-            overflow: hidden;
-            padding: 80px 8%;
-        }
-        .orange-stripe::before {
-            content: '';
-            position: absolute; inset: 0;
-            opacity: 0.08;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: var(--transition);
         }
 
+        .nav-link:hover { color: var(--text); }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding-top: 150px;
+            padding-bottom: clamp(4rem, 10vh, 8rem);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: var(--text-muted);
+            max-width: 600px;
+            margin-bottom: 2.5rem;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-block;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(211, 123, 66, 0.2);
+        }
+
+        /* Grid Section (Products/Features) */
+        .section {
+            padding: clamp(4rem, 10vh, 8rem) 0;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--surface);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            border-color: var(--primary);
+            background: rgba(211, 123, 66, 0.05);
+        }
+
+        .card-img-placeholder {
+            width: 100%;
+            aspect-ratio: 16 / 9; /* Evita Layout Shift */
+            background: #222;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        .card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Responsividade Suave (Mobile First) */
         @media (max-width: 768px) {
-            .service-item { grid-template-columns: 30px 1fr; }
-            .service-arrow { display: none; }
-            #scroll-top, #whatsapp-float { bottom: 20px; right: 20px; }
-            #whatsapp-float { bottom: 72px; }
-            /* Garantia extra para mobile */
-            .product-card.revealed { opacity: 1 !important; transform: translate3d(0,0,0) !important; }
+            .menu-toggle { display: block; }
+
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: var(--bg);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.5rem;
+                transform: translateY(-150%);
+                transition: transform 0.4s ease-in-out;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+                text-align: center;
+            }
+
+            .nav-menu.active {
+                transform: translateY(0);
+            }
+
+            .hero h1 { text-align: left; }
+            .hero p { text-align: left; }
+            .hero { align-items: flex-start; }
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
         }
     </style>
 </head>
-<body class="antialiased">
+<body>
 
-    <div id="loader">
-        <div id="loader-bar-track"><div id="loader-bar"></div></div>
-        <div id="loader-pct">0%</div>
-    </div>
-
-    <button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Voltar ao topo">
-        <i data-lucide="arrow-up" style="width:16px;height:16px;"></i>
-    </button>
-
-    <a id="whatsapp-float" href="https://wa.me/5534999999999" target="_blank" rel="noopener" aria-label="Contato via WhatsApp">
-        <i data-lucide="message-circle" style="width:18px;height:18px;"></i>
-    </a>
-
-    <div class="scroll-dots">
-        <div id="dot-1" class="dot"></div>
-        <div id="dot-2" class="dot"></div>
-        <div id="dot-3" class="dot"></div>
-    </div>
-
-    <nav id="main-nav">
-        <div class="nav-inner">
-            <span class="nav-logo">Stillus <span>Multi</span></span>
-            <div class="nav-links">
-                <a href="#produtos">Produtos</a>
-                <a href="#servicos">Serviços</a>
-                <a href="#sobre">Sobre</a>
-                <a href="#faq">FAQ</a>
-                <a href="#contato" class="nav-cta">Solicitar orçamento</a>
-            </div>
-            <div class="nav-icons" style="display:flex;gap:16px;">
-                <i data-lucide="wrench" style="width:16px;height:16px;"></i>
-                <i data-lucide="messages-square" style="width:16px;height:16px;"></i>
-            </div>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">STILLUS<span>MULTI</span></div>
+                
+                <button class="menu-toggle" aria-label="Abrir Menu">☰</button>
+                
+                <ul class="nav-menu">
+                    <li><a href="#" class="nav-link">Início</a></li>
+                    <li><a href="#" class="nav-link">Serviços</a></li>
+                    <li><a href="#" class="nav-link">Tecnologia</a></li>
+                    <li><a href="#" class="nav-link">Contato</a></li>
+                </ul>
+            </nav>
         </div>
-    </nav>
+    </header>
 
-    <section id="scroll-hero">
-        <div class="hero-sticky">
-            <canvas id="hero-canvas"></canvas>
+    <main class="container">
+        <section class="hero">
+            <h1>Design Fluido,<br>Performance Real.</h1>
+            <p>Criamos interfaces que não apenas se adaptam, mas dominam qualquer dispositivo com estabilidade absoluta.</p>
+            <a href="#" class="btn">Explorar Soluções</a>
+        </section>
 
-            <div id="copy-1" class="hero-block" style="top:28%;">
-                <div class="h-display">
-                    <div><span class="word-wrap"><span class="hero-word">MÁQUINAS</span></span></div>
-                    <div><span class="word-wrap"><span class="hero-word">PARADAS,</span></span></div>
-                    <div>
-                        <span class="word-wrap"><span class="hero-word animated-stroke">LUCRO ZERO.</span></span>
-                    </div>
+        <section class="section">
+            <div class="grid">
+                <div class="card">
+                    <div class="card-img-placeholder"></div>
+                    <h3>Engenharia de Elite</h3>
+                    <p>Estruturas pensadas para carregar instantaneamente, eliminando qualquer movimento brusco de layout.</p>
                 </div>
-                <p class="hero-sub side-line">A inatividade técnica é o maior dreno financeiro da sua operação.</p>
-            </div>
-
-            <div id="copy-2" class="hero-block" style="top:32%;">
-                <div class="h-display">
-                    <div><span class="word-wrap"><span class="hero-word">ENGENHARIA</span></span></div>
-                    <div><span class="word-wrap"><span class="hero-word">DE</span></span> <span class="word-wrap"><span class="hero-word accent">ELITE.</span></span></div>
+                <div class="card">
+                    <div class="card-img-placeholder"></div>
+                    <h3>Responsividade Nativa</h3>
+                    <p>De smartphones 4K a desktops ultra-wide, a hierarquia visual permanece impecável.</p>
                 </div>
-                <p class="hero-sub side-line">Manutenção especializada com diagnóstico avançado e resposta imediata.</p>
-            </div>
-
-            <div id="copy-3" class="hero-block" style="top:30%;">
-                <div class="h-display">
-                    <div><span class="word-wrap"><span class="hero-word">MÁXIMA</span></span></div>
-                    <div><span class="word-wrap"><span class="hero-word accent">EFICIÊNCIA.</span></span></div>
-                </div>
-                <p class="hero-sub" style="margin-bottom:36px;opacity:0;transform:translateY(18px);transition:opacity 0.8s ease 0.35s,transform 0.8s ease 0.35s;font-size:clamp(13px,1.8vw,17px);color:rgba(255,255,255,0.38);font-weight:300;line-height:1.6;max-width:380px;">
-                    Equipamentos que não param. Produção que não cessa.
-                </p>
-                <div class="hero-sub" style="opacity:0;transform:translateY(18px);transition:opacity 0.8s ease 0.5s,transform 0.8s ease 0.5s;display:flex;gap:16px;flex-wrap:wrap;">
-                    <a href="#produtos" class="cta-btn">Ver catálogo</a>
-                    <a href="#contato" class="cta-btn-outline">Falar com especialista</a>
+                <div class="card">
+                    <div class="card-img-placeholder"></div>
+                    <h3>Estabilidade Visual</h3>
+                    <p>Uso de técnicas modernas como aspect-ratio e unidades relativas para garantir fluidez total.</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
-    <section id="produtos" class="relative z-30 py-32 px-[8%]" style="margin-top:-100vh;padding-top:25vh;background:linear-gradient(to bottom, transparent, #080808 15%, #080808 100%);">
-        <div style="max-width:1200px;margin:0 auto;">
-
-            <div style="text-align:center;margin-bottom:80px;">
-                <span class="section-label reveal">Menos paradas. Mais produção.</span>
-                <h2 class="section-title reveal reveal-delay-1" style="margin-bottom:0;">
-                    Soluções completas para manter<br>seus equipamentos sempre ativos
-                </h2>
-            </div>
-
-            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;">
-
-                <div class="product-card" style="padding:32px;border-radius:24px;">
-                    <div style="height:220px;background:rgba(255,255,255,0.04);border-radius:16px;margin-bottom:24px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-                        <div style="position:absolute;inset:0;background:radial-gradient(circle at 60% 40%, rgba(211,123,66,0.08) 0%, transparent 70%);"></div>
-                        <i data-lucide="cog" style="width:56px;height:56px;color:rgba(255,255,255,0.08);position:relative;z-index:1;"></i>
-                    </div>
-                    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:0.05em;margin-bottom:8px;">MOTORES SÉRIE-T</h3>
-                    <p style="color:rgba(255,255,255,0.38);font-size:13px;font-weight:300;line-height:1.6;margin-bottom:20px;">Torque extremo para operações contínuas de alta demanda industrial.</p>
-                    <div style="display:flex;justify-content:space-between;align-items:center;">
-                        <span style="color:#D37B42;font-family:monospace;font-size:11px;letter-spacing:0.1em;">PRONTO_ENVIO</span>
-                        <i data-lucide="arrow-up-right" style="width:18px;height:18px;color:rgba(255,255,255,0.18);"></i>
-                    </div>
-                </div>
-
-                <div class="product-card" style="padding:32px;border-radius:24px;">
-                    <div style="height:220px;background:rgba(255,255,255,0.04);border-radius:16px;margin-bottom:24px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-                        <div style="position:absolute;inset:0;background:radial-gradient(circle at 40% 60%, rgba(211,123,66,0.08) 0%, transparent 70%);"></div>
-                        <i data-lucide="zap" style="width:56px;height:56px;color:rgba(255,255,255,0.08);position:relative;z-index:1;"></i>
-                    </div>
-                    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:0.05em;margin-bottom:8px;">SISTEMAS HIDRÁULICOS</h3>
-                    <p style="color:rgba(255,255,255,0.38);font-size:13px;font-weight:300;line-height:1.6;margin-bottom:20px;">Precisão milimétrica sob carga máxima e ciclos contínuos de operação.</p>
-                    <div style="display:flex;justify-content:space-between;align-items:center;">
-                        <span style="color:#D37B42;font-family:monospace;font-size:11px;letter-spacing:0.1em;">LINHA_PREMIUM</span>
-                        <i data-lucide="arrow-up-right" style="width:18px;height:18px;color:rgba(255,255,255,0.18);"></i>
-                    </div>
-                </div>
-
-                <div class="product-card" style="padding:32px;border-radius:24px;">
-                    <div style="height:220px;background:rgba(255,255,255,0.04);border-radius:16px;margin-bottom:24px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-                        <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, rgba(211,123,66,0.08) 0%, transparent 70%);"></div>
-                        <i data-lucide="shield-check" style="width:56px;height:56px;color:rgba(255,255,255,0.08);position:relative;z-index:1;"></i>
-                    </div>
-                    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:0.05em;margin-bottom:8px;">KITS DE REPARO</h3>
-                    <p style="color:rgba(255,255,255,0.38);font-size:13px;font-weight:300;line-height:1.6;margin-bottom:20px;">Componentes originais com garantia de fábrica e entrega expressa para todo o Brasil.</p>
-                    <div style="display:flex;justify-content:space-between;align-items:center;">
-                        <span style="color:#D37B42;font-family:monospace;font-size:11px;letter-spacing:0.1em;">EM_ESTOQUE</span>
-                        <i data-lucide="arrow-up-right" style="width:18px;height:18px;color:rgba(255,255,255,0.18);"></i>
-                    </div>
-                </div>
-
-                <div class="product-card" style="padding:32px;border-radius:24px;">
-                    <div style="height:220px;background:rgba(255,255,255,0.04);border-radius:16px;margin-bottom:24px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-                        <div style="position:absolute;inset:0;background:radial-gradient(circle at 55% 45%, rgba(211,123,66,0.08) 0%, transparent 70%);"></div>
-                        <i data-lucide="gauge" style="width:56px;height:56px;color:rgba(255,255,255,0.08);position:relative;z-index:1;"></i>
-                    </div>
-                    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:0.05em;margin-bottom:8px;">PAINÉIS DE CONTROLE</h3>
-                    <p style="color:rgba(255,255,255,0.38);font-size:13px;font-weight:300;line-height:1.6;margin-bottom:20px;">Automação e controle inteligente para monitoramento em tempo real da sua linha.</p>
-                    <div style="display:flex;justify-content:space-between;align-items:center;">
-                        <span style="color:#D37B42;font-family:monospace;font-size:11px;letter-spacing:0.1em;">SOB_CONSULTA</span>
-                        <i data-lucide="arrow-up-right" style="width:18px;height:18px;color:rgba(255,255,255,0.18);"></i>
-                    </div>
-                </div>
-
-                <div class="product-card" style="padding:32px;border-radius:24px;">
-                    <div style="height:220px;background:rgba(255,255,255,0.04);border-radius:16px;margin-bottom:24px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-                        <div style="position:absolute;inset:0;background:radial-gradient(circle at 45% 55%, rgba(211,123,66,0.08) 0%, transparent 70%);"></div>
-                        <i data-lucide="settings-2" style="width:56px;height:56px;color:rgba(255,255,255,0.08);position:relative;z-index:1;"></i>
-                    </div>
-                    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:0.05em;margin-bottom:8px;">VÁLVULAS PROPORCIONAIS</h3>
-                    <p style="color:rgba(255,255,255,0.38);font-size:13px;font-weight:300;line-height:1.6;margin-bottom:20px;">Controle dinâmico de fluxo e pressão para sistemas que exigem resposta rápida.</p>
-                    <div style="display:flex;justify-content:space-between;align-items:center;">
-                        <span style="color:#D37B42;font-family:monospace;font-size:11px;letter-spacing:0.1em;">ALTA_PRECISAO</span>
-                        <i data-lucide="arrow-up-right" style="width:18px;height:18px;color:rgba(255,255,255,0.18);"></i>
-                    </div>
-                </div>
-
-                <div class="product-card" style="padding:32px;border-radius:24px;">
-                    <div style="height:220px;background:rgba(255,255,255,0.04);border-radius:16px;margin-bottom:24px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-                        <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 40%, rgba(211,123,66,0.08) 0%, transparent 70%);"></div>
-                        <i data-lucide="activity" style="width:56px;height:56px;color:rgba(255,255,255,0.08);position:relative;z-index:1;"></i>
-                    </div>
-                    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:0.05em;margin-bottom:8px;">SENSORES INDUSTRIAIS</h3>
-                    <p style="color:rgba(255,255,255,0.38);font-size:13px;font-weight:300;line-height:1.6;margin-bottom:20px;">Monitoramento de temperatura, presença e nível com integração total em I/O Link.</p>
-                    <div style="display:flex;justify-content:space-between;align-items:center;">
-                        <span style="color:#D37B42;font-family:monospace;font-size:11px;letter-spacing:0.1em;">TECNOLOGIA_4.0</span>
-                        <i data-lucide="arrow-up-right" style="width:18px;height:18px;color:rgba(255,255,255,0.18);"></i>
-                    </div>
-                </div>
-
-                <div class="product-card" style="padding:32px;border-radius:24px;">
-                    <div style="height:220px;background:rgba(255,255,255,0.04);border-radius:16px;margin-bottom:24px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-                        <div style="position:absolute;inset:0;background:radial-gradient(circle at 35% 50%, rgba(211,123,66,0.08) 0%, transparent 70%);"></div>
-                        <i data-lucide="refresh-cw" style="width:56px;height:56px;color:rgba(255,255,255,0.08);position:relative;z-index:1;"></i>
-                    </div>
-                    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:0.05em;margin-bottom:8px;">REDUTORES DE VELOCIDADE</h3>
-                    <p style="color:rgba(255,255,255,0.38);font-size:13px;font-weight:300;line-height:1.6;margin-bottom:20px;">Transmissão de potência otimizada com baixo desgaste e máxima durabilidade térmica.</p>
-                    <div style="display:flex;justify-content:space-between;align-items:center;">
-                        <span style="color:#D37B42;font-family:monospace;font-size:11px;letter-spacing:0.1em;">ESTOQUE_LOCAL</span>
-                        <i data-lucide="arrow-up-right" style="width:18px;height:18px;color:rgba(255,255,255,0.18);"></i>
-                    </div>
-                </div>
-
-            </div>
-
-            <div style="text-align:center;margin-top:48px;" class="reveal">
-                <a href="#contato" class="cta-btn-outline" style="display:inline-block;">Ver catálogo completo</a>
-            </div>
-
-        </div>
-    </section>
-
-    <div class="brand-strip" style="margin:0;">
-        <div class="brand-track" id="brand-track">
-            <span class="brand-item">SIEMENS</span><div class="brand-dot"></div>
-            <span class="brand-item">WEG</span><div class="brand-dot"></div>
-            <span class="brand-item">BOSCH REXROTH</span><div class="brand-dot"></div>
-            <span class="brand-item">PARKER</span><div class="brand-dot"></div>
-            <span class="brand-item">SEW-EURODRIVE</span><div class="brand-dot"></div>
-            <span class="brand-item">SCHNEIDER</span><div class="brand-dot"></div>
-            <span class="brand-item">ABB</span><div class="brand-dot"></div>
-            <span class="brand-item">DANFOSS</span><div class="brand-dot"></div>
-            <span class="brand-item">EATON</span><div class="brand-dot"></div>
-            <span class="brand-item">HYDRALMEC</span><div class="brand-dot"></div>
-            <span class="brand-item">SIEMENS</span><div class="brand-dot"></div>
-            <span class="brand-item">WEG</span><div class="brand-dot"></div>
-            <span class="brand-item">BOSCH REXROTH</span><div class="brand-dot"></div>
-            <span class="brand-item">PARKER</span><div class="brand-dot"></div>
-            <span class="brand-item">SEW-EURODRIVE</span><div class="brand-dot"></div>
-            <span class="brand-item">SCHNEIDER</span><div class="brand-dot"></div>
-            <span class="brand-item">ABB</span><div class="brand-dot"></div>
-            <span class="brand-item">DANFOSS</span><div class="brand-dot"></div>
-            <span class="brand-item">EATON</span><div class="brand-dot"></div>
-            <span class="brand-item">HYDRALMEC</span><div class="brand-dot"></div>
-        </div>
-    </div>
-
-    <section style="padding:100px 8%;background:#080808;" id="sobre">
-        <div style="max-width:1200px;margin:0 auto;">
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;" class="stats-grid">
-                <div>
-                    <span class="section-label reveal">Nossa trajetória</span>
-                    <h2 class="section-title reveal reveal-delay-1" style="margin-bottom:24px;">
-                        Anos de precisão.<br><span style="color:#D37B42;">Resultados reais.</span>
-                    </h2>
-                    <p class="section-body reveal reveal-delay-2" style="margin-bottom:36px;">
-                        Desde nossa fundação, construímos uma reputação sólida no setor industrial de Minas Gerais e região. Não terceirizamos diagnósticos — cada análise é feita por engenheiros próprios, com responsabilidade técnica total.
-                    </p>
-                    <a href="#contato" class="cta-btn reveal reveal-delay-3">Solicitar diagnóstico</a>
-                </div>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;">
-                    <div style="background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.07);padding:40px 32px;" class="reveal">
-                        <div class="stat-num">+<span>18</span></div>
-                        <div style="font-size:12px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-top:8px;">Anos de mercado</div>
-                    </div>
-                    <div style="background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.07);padding:40px 32px;" class="reveal reveal-delay-1">
-                        <div class="stat-num"><span>98</span>%</div>
-                        <div style="font-size:12px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-top:8px;">Uptime garantido</div>
-                    </div>
-                    <div style="background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.07);padding:40px 32px;" class="reveal reveal-delay-2">
-                        <div class="stat-num">+<span>2.4</span><span style="font-size:clamp(28px,4vw,48px);">k</span></div>
-                        <div style="font-size:12px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-top:8px;">Equipamentos revisados</div>
-                    </div>
-                    <div style="background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.07);padding:40px 32px;" class="reveal reveal-delay-3">
-                        <div class="stat-num"><span>4</span>h</div>
-                        <div style="font-size:12px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-top:8px;">Tempo médio de resposta</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <style>
-        @media (max-width: 768px) {
-            .stats-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
-        }
-    </style>
-
-    <div class="orange-stripe">
-        <div style="max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:40px;flex-wrap:wrap;">
-            <div>
-                <p style="font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,5vw,52px);letter-spacing:0.02em;color:#fff;line-height:1;margin-bottom:8px;">
-                    PAROU? ACIONAMOS EM ATÉ 4 HORAS.
-                </p>
-                <p style="font-size:14px;color:rgba(255,255,255,0.6);font-weight:300;">Atendimento emergencial 24/7 para clientes em contrato.</p>
-            </div>
-            <a href="#contato" style="display:inline-block;background:#fff;color:#D37B42;padding:18px 44px;border-radius:100px;font-family:'DM Sans',sans-serif;font-size:10px;font-weight:500;letter-spacing:0.3em;text-transform:uppercase;text-decoration:none;white-space:nowrap;transition:transform 0.2s ease,box-shadow 0.2s ease;box-shadow:0 0 40px rgba(0,0,0,0.2);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
-                Acionar agora
-            </a>
-        </div>
-    </div>
-
-    <section id="servicos" style="padding:100px 8%;background:#080808;">
-        <div style="max-width:1200px;margin:0 auto;">
-            <div style="display:grid;grid-template-columns:1fr 2fr;gap:80px;align-items:start;" class="services-grid">
-                <div style="position:sticky;top:120px;">
-                    <span class="section-label reveal">O que fazemos</span>
-                    <h2 class="section-title reveal reveal-delay-1" style="margin-bottom:24px;">
-                        Serviços<br><span style="color:#D37B42;">especializados</span>
-                    </h2>
-                    <p class="section-body reveal reveal-delay-2">
-                        Da manutenção preventiva ao retrofit completo — cobertura técnica total para sua planta industrial.
-                    </p>
-                </div>
-                <div>
-                    <div class="service-item reveal">
-                        <span class="service-num">01</span>
-                        <div>
-                            <div class="service-name">MANUTENÇÃO PREVENTIVA</div>
-                            <div class="service-desc">Planos periódicos que eliminam falhas antes que ocorram. Redução comprovada de custos operacionais e extensão da vida útil dos ativos.</div>
-                        </div>
-                        <i data-lucide="arrow-up-right" class="service-arrow" style="width:20px;height:20px;"></i>
-                    </div>
-                    <div class="service-item reveal reveal-delay-1">
-                        <span class="service-num">02</span>
-                        <div>
-                            <div class="service-name">DIAGNÓSTICO AVANÇADO</div>
-                            <div class="service-desc">Análise de vibração, termografia e ultrassom para identificar falhas ocultas com precisão cirúrgica, sem necessidade de parar a produção.</div>
-                        </div>
-                        <i data-lucide="arrow-up-right" class="service-arrow" style="width:20px;height:20px;"></i>
-                    </div>
-                    <div class="service-item reveal reveal-delay-2">
-                        <span class="service-num">03</span>
-                        <div>
-                            <div class="service-name">REFORMA E RETROFIT</div>
-                            <div class="service-desc">Modernização de equipamentos legados com tecnologia atual. Desempenho de máquina nova com uma fração do custo de reposição.</div>
-                        </div>
-                        <i data-lucide="arrow-up-right" class="service-arrow" style="width:20px;height:20px;"></i>
-                    </div>
-                    <div class="service-item reveal reveal-delay-3">
-                        <span class="service-num">04</span>
-                        <div>
-                            <div class="service-name">SUPORTE DE EMERGÊNCIA</div>
-                            <div class="service-desc">Equipe técnica disponível 24 horas por dia, 7 dias por semana. Atendimento em campo em até 4 horas para clientes com contrato ativo.</div>
-                        </div>
-                        <i data-lucide="arrow-up-right" class="service-arrow" style="width:20px;height:20px;"></i>
-                    </div>
-                    <div class="service-item reveal reveal-delay-4">
-                        <span class="service-num">05</span>
-                        <div>
-                            <div class="service-name">TREINAMENTO TÉCNICO</div>
-                            <div class="service-desc">Capacitação da sua equipe interna para operação segura e manutenção de primeiro nível, reduzindo dependência externa e aumentando autonomia operacional.</div>
-                        </div>
-                        <i data-lucide="arrow-up-right" class="service-arrow" style="width:20px;height:20px;"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <style>
-        @media (max-width: 768px) {
-            .services-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
-            .services-grid > div:first-child { position: static !important; }
-        }
-    </style>
-
-    <section style="padding:100px 8%;background:#080808;border-top:0.5px solid rgba(255,255,255,0.05);">
-        <div style="max-width:1200px;margin:0 auto;">
-            <div style="text-align:center;margin-bottom:72px;">
-                <span class="section-label reveal">Como trabalhamos</span>
-                <h2 class="section-title reveal reveal-delay-1">Do contato ao resultado</h2>
-            </div>
-            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0;position:relative;">
-                <div style="position:absolute;top:16px;left:calc(10% + 16px);right:calc(10% + 16px);height:0.5px;background:rgba(255,255,255,0.07);z-index:0;" class="process-line-h"></div>
-
-                <div style="text-align:center;padding:0 24px;position:relative;z-index:1;" class="reveal">
-                    <div style="width:32px;height:32px;border-radius:50%;border:0.5px solid rgba(211,123,66,0.35);background:#080808;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;">
-                        <div style="width:8px;height:8px;border-radius:50%;background:#D37B42;"></div>
-                    </div>
-                    <div style="font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:0.1em;margin-bottom:8px;color:#F8F8F8;">CONTATO</div>
-                    <p style="font-size:12px;color:rgba(255,255,255,0.3);font-weight:300;line-height:1.6;">Você nos aciona por telefone, WhatsApp ou formulário.</p>
-                </div>
-
-                <div style="text-align:center;padding:0 24px;position:relative;z-index:1;" class="reveal reveal-delay-1">
-                    <div style="width:32px;height:32px;border-radius:50%;border:0.5px solid rgba(211,123,66,0.35);background:#080808;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;">
-                        <div style="width:8px;height:8px;border-radius:50%;background:#D37B42;"></div>
-                    </div>
-                    <div style="font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:0.1em;margin-bottom:8px;color:#F8F8F8;">DIAGNÓSTICO</div>
-                    <p style="font-size:12px;color:rgba(255,255,255,0.3);font-weight:300;line-height:1.6;">Técnico especializado avalia o equipamento pessoalmente.</p>
-                </div>
-
-                <div style="text-align:center;padding:0 24px;position:relative;z-index:1;" class="reveal reveal-delay-2">
-                    <div style="width:32px;height:32px;border-radius:50%;border:0.5px solid rgba(211,123,66,0.35);background:#080808;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;">
-                        <div style="width:8px;height:8px;border-radius:50%;background:#D37B42;"></div>
-                    </div>
-                    <div style="font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:0.1em;margin-bottom:8px;color:#F8F8F8;">ORÇAMENTO</div>
-                    <p style="font-size:12px;color:rgba(255,255,255,0.3);font-weight:300;line-height:1.6;">Proposta clara, sem surpresas, com prazo de entrega definido.</p>
-                </div>
-
-                <div style="text-align:center;padding:0 24px;position:relative;z-index:1;" class="reveal reveal-delay-3">
-                    <div style="width:32px;height:32px;border-radius:50%;border:0.5px solid rgba(211,123,66,0.35);background:#080808;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;">
-                        <div style="width:8px;height:8px;border-radius:50%;background:#D37B42;"></div>
-                    </div>
-                    <div style="font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:0.1em;margin-bottom:8px;color:#F8F8F8;">EXECUÇÃO</div>
-                    <p style="font-size:12px;color:rgba(255,255,255,0.3);font-weight:300;line-height:1.6;">Serviço executado com componentes certificados e rastreáveis.</p>
-                </div>
-
-                <div style="text-align:center;padding:0 24px;position:relative;z-index:1;" class="reveal reveal-delay-4">
-                    <div style="width:32px;height:32px;border-radius:50%;border:0.5px solid rgba(211,123,66,0.35);background:#080808;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;">
-                        <div style="width:8px;height:8px;border-radius:50%;background:#D37B42;"></div>
-                    </div>
-                    <div style="font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:0.1em;margin-bottom:8px;color:#F8F8F8;">GARANTIA</div>
-                    <p style="font-size:12px;color:rgba(255,255,255,0.3);font-weight:300;line-height:1.6;">Acompanhamento pós-serviço e garantia documentada.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section style="padding:100px 8%;background:#080808;border-top:0.5px solid rgba(255,255,255,0.05);">
-        <div style="max-width:1200px;margin:0 auto;">
-            <div style="text-align:center;margin-bottom:64px;">
-                <span class="section-label reveal">O que dizem nossos clientes</span>
-                <h2 class="section-title reveal reveal-delay-1">Confiança construída<br><span style="color:#D37B42;">na prática</span></h2>
-            </div>
-            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;">
-
-                <div class="testimonial-card reveal">
-                    <div class="stars">★★★★★</div>
-                    <p class="testimonial-quote">"Tínhamos uma prensa parada há três dias e ninguém conseguia diagnosticar. A Stillus enviou um técnico em menos de quatro horas e o equipamento voltou a operar no mesmo dia."</p>
-                    <div class="testimonial-author">Ricardo Fonseca</div>
-                    <div class="testimonial-role">Gerente de Manutenção · Metalúrgica Triângulo</div>
-                </div>
-
-                <div class="testimonial-card reveal reveal-delay-1">
-                    <div class="stars">★★★★★</div>
-                    <p class="testimonial-quote">"O contrato de manutenção preventiva reduziu nossas paradas não planejadas em 70%. O ROI foi evidente logo no primeiro semestre de parceria."</p>
-                    <div class="testimonial-author">Fernanda Luz</div>
-                    <div class="testimonial-role">Diretora Industrial · Agro Cerrado S.A.</div>
-                </div>
-
-                <div class="testimonial-card reveal reveal-delay-2">
-                    <div class="stars">★★★★★</div>
-                    <p class="testimonial-quote">"Retrofit completo de uma linha de embalagem de 2008. O custo foi 30% do que seria um equipamento novo e o desempenho está acima do esperado."</p>
-                    <div class="testimonial-author">Paulo Magalhães</div>
-                    <div class="testimonial-role">CEO · Indústria Mineira de Alimentos</div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <section id="faq" style="padding:100px 8%;background:#080808;border-top:0.5px solid rgba(255,255,255,0.05);">
-        <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 2fr;gap:80px;align-items:start;" class="faq-grid">
-            <div style="position:sticky;top:120px;">
-                <span class="section-label reveal">Dúvidas frequentes</span>
-                <h2 class="section-title reveal reveal-delay-1" style="margin-bottom:24px;">
-                    Perguntas<br><span style="color:#D37B42;">e respostas</span>
-                </h2>
-                <p class="section-body reveal reveal-delay-2">Não encontrou o que precisa? Fale diretamente com nossa equipe técnica.</p>
-                <div style="margin-top:32px;" class="reveal reveal-delay-3">
-                    <a href="#contato" class="cta-btn-outline" style="display:inline-block;">Falar com especialista</a>
-                </div>
-            </div>
-            <div id="faq-list">
-                <div class="faq-item reveal">
-                    <button class="faq-trigger" onclick="toggleFaq(this)">
-                        <span class="faq-question">Qual o prazo de atendimento em caso de emergência?</span>
-                        <span class="faq-icon"><i data-lucide="plus" style="width:14px;height:14px;"></i></span>
-                    </button>
-                    <div class="faq-body">
-                        <p class="faq-answer">Para clientes com contrato ativo, garantimos presença em campo em até 4 horas úteis a partir do acionamento. Para regiões próximas a Uberlândia, o tempo médio histórico é de 2,5 horas. Clientes sem contrato são atendidos conforme disponibilidade da equipe técnica.</p>
-                    </div>
-                </div>
-                <div class="faq-item reveal reveal-delay-1">
-                    <button class="faq-trigger" onclick="toggleFaq(this)">
-                        <span class="faq-question">Vocês trabalham com equipamentos de qualquer fabricante?</span>
-                        <span class="faq-icon"><i data-lucide="plus" style="width:14px;height:14px;"></i></span>
-                    </button>
-                    <div class="faq-body">
-                        <p class="faq-answer">Sim. Nossa equipe tem certificações para as principais marcas do mercado industrial: WEG, Siemens, ABB, Bosch Rexroth, Parker, SEW-Eurodrive, Schneider Electric, entre outras. Para equipamentos mais específicos, consulte nossa equipe para verificar disponibilidade.</p>
-                    </div>
-                </div>
-                <div class="faq-item reveal reveal-delay-2">
-                    <button class="faq-trigger" onclick="toggleFaq(this)">
-                        <span class="faq-question">Como funciona o contrato de manutenção preventiva?</span>
-                        <span class="faq-icon"><i data-lucide="plus" style="width:14px;height:14px;"></i></span>
-                    </button>
-                    <div class="faq-body">
-                        <p class="faq-answer">Fazemos um levantamento completo dos seus ativos, classificamos por criticidade e criamos um plano de manutenção com frequências definidas. O contrato inclui visitas periódicas, relatórios técnicos, prioridade de atendimento emergencial e desconto nos peças e kits de reparo.</p>
-                    </div>
-                </div>
-                <div class="faq-item reveal reveal-delay-3">
-                    <button class="faq-trigger" onclick="toggleFaq(this)">
-                        <span class="faq-question">Os componentes utilizados são originais?</span>
-                        <span class="faq-icon"><i data-lucide="plus" style="width:14px;height:14px;"></i></span>
-                    </button>
-                    <div class="faq-body">
-                        <p class="faq-answer">Utilizamos exclusivamente componentes originais ou equivalentes certificados, com rastreabilidade de origem. Nunca utilizamos peças genéricas sem certificação. Toda reposição é documentada no relatório técnico do serviço e acompanhada de nota fiscal.</p>
-                    </div>
-                </div>
-                <div class="faq-item reveal reveal-delay-4">
-                    <button class="faq-trigger" onclick="toggleFaq(this)">
-                        <span class="faq-question">Qual é a área de atuação da Stillus?</span>
-                        <span class="faq-icon"><i data-lucide="plus" style="width:14px;height:14px;"></i></span>
-                    </button>
-                    <div class="faq-body">
-                        <p class="faq-answer">Nossa base é em Uberlândia-MG, com cobertura em todo o Triângulo Mineiro, Alto Paranaíba e parte do interior de Goiás e São Paulo. Para projetos de grande porte, atendemos em âmbito nacional mediante avaliação e proposta específica.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contato" style="padding:100px 8%;background:#080808;border-top:0.5px solid rgba(255,255,255,0.05);">
-        <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;" class="contact-grid">
-
-            <div>
-                <span class="section-label reveal">Fale conosco</span>
-                <h2 class="section-title reveal reveal-delay-1" style="margin-bottom:24px;">
-                    Vamos resolver<br><span style="color:#D37B42;">seu problema.</span>
-                </h2>
-                <p class="section-body reveal reveal-delay-2" style="margin-bottom:48px;">
-                    Descreva o equipamento e a situação. Nossa equipe técnica analisa e retorna com diagnóstico inicial em até 2 horas úteis.
-                </p>
-
-                <div style="display:flex;flex-direction:column;gap:24px;" class="reveal reveal-delay-3">
-                    <div style="display:flex;align-items:center;gap:16px;">
-                        <div style="width:40px;height:40px;border-radius:50%;border:0.5px solid rgba(211,123,66,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                            <i data-lucide="phone" style="width:16px;height:16px;color:#D37B42;"></i>
-                        </div>
-                        <div>
-                            <div style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:3px;">Telefone</div>
-                            <div style="font-size:15px;color:rgba(255,255,255,0.75);">(34) 9 9999-9999</div>
-                        </div>
-                    </div>
-                    <div style="display:flex;align-items:center;gap:16px;">
-                        <div style="width:40px;height:40px;border-radius:50%;border:0.5px solid rgba(211,123,66,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                            <i data-lucide="mail" style="width:16px;height:16px;color:#D37B42;"></i>
-                        </div>
-                        <div>
-                            <div style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:3px;">E-mail</div>
-                            <div style="font-size:15px;color:rgba(255,255,255,0.75);">contato@stillusmulti.com.br</div>
-                        </div>
-                    </div>
-                    <div style="display:flex;align-items:center;gap:16px;">
-                        <div style="width:40px;height:40px;border-radius:50%;border:0.5px solid rgba(211,123,66,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                            <i data-lucide="map-pin" style="width:16px;height:16px;color:#D37B42;"></i>
-                        </div>
-                        <div>
-                            <div style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:3px;">Endereço</div>
-                            <div style="font-size:15px;color:rgba(255,255,255,0.75);">Uberlândia — MG, Brasil</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div style="margin-top:40px;display:flex;gap:12px;" class="reveal reveal-delay-4">
-                    <a href="#" class="social-icon" aria-label="Instagram">
-                        <i data-lucide="instagram" style="width:15px;height:15px;"></i>
-                    </a>
-                    <a href="#" class="social-icon" aria-label="LinkedIn">
-                        <i data-lucide="linkedin" style="width:15px;height:15px;"></i>
-                    </a>
-                    <a href="https://wa.me/5534999999999" target="_blank" class="social-icon" aria-label="WhatsApp">
-                        <i data-lucide="message-circle" style="width:15px;height:15px;"></i>
-                    </a>
-                </div>
-            </div>
-
-            <div class="reveal reveal-delay-1" style="background:rgba(255,255,255,0.02);border:0.5px solid rgba(255,255,255,0.08);border-radius:24px;padding:40px;">
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;">
-                    <div>
-                        <label class="contact-form-label">Nome</label>
-                        <input type="text" class="contact-form-input" placeholder="Seu nome">
-                    </div>
-                    <div>
-                        <label class="contact-form-label">Empresa</label>
-                        <input type="text" class="contact-form-input" placeholder="Nome da empresa">
-                    </div>
-                </div>
-                <div style="margin-bottom:20px;">
-                    <label class="contact-form-label">Telefone / WhatsApp</label>
-                    <input type="tel" class="contact-form-input" placeholder="(00) 0 0000-0000">
-                </div>
-                <div style="margin-bottom:20px;">
-                    <label class="contact-form-label">Equipamento</label>
-                    <input type="text" class="contact-form-input" placeholder="Ex.: Motor WEG 15cv, Prensa hidráulica...">
-                </div>
-                <div style="margin-bottom:28px;">
-                    <label class="contact-form-label">Descreva o problema</label>
-                    <textarea class="contact-form-input" placeholder="Descreva os sintomas, tempo de parada e qualquer detalhe relevante..."></textarea>
-                </div>
-                <button onclick="handleFormSubmit(this)" style="width:100%;background:linear-gradient(135deg,#D37B42,#B55A22);color:#fff;padding:18px;border-radius:12px;border:none;font-family:'DM Sans',sans-serif;font-size:10px;font-weight:500;letter-spacing:0.3em;text-transform:uppercase;cursor:pointer;transition:opacity 0.2s ease,transform 0.2s ease;box-shadow:0 0 40px rgba(211,123,66,0.2);" onmouseover="this.style.opacity='0.88'" onmouseout="this.style.opacity='1'">
-                    Enviar mensagem
-                </button>
-                <p style="font-size:11px;color:rgba(255,255,255,0.2);text-align:center;margin-top:16px;line-height:1.5;">Resposta em até 2 horas úteis · Seus dados não são compartilhados</p>
-            </div>
-
-        </div>
-    </section>
-
-    <footer style="padding:60px 8% 40px;background:#050505;border-top:0.5px solid rgba(255,255,255,0.06);">
-        <div style="max-width:1200px;margin:0 auto;">
-            <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px;" class="footer-grid">
-
-                <div>
-                    <div class="footer-logo" style="margin-bottom:16px;">Stillus <span>Multi</span></div>
-                    <p style="font-size:13px;color:rgba(255,255,255,0.25);font-weight:300;line-height:1.7;max-width:280px;margin-bottom:24px;">
-                        Engenharia industrial de alta performance para manter sua operação sempre no limite máximo de produtividade.
-                    </p>
-                    <div style="display:flex;gap:10px;">
-                        <a href="#" class="social-icon" aria-label="Instagram"><i data-lucide="instagram" style="width:14px;height:14px;"></i></a>
-                        <a href="#" class="social-icon" aria-label="LinkedIn"><i data-lucide="linkedin" style="width:14px;height:14px;"></i></a>
-                        <a href="https://wa.me/5534999999999" class="social-icon" aria-label="WhatsApp"><i data-lucide="message-circle" style="width:14px;height:14px;"></i></a>
-                    </div>
-                </div>
-
-                <div>
-                    <div class="footer-col-title">Empresa</div>
-                    <a href="#sobre" class="footer-link">Sobre nós</a>
-                    <a href="#servicos" class="footer-link">Serviços</a>
-                    <a href="#produtos" class="footer-link">Produtos</a>
-                    <a href="#contato" class="footer-link">Contato</a>
-                </div>
-
-                <div>
-                    <div class="footer-col-title">Serviços</div>
-                    <a href="#servicos" class="footer-link">Manutenção preventiva</a>
-                    <a href="#servicos" class="footer-link">Diagnóstico avançado</a>
-                    <a href="#servicos" class="footer-link">Reforma e retrofit</a>
-                    <a href="#servicos" class="footer-link">Suporte emergencial</a>
-                </div>
-
-                <div>
-                    <div class="footer-col-title">Contato</div>
-                    <a href="tel:+5534999999999" class="footer-link">(34) 9 9999-9999</a>
-                    <a href="mailto:contato@stillusmulti.com.br" class="footer-link">contato@stillusmulti.com.br</a>
-                    <span class="footer-link" style="cursor:default;">Uberlândia — MG</span>
-                    <div style="margin-top:16px;">
-                        <div class="badge">
-                            <div class="badge-dot"></div>
-                            Atendimento 24/7
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <hr class="footer-divider">
-
-            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
-                <p style="font-size:11px;color:rgba(255,255,255,0.15);">© 2025 Stillus Multimáquinas. Todos os direitos reservados.</p>
-                <div style="display:flex;gap:24px;">
-                    <a href="#" style="font-size:11px;color:rgba(255,255,255,0.15);text-decoration:none;transition:color 0.2s ease;" onmouseover="this.style.color='rgba(255,255,255,0.4)'" onmouseout="this.style.color='rgba(255,255,255,0.15)'">Política de privacidade</a>
-                    <a href="#" style="font-size:11px;color:rgba(255,255,255,0.15);text-decoration:none;transition:color 0.2s ease;" onmouseover="this.style.color='rgba(255,255,255,0.4)'" onmouseout="this.style.color='rgba(255,255,255,0.15)'">Termos de uso</a>
-                </div>
-            </div>
+    <footer>
+        <div class="container">
+            &copy; 2026 Stillus Multi. Estabilidade e Performance Industrial.
         </div>
     </footer>
 
     <script>
-    (() => {
-        const BASE_URL    = 'heroframe/ezgif-frame-';
-        const FRAME_COUNT = 83;
-        const IS_MOBILE   = /iPhone|Android|iPad/i.test(navigator.userAgent) || window.innerWidth <= 1024;
+        // Menu Hambúrguer Simples e Estável
+        const toggle = document.querySelector('.menu-toggle');
+        const menu = document.querySelector('.nav-menu');
 
-        const bitmaps = new Array(FRAME_COUNT);
-        let loaded = 0;
-        let currentFraction = 0;
-        let targetFraction  = 0;
-        let lastScrollY      = window.scrollY;
-        let rafId            = null;
+        toggle.addEventListener('click', () => {
+            menu.classList.toggle('active');
+            toggle.textContent = menu.classList.contains('active') ? '✕' : '☰';
+        });
 
-        const canvas = document.getElementById('hero-canvas');
-        const ctx    = canvas.getContext('2d', { alpha: false, desynchronized: true });
-        let cW, cH, dpr, drawX, drawY, drawW, drawH;
-
-        function recalcLayout() {
-            dpr = Math.min(window.devicePixelRatio || 1, IS_MOBILE ? 1.5 : 2);
-            cW  = window.innerWidth;
-            cH  = window.innerHeight;
-            canvas.width  = Math.round(cW * dpr);
-            canvas.height = Math.round(cH * dpr);
-            canvas.style.width  = cW + 'px';
-            canvas.style.height = cH + 'px';
-            ctx.scale(dpr, dpr);
-            const ref = bitmaps.find(Boolean);
-            if (ref) computeDraw(ref);
-        }
-
-        function computeDraw(bmp) {
-            const ratio = Math.max(cW / bmp.width, cH / bmp.height);
-            drawW = (bmp.width  * ratio) | 0;
-            drawH = (bmp.height * ratio) | 0;
-            drawX = ((cW - drawW) / 2) | 0;
-            drawY = ((cH - drawH) / 2) | 0;
-        }
-
-        function render(fraction) {
-            const prog  = Math.min(1, fraction / 0.9) * (FRAME_COUNT - 1);
-            const base  = Math.floor(prog);
-            const t      = prog - base;
-            const bmpA  = bitmaps[base];
-            const bmpB  = bitmaps[Math.min(base + 1, FRAME_COUNT - 1)];
-            if (!bmpA || !bmpB) return;
-
-            ctx.globalAlpha = 1;
-            ctx.drawImage(bmpA, drawX, drawY, drawW, drawH);
-            if (t > 0.015) {
-                ctx.globalAlpha = t;
-                ctx.drawImage(bmpB, drawX, drawY, drawW, drawH);
-                ctx.globalAlpha = 1;
-            }
-
-            if (fraction > 0.88) {
-                const zp = (fraction - 0.88) / 0.12;
-                canvas.style.transform = `scale(${1 - zp * 0.04}) translate3d(0,0,0)`;
-            } else {
-                canvas.style.transform = 'scale(1) translate3d(0,0,0)';
-            }
-        }
-
-        const blocks = [
-            { id: 'copy-1', dot: 'dot-1', start: 0.04, end: 0.26 },
-            { id: 'copy-2', dot: 'dot-2', start: 0.33, end: 0.57 },
-            { id: 'copy-3', dot: 'dot-3', start: 0.69, end: 0.98 }
-        ];
-
-        function applyText(fraction) {
-            blocks.forEach(({ id, dot, start, end }) => {
-                const el = document.getElementById(id);
-                const dotEl = document.getElementById(dot);
-                if (!el) return;
-
-                const inRange = fraction >= start && fraction <= end;
-                const wasActive = el.classList.contains('active');
-
-                if (inRange) {
-                    el.classList.remove('exiting');
-                    el.classList.add('active');
-                    if (dotEl) dotEl.classList.add('active');
-                    
-                    const drift = (fraction - start) * (window.innerHeight * 0.55);
-                    el.style.transform = `translate3d(0, ${-drift | 0}px, 0)`;
-                    
-                    if (id === 'copy-1') {
-                        const fill = Math.min(100, ((fraction - start) / 0.14) * 100);
-                        document.documentElement.style.setProperty('--fill-width', fill.toFixed(1) + '%');
-                    }
-                } else {
-                    if (dotEl) dotEl.classList.remove('active');
-                    if (wasActive) {
-                        el.classList.add('exiting');
-                        setTimeout(() => {
-                            el.classList.remove('active', 'exiting');
-                            el.style.transform = '';
-                        }, 520);
-                    }
-                }
+        // Fecha o menu ao clicar em um link (melhor UX mobile)
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.remove('active');
+                toggle.textContent = '☰';
             });
-
-            // REVELAR CARDS NO MOBILE - LOGICA MELHORADA
-            document.querySelectorAll('.product-card').forEach((card, i) => {
-                if (!card.classList.contains('revealed')) {
-                    const rect = card.getBoundingClientRect();
-                    // Detecta se o card está visível ou próximo de aparecer (95% da tela)
-                    if (rect.top < (window.innerHeight * 0.95)) {
-                        setTimeout(() => card.classList.add('revealed'), i * 60);
-                    }
-                }
-            });
-        }
-
-        function loop() {
-            const curScrollY = window.scrollY;
-            const velocity   = Math.abs(curScrollY - lastScrollY);
-            lastScrollY      = curScrollY;
-            const delta = targetFraction - currentFraction;
-
-            if (Math.abs(delta) > 0.00005) {
-                const base = IS_MOBILE ? 0.28 : 0.10;
-                const lerp = Math.min(IS_MOBILE ? 0.45 : 0.25, base + velocity * 0.0012);
-                currentFraction += delta * lerp;
-                render(currentFraction);
-                applyText(currentFraction);
-            } else {
-                // Mesmo sem delta (parado), verifica revelação dos cards
-                applyText(currentFraction);
-            }
-            rafId = requestAnimationFrame(loop);
-        }
-
-        window.addEventListener('scroll', () => {
-            const hero  = document.getElementById('scroll-hero');
-            const total = hero.offsetHeight - window.innerHeight;
-            targetFraction = Math.max(0, Math.min(1, window.scrollY / (total || 1)));
-
-            // Nav scroll state
-            const nav = document.getElementById('main-nav');
-            if (window.scrollY > 60) nav.classList.add('scrolled');
-            else nav.classList.remove('scrolled');
-
-            // Floating buttons
-            const st   = document.getElementById('scroll-top');
-            const wa   = document.getElementById('whatsapp-float');
-            const show = window.scrollY > 400;
-            if (st) { st.classList.toggle('visible', show); }
-            if (wa) { wa.classList.toggle('visible', show); }
-        }, { passive: true });
-
-        let resizeTimer;
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(recalcLayout, 150);
-        }, { passive: true });
-
-        const loaderBar = document.getElementById('loader-bar');
-        const loaderPct = document.getElementById('loader-pct');
-        const loaderEl  = document.getElementById('loader');
-
-        async function loadAll() {
-            const CONCURRENCY = IS_MOBILE ? 4 : 8;
-            const queue = [];
-            for (let i = 0; i < FRAME_COUNT; i++) queue.push(i);
-
-            async function worker() {
-                while (queue.length) {
-                    const i   = queue.shift();
-                    const url = `${BASE_URL}${String(i + 1).padStart(3, '0')}.jpg`;
-                    try {
-                        const res  = await fetch(url);
-                        const blob = await res.blob();
-                        bitmaps[i] = await createImageBitmap(blob, {
-                            premultiplyAlpha: 'none',
-                            colorSpaceConversion: 'none'
-                        });
-                    } catch(e) {}
-                    loaded++;
-                    const pct = Math.round((loaded / FRAME_COUNT) * 100);
-                    loaderBar.style.width = pct + '%';
-                    loaderPct.textContent = pct + '%';
-
-                    if (loaded === 1 && bitmaps[i]) {
-                        recalcLayout();
-                        computeDraw(bitmaps[i]);
-                        render(0);
-                        applyText(0);
-                    }
-                }
-            }
-
-            const workers = Array.from({ length: CONCURRENCY }, worker);
-            await Promise.all(workers);
-
-            loaderEl.style.opacity = '0';
-            setTimeout(() => {
-                loaderEl.style.display = 'none';
-                loop();
-                initReveal();
-            }, 600);
-        }
-
-        function initReveal() {
-            const els = document.querySelectorAll('.reveal');
-            const io  = new IntersectionObserver((entries) => {
-                entries.forEach(e => {
-                    if (e.isIntersecting) {
-                        e.target.classList.add('visible');
-                        io.unobserve(e.target);
-                    }
-                });
-            }, { threshold: 0.12 });
-            els.forEach(el => io.observe(el));
-        }
-
-        if (window.lucide) lucide.createIcons();
-        loadAll();
-    })();
-
-    function toggleFaq(trigger) {
-        const item = trigger.closest('.faq-item');
-        const isOpen = item.classList.contains('open');
-        document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
-        if (!isOpen) item.classList.add('open');
-    }
-
-    function handleFormSubmit(btn) {
-        btn.textContent = 'Enviando...';
-        btn.disabled = true;
-        setTimeout(() => {
-            btn.textContent = 'Mensagem enviada!';
-            btn.style.background = 'linear-gradient(135deg,#2a9d6f,#1e7a56)';
-            setTimeout(() => {
-                btn.textContent = 'Enviar mensagem';
-                btn.style.background = 'linear-gradient(135deg,#D37B42,#B55A22)';
-                btn.disabled = false;
-            }, 3000);
-        }, 1400);
-    }
+        });
     </script>
 </body>
 </html>
