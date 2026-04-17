@@ -83,6 +83,13 @@
             backface-visibility: hidden;
         }
 
+        .glass-premium {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px) saturate(160%);
+            -webkit-backdrop-filter: blur(20px) saturate(160%);
+            border: 0.5px solid rgba(255, 255, 255, 0.1);
+        }
+
         #produtos {
             position: relative;
             z-index: 40;
@@ -100,7 +107,18 @@
             cursor: pointer;
         }
 
+        .product-card:hover {
+            transform: translate3d(0, -5px, 0) scale(1.02);
+            border-color: rgba(211, 123, 66, 0.4);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(211, 123, 66, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
         .product-card.revealed { opacity: 1; transform: translate3d(0, 0, 0); }
+
+        @keyframes slow-rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .icon-spin { animation: slow-rotate 8s linear infinite; }
+        .product-card:hover .icon-spin { animation-duration: 2s; color: var(--brand-orange); }
 
         #loader {
             position: fixed; inset: 0; background: #080808; z-index: 9999;
@@ -151,25 +169,44 @@
 
     <section id="produtos" class="relative z-30 py-32 px-[8%]">
         <div class="max-w-7xl mx-auto text-center">
-            <h2 class="text-5xl md:text-7xl text-white font-black italic mb-24">METAL POWER.</h2>
+            <span class="text-[10px] tracking-[0.5em] text-[#D37B42] uppercase font-bold mb-4">Menos parada. Mais produção.</span>
+            <h2 class="text-5xl md:text-7xl text-white font-black italic mb-24">Soluções completas para manter seus equipamentos sempre ativos</h2>
+            
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
                 <div class="product-card glass-premium p-8 rounded-3xl group">
-                    <div class="h-64 bg-white/5 rounded-2xl mb-6 flex items-center justify-center">
-                        <i data-lucide="cog" class="w-16 h-16 text-white/10 icon-spin"></i>
+                    <div class="h-64 bg-white/5 rounded-2xl mb-6 overflow-hidden flex items-center justify-center">
+                        <i data-lucide="cog" class="w-16 h-16 text-white/10 transition-all duration-700 icon-spin"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-2">MOTORES SÉRIE-T</h3>
+                    <p class="text-white/40 text-sm mb-6">Torque extremo para operações contínuas.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-[#D37B42] font-mono text-xs">READY_TO_SHIP</span>
+                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-white/20 group-hover:text-[#D37B42] transition-colors"></i>
+                    </div>
                 </div>
+
                 <div class="product-card glass-premium p-8 rounded-3xl group">
-                    <div class="h-64 bg-white/5 rounded-2xl mb-6 flex items-center justify-center">
-                        <i data-lucide="zap" class="w-16 h-16 text-white/10"></i>
+                    <div class="h-64 bg-white/5 rounded-2xl mb-6 overflow-hidden flex items-center justify-center">
+                        <i data-lucide="zap" class="w-16 h-16 text-white/10 transition-all duration-500"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-2">SISTEMAS HIDRÁULICOS</h3>
+                    <p class="text-white/40 text-sm mb-6">Precisão milimétrica em carga máxima.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-[#D37B42] font-mono text-xs">PREMIUM_BUILD</span>
+                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-white/20 group-hover:text-[#D37B42] transition-colors"></i>
+                    </div>
                 </div>
+
                 <div class="product-card glass-premium p-8 rounded-3xl group">
-                    <div class="h-64 bg-white/5 rounded-2xl mb-6 flex items-center justify-center">
-                        <i data-lucide="shield-check" class="w-16 h-16 text-white/10"></i>
+                    <div class="h-64 bg-white/5 rounded-2xl mb-6 overflow-hidden flex items-center justify-center">
+                        <i data-lucide="shield-check" class="w-16 h-16 text-white/10 transition-all duration-500"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-2">KITS DE REPARO</h3>
+                    <p class="text-white/40 text-sm mb-6">Componentes originais com garantia vitalícia.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-[#D37B42] font-mono text-xs">IN_STOCK</span>
+                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-white/20 group-hover:text-[#D37B42] transition-colors"></i>
+                    </div>
                 </div>
             </div>
         </div>
@@ -184,7 +221,6 @@
                 loadedCount: 0
             };
 
-            // VELOCITY & MOTION ENGINE STATE
             let currentFraction = 0;
             let targetFraction = 0;
             let velocity = 0;
@@ -199,10 +235,9 @@
                 const heroSection = document.getElementById('scroll-hero');
 
                 function renderFrame(fraction) {
-                    // FRAME BLENDING LOGIC
                     const progress = fraction * (state.frameCount - 1);
                     const base = Math.floor(progress);
-                    const t = progress - base; // Decimal progress between frames
+                    const t = progress - base;
 
                     const imgA = state.images[base];
                     const imgB = state.images[Math.min(base + 1, state.frameCount - 1)];
@@ -215,28 +250,25 @@
                     const sw = imgA.width * ratio, sh = imgA.height * ratio;
                     const sx = (canvas.width - sw) / 2, sy = (canvas.height - sh) / 2;
 
-                    // MOTION BLUR CALCULATION
-                    const blurValue = Math.min(velocity * 0.04, isMobile ? 4 : 8);
-                    canvas.style.filter = `brightness(0.55) blur(${blurValue}px)`;
-
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    const blurValue = Math.min(velocity * 0.04, isMobile ? 3 : 6);
                     
-                    // ALPHA BLENDING
-                    ctx.globalAlpha = 1 - t;
+                    ctx.globalAlpha = 1;
                     ctx.drawImage(imgA, sx, sy, sw, sh);
                     
-                    ctx.globalAlpha = t;
-                    ctx.drawImage(imgB, sx, sy, sw, sh);
+                    if (t > 0) {
+                        ctx.globalAlpha = t;
+                        ctx.drawImage(imgB, sx, sy, sw, sh);
+                    }
                     
                     ctx.globalAlpha = 1;
 
-                    // POST-VIDEO EFFECTS (Zoom/Blur at the end)
                     if (fraction > 0.85) {
                         const zp = (fraction - 0.85) / 0.15;
                         canvas.style.transform = `scale(${1 - (zp * 0.05)}) translate3d(0,0,0)`;
-                        canvas.style.filter += ` blur(${zp * 10}px)`;
+                        canvas.style.filter = `brightness(0.55) blur(${blurValue + (zp * 10)}px)`;
                     } else {
                         canvas.style.transform = `scale(1) translate3d(0,0,0)`;
+                        canvas.style.filter = `brightness(0.55) blur(${blurValue}px)`;
                     }
                 }
 
@@ -277,13 +309,10 @@
                     velocity = Math.abs(currentY - lastScrollY);
                     lastScrollY = currentY;
 
-                    // ADAPTIVE DAMPING & PREDICTION
-                    const baseLerp = isMobile ? 0.06 : 0.1;
-                    const adaptiveLerp = Math.min(0.2, baseLerp + (velocity * 0.0005));
+                    const baseLerp = isMobile ? 0.08 : 0.12;
+                    const adaptiveLerp = Math.min(0.25, baseLerp + (velocity * 0.0005));
                     
-                    // FRAME PREDICTION SYSTEM
                     const predictedTarget = targetFraction + (velocity * 0.00001);
-                    
                     const delta = predictedTarget - currentFraction;
                     
                     if (Math.abs(delta) > 0.00001) {
