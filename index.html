@@ -164,16 +164,12 @@
         .cta-btn-outline { display: inline-block; background: transparent; color: rgba(255,255,255,0.7); padding: 18px 44px; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; cursor: pointer; border: 0.5px solid rgba(255,255,255,0.2); transition: all 0.2s ease; text-decoration: none; }
         .cta-btn-outline:hover { border-color: rgba(255,255,255,0.45); color: #fff; }
 
-        /* ── TRANSIÇÃO PRODUTOS (GAVETA PERFEITA MOBILE E DESKTOP) ── */
+        /* ── PRODUCTS ── */
         #produtos { 
             position: relative; 
             z-index: 40; 
-            margin-top: -100vh;
-            margin-top: -100svh; 
-            padding-top: 15vh; 
-            background: linear-gradient(to bottom, transparent, #080808 15vh, #080808 100%); 
+            background: #080808; 
         }
-
         .product-card { opacity: 0; transform: translate3d(0, 40px, 0); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1), border 0.3s ease, box-shadow 0.3s ease; cursor: pointer; background: rgba(255,255,255,0.03); backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%); border: 0.5px solid rgba(255,255,255,0.08); will-change: transform, opacity; }
         .product-card:hover { transform: translate3d(0, -5px, 0) scale3d(1.02, 1.02, 1) !important; border-color: rgba(211,123,66,0.35); box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 24px rgba(211,123,66,0.12); background: rgba(255,255,255,0.05); }
         .product-card.revealed { opacity: 1; transform: translate3d(0,0,0); }
