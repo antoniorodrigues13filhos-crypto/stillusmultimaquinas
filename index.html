@@ -7,7 +7,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&subset=latin,latin-ext&display=swap" rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -31,7 +31,6 @@
             color: #F8F8F8;
             font-family: 'DM Sans', sans-serif;
             -webkit-overflow-scrolling: touch;
-            /* O 'clip' trava o scroll horizontal, mas não quebra o position: sticky do Hero */
             overflow-x: clip; 
             max-width: 100vw;
         }
@@ -206,10 +205,8 @@
             .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 32px !important; }
             .footer-grid > div:first-child { grid-column: 1 / -1; }
 
-            /* ESSA É A CLASSE QUE ESCONDE AS SEÇÕES NO MOBILE */
             .hide-on-mobile { display: none !important; }
             
-            /* Garante que os cards apareçam sem erro no JS */
             .product-card { opacity: 1 !important; transform: translate3d(0,0,0) !important; }
         }
     </style>
@@ -251,11 +248,11 @@
 
             <div id="copy-1" class="hero-block" style="top:28%;">
                 <div class="h-display">
-                    <div><span class="word-wrap"><span class="hero-word">MÁQUINAS</span></span></div>
+                    <div><span class="word-wrap"><span class="hero-word">M&Aacute;QUINAS</span></span></div>
                     <div><span class="word-wrap"><span class="hero-word">PARADAS,</span></span></div>
                     <div><span class="word-wrap"><span class="hero-word animated-stroke">LUCRO ZERO.</span></span></div>
                 </div>
-                <p class="hero-sub side-line">A inatividade técnica é o maior dreno financeiro da sua operação.</p>
+                <p class="hero-sub side-line">A inatividade t&eacute;cnica &eacute; o maior dreno financeiro da sua opera&ccedil;&atilde;o.</p>
             </div>
 
             <div id="copy-2" class="hero-block" style="top:32%;">
@@ -263,19 +260,19 @@
                     <div><span class="word-wrap"><span class="hero-word">ENGENHARIA</span></span></div>
                     <div><span class="word-wrap"><span class="hero-word">DE</span></span> <span class="word-wrap"><span class="hero-word accent">ELITE.</span></span></div>
                 </div>
-                <p class="hero-sub side-line">Manutenção especializada com diagnóstico avançado e resposta imediata.</p>
+                <p class="hero-sub side-line">Manuten&ccedil;&atilde;o especializada com diagn&oacute;stico avan&ccedil;ado e resposta imediata.</p>
             </div>
 
             <div id="copy-3" class="hero-block" style="top:30%;">
                 <div class="h-display">
-                    <div><span class="word-wrap"><span class="hero-word">MÁXIMA</span></span></div>
-                    <div><span class="word-wrap"><span class="hero-word accent">EFICIÊNCIA.</span></span></div>
+                    <div><span class="word-wrap"><span class="hero-word">M&Aacute;XIMA</span></span></div>
+                    <div><span class="word-wrap"><span class="hero-word accent">EFICI&Ecirc;NCIA.</span></span></div>
                 </div>
                 <p class="hero-sub" style="margin-bottom:36px;opacity:0;transform:translateY(18px);transition:opacity 0.8s ease 0.35s,transform 0.8s ease 0.35s;font-size:clamp(13px,1.8vw,17px);color:rgba(255,255,255,0.38);font-weight:300;line-height:1.6;max-width:380px;">
-                    Equipamentos que não param. Produção que não cessa.
+                    Equipamentos que n&atilde;o param. Produ&ccedil;&atilde;o que n&atilde;o cessa.
                 </p>
                 <div class="hero-sub" style="opacity:0;transform:translateY(18px);transition:opacity 0.8s ease 0.5s,transform 0.8s ease 0.5s;display:flex;gap:16px;flex-wrap:wrap;">
-                    <a href="#produtos" class="cta-btn">Ver catálogo</a>
+                    <a href="#produtos" class="cta-btn">Ver cat&aacute;logo</a>
                     <a href="#contato" class="cta-btn-outline hide-on-mobile">Falar com especialista</a>
                 </div>
             </div>
@@ -596,7 +593,6 @@
 
         function recalcLayout() {
             dpr = Math.min(window.devicePixelRatio || 1, IS_MOBILE ? 1.5 : 2);
-            // Corrige o recálculo que tremia a tela usando clientWidth
             cW  = document.documentElement.clientWidth; 
             cH  = window.innerHeight;
             canvas.width  = Math.round(cW * dpr);
@@ -632,7 +628,6 @@
                 ctx.globalAlpha = 1;
             }
 
-            // Não encolhe (scale) no final se for mobile
             if (fraction > 0.88 && !IS_MOBILE) {
                 const zp = (fraction - 0.88) / 0.12;
                 canvas.style.transform = `scale(${1 - zp * 0.04})`;
@@ -644,7 +639,6 @@
         const blocks = [
             { id: 'copy-1', dot: 'dot-1', start: 0.04, end: 0.26 },
             { id: 'copy-2', dot: 'dot-2', start: 0.33, end: 0.57 },
-            // Alterado para não sumir no mobile
             { id: 'copy-3', dot: 'dot-3', start: 0.69, end: IS_MOBILE ? 2.0 : 0.98 } 
         ];
 
@@ -661,7 +655,6 @@
                     if (dotEl) dotEl.classList.add('active');
                     
                     let calcFraction = fraction;
-                    // Trava o último bloco no lugar (não deixa ele subir e sumir) no mobile
                     if (IS_MOBILE && id === 'copy-3' && fraction > 0.85) {
                         calcFraction = 0.85; 
                     }
@@ -784,4 +777,5 @@
     }
     </script>
 </body>
+</html>
 </html>
