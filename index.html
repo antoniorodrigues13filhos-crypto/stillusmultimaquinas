@@ -19,6 +19,7 @@
             --fill-width: 0%;
         }
 
+        /* ── TRAVA CONTRA TELA TREMENDO ── */
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         
         html { 
@@ -87,7 +88,8 @@
         .hero-sticky { 
             position: sticky; 
             top: 0; 
-            height: 100vh; 
+            height: 100vh;
+            height: 100svh; /* O segredo do mobile: Ignora a barra do navegador que some/aparece */
             width: 100%; 
             overflow: hidden; 
             background-color: #121212; 
@@ -100,7 +102,8 @@
         .dot { width: 4px; height: 4px; background: #fff; border-radius: 50%; opacity: 0.15; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform, opacity; }
         .dot.active { opacity: 1; transform: scale(2.5); background: var(--brand-orange); box-shadow: 0 0 15px var(--brand-orange); }
 
-        .hero-block { position: absolute; left: 8%; right: 8%; z-index: 20; pointer-events: none; will-change: transform; }
+        /* ── ANIMAÇÕES ULTRA-FLUIDAS (HERO) ── */
+        .hero-block { position: absolute; left: 8%; right: 8%; z-index: 20; pointer-events: none; will-change: transform; backface-visibility: hidden; }
         
         .word-wrap { 
             overflow: hidden; 
@@ -112,13 +115,42 @@
             margin-bottom: -0.1em;
         }
 
-        .hero-word { display: inline-block; transform: translate3d(0, 110%, 0); opacity: 0; transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform, opacity; }
+        .hero-word { 
+            display: inline-block; 
+            transform: translate3d(0, 110%, 0); 
+            opacity: 0; 
+            transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1), opacity 1.2s cubic-bezier(0.19, 1, 0.22, 1); 
+            will-change: transform, opacity; 
+            backface-visibility: hidden;
+        }
         .hero-block.active .hero-word { transform: translate3d(0, 0, 0); opacity: 1; }
-        .hero-word:nth-child(1) { transition-delay: 0s; } .hero-word:nth-child(2) { transition-delay: 0.07s; } .hero-word:nth-child(3) { transition-delay: 0.14s; }
-        .hero-sub { opacity: 0; transform: translate3d(0, 18px, 0); transition: opacity 0.8s ease 0.35s, transform 0.8s ease 0.35s; will-change: transform, opacity; }
+        
+        .hero-word:nth-child(1) { transition-delay: 0s; } 
+        .hero-word:nth-child(2) { transition-delay: 0.12s; } 
+        .hero-word:nth-child(3) { transition-delay: 0.24s; }
+
+        .hero-sub { 
+            opacity: 0; 
+            transform: translate3d(0, 25px, 0); 
+            transition: opacity 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.45s, transform 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.45s; 
+            will-change: transform, opacity; 
+            backface-visibility: hidden;
+        }
         .hero-block.active .hero-sub { opacity: 1; transform: translate3d(0, 0, 0); }
-        .hero-block.exiting .hero-word { transform: translate3d(0, -110%, 0); opacity: 0; transition-duration: 0.5s; }
-        .hero-block.exiting .hero-sub { opacity: 0; transform: translate3d(0, -12px, 0); transition-duration: 0.4s; transition-delay: 0s; }
+        
+        .hero-block.exiting .hero-word { 
+            transform: translate3d(0, -110%, 0); 
+            opacity: 0; 
+            transition-duration: 0.7s; 
+            transition-timing-function: cubic-bezier(0.55, 0.085, 0.68, 0.53); 
+        }
+        .hero-block.exiting .hero-sub { 
+            opacity: 0; 
+            transform: translate3d(0, -20px, 0); 
+            transition-duration: 0.5s; 
+            transition-delay: 0s; 
+            transition-timing-function: cubic-bezier(0.55, 0.085, 0.68, 0.53); 
+        }
 
         .animated-stroke { color: transparent; -webkit-text-stroke: 1.5px rgba(255,255,255,0.18); position: relative; display: inline-block; }
         .animated-stroke::after { content: "LUCRO ZERO."; position: absolute; left: 0; top: 0; width: var(--fill-width); height: 100%; color: var(--brand-orange); -webkit-text-stroke: 1.5px var(--brand-orange); overflow: hidden; white-space: nowrap; filter: drop-shadow(0 0 14px rgba(211,123,66,0.5)); transition: width 0.08s linear; will-change: width; }
@@ -132,15 +164,16 @@
         .cta-btn-outline { display: inline-block; background: transparent; color: rgba(255,255,255,0.7); padding: 18px 44px; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; cursor: pointer; border: 0.5px solid rgba(255,255,255,0.2); transition: all 0.2s ease; text-decoration: none; }
         .cta-btn-outline:hover { border-color: rgba(255,255,255,0.45); color: #fff; }
 
-        /* ── PRODUCTS CORREÇÃO DE TRANSIÇÃO ── */
+        /* ── TRANSIÇÃO PRODUTOS (GAVETA PERFEITA MOBILE E DESKTOP) ── */
         #produtos { 
             position: relative; 
             z-index: 40; 
-            /* Correção do overlap: Transição linear após o final do scroll do Hero */
-            margin-top: 0; 
-            padding-top: 100px; 
-            background: #080808; 
+            margin-top: -100vh; /* Faz a seção sobrepor a tela anterior... */
+            margin-top: -100svh; /* ...usando svh para ser perfeito no mobile */
+            padding-top: 15vh; /* O degradê cria o fade-in sobre o canvas */
+            background: linear-gradient(to bottom, transparent, #080808 15vh, #080808 100%); 
         }
+
         .product-card { opacity: 0; transform: translate3d(0, 40px, 0); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1), border 0.3s ease, box-shadow 0.3s ease; cursor: pointer; background: rgba(255,255,255,0.03); backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%); border: 0.5px solid rgba(255,255,255,0.08); will-change: transform, opacity; }
         .product-card:hover { transform: translate3d(0, -5px, 0) scale3d(1.02, 1.02, 1) !important; border-color: rgba(211,123,66,0.35); box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 24px rgba(211,123,66,0.12); background: rgba(255,255,255,0.05); }
         .product-card.revealed { opacity: 1; transform: translate3d(0,0,0); }
@@ -706,7 +739,7 @@
                     if (b.dotEl) b.dotEl.classList.remove('active');
                     if (b.el.classList.contains('active')) {
                         b.el.classList.add('exiting');
-                        setTimeout(() => { b.el.classList.remove('active', 'exiting'); b.el.style.transform = ''; }, 520);
+                        setTimeout(() => { b.el.classList.remove('active', 'exiting'); b.el.style.transform = ''; }, 750);
                     }
                 }
             });
@@ -719,7 +752,7 @@
             const delta = targetFraction - currentFraction;
 
             if (Math.abs(delta) > 0.00005) {
-                const base = IS_MOBILE ? 0.20 : 0.08; 
+                const base = IS_MOBILE ? 0.12 : 0.08; 
                 const lerp = Math.min(IS_MOBILE ? 0.35 : 0.15, base + velocity * 0.0008);
                 currentFraction += delta * lerp;
                 render(currentFraction);
