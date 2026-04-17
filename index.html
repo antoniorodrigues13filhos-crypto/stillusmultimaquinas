@@ -28,52 +28,30 @@
             overflow-x: hidden;
         }
 
-        /* TEXTURA NOISE OVERLAY */
         body::before {
             content: "";
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.03;
-            z-index: 9998;
-            pointer-events: none;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0.03; z-index: 9998; pointer-events: none;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        h1,
-        h2 {
-            font-weight: 900;
-            letter-spacing: -0.05em;
-            text-transform: uppercase;
-            line-height: 0.9;
-        }
+        h1, h2 { font-weight: 900; letter-spacing: -0.05em; text-transform: uppercase; line-height: 0.9; }
 
-        /* EFEITO LUCRO ZERO */
         .animated-stroke {
             color: transparent;
             -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
-            position: relative;
-            display: inline-block;
+            position: relative; display: inline-block;
         }
 
         .animated-stroke::after {
             content: "LUCRO ZERO.";
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: var(--fill-width);
-            height: 100%;
-            color: var(--brand-orange);
-            -webkit-text-stroke: 1px var(--brand-orange);
-            overflow: hidden;
-            white-space: nowrap;
-            filter: drop-shadow(0 0 12px rgba(211, 123, 66, 0.6));
+            position: absolute; left: 0; top: 0; width: var(--fill-width); height: 100%;
+            color: var(--brand-orange); -webkit-text-stroke: 1px var(--brand-orange);
+            overflow: hidden; white-space: nowrap; filter: drop-shadow(0 0 12px rgba(211, 123, 66, 0.6));
             transition: width 0.1s ease-out;
         }
 
-        /* AJUSTE MÁXIMA EFICIÊNCIA */
         .title-monumental {
             line-height: 1.1 !important;
             letter-spacing: -0.02em !important;
@@ -84,7 +62,6 @@
             position: relative;
         }
 
-        /* LINHA DE TRANSIÇÃO PARA PRODUTOS */
         .scroll-connector {
             width: 1px;
             height: 0px;
@@ -94,11 +71,8 @@
             box-shadow: 0 0 15px rgba(211, 123, 66, 0.4);
         }
 
-        .hero-text-block.active .scroll-connector {
-            height: 80px;
-        }
+        .hero-text-block.active .scroll-connector { height: 80px; }
 
-        /* EFEITO DE REVELAÇÃO FLUIDA */
         .fluid-word {
             display: inline-block;
             opacity: 0;
@@ -151,13 +125,10 @@
             height: 100%;
             object-fit: cover;
             transition: transform 0.1s ease-out, filter 0.1s ease-out;
-            /* Otimização Mobile GPU */
-            transform: translateZ(0);
-            backface-visibility: hidden;
-            perspective: 1000;
+            transform: translateZ(0); /* GPU Acceleration */
+            will-change: transform, filter;
         }
 
-        /* TRANSIÇÃO PREMIUM PRODUTOS */
         #produtos {
             position: relative;
             z-index: 40;
@@ -175,7 +146,6 @@
             cursor: pointer;
         }
 
-        /* FEEDBACK TÁTIL / GLASS LIFT */
         .product-card:hover {
             transform: translateY(-5px) scale(1.02) !important;
             border-color: rgba(211, 123, 66, 0.4);
@@ -183,63 +153,26 @@
             background: rgba(255, 255, 255, 0.05);
         }
 
-        .product-card.revealed {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .product-card.revealed { opacity: 1; transform: translateY(0); }
 
-        /* ANIMAÇÃO DE ÍCONES */
-        @keyframes slow-rotate {
-            from {
-                transform: rotate(0deg);
-            }
-
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .icon-spin {
-            animation: slow-rotate 8s linear infinite;
-        }
-
-        .product-card:hover .icon-spin {
-            animation-duration: 2s;
-            color: var(--brand-orange);
-        }
-
-        .product-card:hover .icon-pulse {
-            transform: scale(1.2);
-            color: var(--brand-orange);
-            filter: drop-shadow(0 0 8px var(--brand-orange));
-        }
+        @keyframes slow-rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .icon-spin { animation: slow-rotate 8s linear infinite; }
+        .product-card:hover .icon-spin { animation-duration: 2s; color: var(--brand-orange); }
 
         #loader {
-            position: fixed;
-            inset: 0;
-            background: #080808;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            position: fixed; inset: 0; background: #080808; z-index: 9999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
             transition: opacity 0.8s ease;
         }
 
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 
 <body class="antialiased">
 
     <div id="loader">
-        <div
-            style="width: 40px; height: 40px; border-top: 2px solid #D37B42; border-radius: 50%; animation: spin 1s linear infinite;">
-        </div>
+        <div style="width: 40px; height: 40px; border-top: 2px solid #D37B42; border-radius: 50%; animation: spin 1s linear infinite;"></div>
     </div>
 
     <nav class="fixed top-0 w-full z-50 px-6 md:px-10 py-6">
@@ -291,8 +224,7 @@
                 <h2 class="text-6xl md:text-8xl mb-8 title-monumental">
                     MÁXIMA <br> <span class="text-glow-orange" style="color: #D37B42;">EFICIÊNCIA.</span>
                 </h2>
-                <p
-                    class="text-lg text-white/40 font-light leading-relaxed max-w-md mb-10 border-l border-[#D37B42] pl-6">
+                <p class="text-lg text-white/40 font-light leading-relaxed max-w-md mb-10 border-l border-[#D37B42] pl-6">
                     Máquinas e peças selecionadas para máximo desempenho no seu trabalho
                 </p>
                 <div class="flex flex-col sm:flex-row gap-6">
@@ -309,46 +241,30 @@
     </section>
 
     <section id="produtos" class="relative z-30 py-32 px-[8%]">
-        <div class="max-w-7xl mx-auto">
-            <div class="flex flex-col items-center mb-24 text-center">
-                <span class="text-[10px] tracking-[0.5em] text-[#D37B42] uppercase font-bold mb-4">Menos parada. Mais produção.</span>
-                <h2 class="text-5xl md:text-7xl text-white font-black italic">Soluções completas para manter seus
-                    equipamentos sempre ativos</h2>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="max-w-7xl mx-auto text-center">
+            <span class="text-[10px] tracking-[0.5em] text-[#D37B42] uppercase font-bold mb-4">Menos parada. Mais produção.</span>
+            <h2 class="text-5xl md:text-7xl text-white font-black italic mb-24">Soluções completas para manter seus equipamentos sempre ativos</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
                 <div class="product-card glass-premium p-8 rounded-3xl group">
                     <div class="h-64 bg-white/5 rounded-2xl mb-6 overflow-hidden flex items-center justify-center">
                         <i data-lucide="cog" class="w-16 h-16 text-white/10 transition-all duration-700 icon-spin"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-2">MOTORES SÉRIE-T</h3>
                     <p class="text-white/40 text-sm mb-6">Torque extremo para operações contínuas.</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-[#D37B42] font-mono text-xs">READY_TO_SHIP</span>
-                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-white/20 group-hover:text-[#D37B42] transition-colors"></i>
-                    </div>
                 </div>
                 <div class="product-card glass-premium p-8 rounded-3xl group">
                     <div class="h-64 bg-white/5 rounded-2xl mb-6 overflow-hidden flex items-center justify-center">
-                        <i data-lucide="zap" class="w-16 h-16 text-white/10 transition-all duration-500 icon-pulse"></i>
+                        <i data-lucide="zap" class="w-16 h-16 text-white/10 transition-all duration-500"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-2">SISTEMAS HIDRÁULICOS</h3>
                     <p class="text-white/40 text-sm mb-6">Precisão milimétrica em carga máxima.</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-[#D37B42] font-mono text-xs">PREMIUM_BUILD</span>
-                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-white/20 group-hover:text-[#D37B42] transition-colors"></i>
-                    </div>
                 </div>
                 <div class="product-card glass-premium p-8 rounded-3xl group">
                     <div class="h-64 bg-white/5 rounded-2xl mb-6 overflow-hidden flex items-center justify-center">
-                        <i data-lucide="shield-check" class="w-16 h-16 text-white/10 transition-all duration-500 icon-pulse"></i>
+                        <i data-lucide="shield-check" class="w-16 h-16 text-white/10 transition-all duration-500"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-2">KITS DE REPARO</h3>
                     <p class="text-white/40 text-sm mb-6">Componentes originais com garantia vitalícia.</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-[#D37B42] font-mono text-xs">IN_STOCK</span>
-                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-white/20 group-hover:text-[#D37B42] transition-colors"></i>
-                    </div>
                 </div>
             </div>
         </div>
@@ -363,14 +279,11 @@
                 loadedCount: 0
             };
 
+            // MOTION ENGINE STATE
             let currentFraction = 0;
             let targetFraction = 0;
-            
-            // AJUSTE MOBILE/TABLET: LERP Otimizado
-            // Se for mobile/tablet, usamos um lerp mais suave (0.075) para esconder o jitter do toque.
-            // No Desktop, mantemos a resposta direta (1.0) para máxima fidelidade ao scroll do mouse.
-            const isSmallDevice = window.innerWidth <= 1024;
-            const lerpFactor = isSmallDevice ? 0.075 : 1.0; 
+            let velocity = 0;
+            let lastScrollY = window.scrollY;
 
             window.addEventListener('load', () => {
                 if(window.lucide) lucide.createIcons();
@@ -387,14 +300,18 @@
 
                     canvas.width = window.innerWidth;
                     canvas.height = window.innerHeight;
+                    const ratio = Math.max(canvas.width / img.width, canvas.height / img.height);
+                    const sw = img.width * ratio, sh = img.height * ratio;
+                    ctx.drawImage(img, (canvas.width - sw) / 2, (canvas.height - sh) / 2, sw, sh);
 
-                    const hRatio = canvas.width / img.width;
-                    const vRatio = canvas.height / img.height;
-                    const ratio = Math.max(hRatio, vRatio);
-                    const shiftX = (canvas.width - img.width * ratio) / 2;
-                    const shiftY = (canvas.height - img.height * ratio) / 2;
-
-                    ctx.drawImage(img, 0, 0, img.width, img.height, shiftX, shiftY, img.width * ratio, img.height * ratio);
+                    if (fraction > 0.85) {
+                        const zoomProgress = (fraction - 0.85) / 0.15;
+                        canvas.style.transform = `scale(${1 - (zoomProgress * 0.05)})`;
+                        canvas.style.filter = `brightness(${0.55 - (zoomProgress * 0.3)}) blur(${zoomProgress * 10}px)`;
+                    } else {
+                        canvas.style.transform = `scale(1)`;
+                        canvas.style.filter = `brightness(0.55) blur(0px)`;
+                    }
                 }
 
                 function applyParallax(fraction) {
@@ -407,15 +324,13 @@
                     blocks.forEach(block => {
                         const el = document.getElementById(block.id);
                         if (!el) return;
-                        const speed = parseFloat(el.getAttribute('data-speed'));
+                        const speed = parseFloat(el.getAttribute('data-speed')) || 0.2;
                         
                         if (fraction >= block.start && fraction <= block.end) {
                             el.classList.add('active');
                             const progress = (fraction - block.start);
                             const moveY = progress * (window.innerHeight * speed * 3);
-                            
-                            // MOBILE: Uso de transform3d para performance de camada
-                            el.style.transform = `translate3d(0, ${-moveY}px, 0)`;
+                            el.style.transform = `translateY(${-moveY}px)`;
 
                             if(block.id === 'copy-1') {
                                 const fillPercent = Math.min(100, (progress / 0.12) * 100);
@@ -423,48 +338,36 @@
                             }
                         } else {
                             el.classList.remove('active');
-                            if (fraction < block.start) {
-                                el.style.transform = `translate3d(0, 40px, 0)`;
-                            }
+                            if (fraction < block.start) el.style.transform = `translateY(40px)`;
                         }
                     });
 
-                    if (fraction > 0.85) {
-                        const zoomProgress = (fraction - 0.85) / 0.15;
-                        const scale = 1 - (zoomProgress * 0.05);
-                        canvas.style.transform = `scale(${scale}) translateZ(0)`;
-                        canvas.style.filter = `brightness(${0.55 - (zoomProgress * 0.3)}) blur(${zoomProgress * 10}px)`;
-                    } else {
-                        canvas.style.transform = `scale(1) translateZ(0)`;
-                        canvas.style.filter = `brightness(0.55) blur(0px)`;
-                    }
-
-                    const cards = document.querySelectorAll('.product-card');
-                    cards.forEach((card, index) => {
+                    document.querySelectorAll('.product-card').forEach((card, index) => {
                         const rect = card.getBoundingClientRect();
                         if (rect.top < window.innerHeight * 0.85) {
-                            setTimeout(() => {
-                                card.classList.add('revealed');
-                            }, index * 100);
+                            setTimeout(() => card.classList.add('revealed'), index * 100);
                         }
                     });
                 }
 
-                // LOOP DE RENDERIZAÇÃO CONTÍNUA (Smoothing Proxy)
+                // MOTION ENGINE: ADAPTIVE DAMPING LOOP
                 function renderLoop() {
-                    // Calcula a diferença entre onde o scroll está e onde a animação está
+                    const currentY = window.scrollY;
+                    velocity = Math.abs(currentY - lastScrollY);
+                    lastScrollY = currentY;
+
+                    // Damping adaptativo: scroll rápido = lerpFactor alto (responsivo), scroll lento = lerpFactor baixo (suave)
+                    const baseLerp = window.innerWidth <= 1024 ? 0.06 : 0.15;
+                    const adaptiveLerp = Math.min(0.3, baseLerp + (velocity * 0.001));
+                    
                     const delta = targetFraction - currentFraction;
                     
-                    // Se houver diferença perceptível, suavemente move o 'current' em direção ao 'target'
                     if (Math.abs(delta) > 0.0001) {
-                        currentFraction += delta * lerpFactor;
+                        currentFraction += delta * adaptiveLerp;
                         updateCanvas(currentFraction);
                         applyParallax(currentFraction);
-                    } else {
-                        // Garante que chegue ao valor exato no final do movimento
-                        currentFraction = targetFraction;
                     }
-                    
+
                     requestAnimationFrame(renderLoop);
                 }
 
@@ -476,11 +379,11 @@
                         state.loadedCount++;
                         if (state.loadedCount === state.frameCount) {
                             loader.style.opacity = '0';
-                            setTimeout(() => loader.style.display = 'none', 800);
-                            
-                            // Inicia os valores e o loop
-                            updateCanvas(0);
-                            renderLoop();
+                            setTimeout(() => {
+                                loader.style.display = 'none';
+                                updateCanvas(0);
+                                renderLoop();
+                            }, 800);
                         }
                     };
                     state.images.push(img);
@@ -489,7 +392,6 @@
                 window.addEventListener('scroll', () => {
                     const scrollPos = window.scrollY;
                     const total = heroSection.offsetHeight - window.innerHeight;
-                    // Atualiza apenas o alvo (target), o renderLoop cuida da suavização
                     targetFraction = Math.max(0, Math.min(1, scrollPos / (total || 1)));
                 }, { passive: true });
             });
