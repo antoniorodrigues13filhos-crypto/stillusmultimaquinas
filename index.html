@@ -28,42 +28,80 @@
             overflow-x: hidden;
         }
 
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            opacity: 0.03; z-index: 9998; pointer-events: none;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        h1,
+        h2 {
+            font-weight: 900;
+            letter-spacing: -0.05em;
+            text-transform: uppercase;
+            line-height: 0.9;
         }
 
-        h1, h2 { font-weight: 900; letter-spacing: -0.05em; text-transform: uppercase; line-height: 0.9; }
-
+        /* EFEITO LUCRO ZERO */
         .animated-stroke {
             color: transparent;
             -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
-            position: relative; display: inline-block;
+            position: relative;
+            display: inline-block;
         }
 
         .animated-stroke::after {
             content: "LUCRO ZERO.";
-            position: absolute; left: 0; top: 0; width: var(--fill-width); height: 100%;
-            color: var(--brand-orange); -webkit-text-stroke: 1px var(--brand-orange);
-            overflow: hidden; white-space: nowrap; filter: drop-shadow(0 0 12px rgba(211, 123, 66, 0.6));
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: var(--fill-width);
+            height: 100%;
+            color: var(--brand-orange);
+            -webkit-text-stroke: 1px var(--brand-orange);
+            overflow: hidden;
+            white-space: nowrap;
+            filter: drop-shadow(0 0 12px rgba(211, 123, 66, 0.6));
             transition: width 0.1s ease-out;
         }
 
-        .hero-text-block {
-            max-width: 600px; position: absolute; left: 10%; opacity: 0;
-            filter: blur(10px); transform: translate3d(0, 40px, 0);
-            transition: opacity 1s ease, transform 1s ease, filter 1s ease;
-            pointer-events: none; z-index: 20; will-change: transform, opacity;
+        /* AJUSTE MÁXIMA EFICIÊNCIA */
+        .title-monumental {
+            line-height: 1.1 !important;
+            letter-spacing: -0.02em !important;
         }
 
-        .hero-text-block.active { opacity: 1; filter: blur(0px); transform: translate3d(0, 0, 0); pointer-events: auto; }
+        .text-glow-orange {
+            text-shadow: 0 0 30px rgba(211, 123, 66, 0.3);
+            position: relative;
+        }
 
-        #hero-canvas {
-            filter: brightness(0.55); width: 100%; height: 100%; object-fit: cover;
-            transform: translate3d(0,0,0); will-change: transform; backface-visibility: hidden;
+        /* LINHA DE TRANSIÇÃO PARA PRODUTOS */
+        .scroll-connector {
+            width: 1px;
+            height: 0px;
+            background: linear-gradient(to bottom, var(--brand-orange), transparent);
+            margin-top: 40px;
+            transition: height 1s ease;
+            box-shadow: 0 0 15px rgba(211, 123, 66, 0.4);
+        }
+
+        .hero-text-block.active .scroll-connector {
+            height: 80px;
+        }
+
+        /* EFEITO DE REVELAÇÃO FLUIDA */
+        .fluid-word {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(10px);
+            filter: blur(5px);
+            transition: opacity 0.6s ease, transform 0.6s ease, filter 0.6s ease;
+            margin-right: 0.2em;
+        }
+
+        .hero-text-block.active .fluid-word {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0px);
+        }
+
+        .hero-text-block.active .fluid-word:nth-child(n) {
+            transition-delay: calc(var(--i) * 0.05s);
         }
 
         .glass-premium {
@@ -73,34 +111,82 @@
             border: 0.5px solid rgba(255, 255, 255, 0.1);
         }
 
+        .hero-text-block {
+            max-width: 600px;
+            position: absolute;
+            left: 10%;
+            opacity: 0;
+            filter: blur(10px);
+            transform: translateY(40px);
+            transition: opacity 1s ease, transform 1s ease, filter 1s ease;
+            pointer-events: none;
+            z-index: 20;
+            will-change: transform, opacity, filter;
+        }
+
+        .hero-text-block.active {
+            opacity: 1;
+            filter: blur(0px);
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        #hero-canvas {
+            filter: brightness(0.55);
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.1s ease-out, filter 0.1s ease-out;
+        }
+
+        /* TRANSIÇÃO PREMIUM PRODUTOS */
         #produtos {
-            position: relative; z-index: 40; margin-top: -100vh; padding-top: 25vh;
+            position: relative;
+            z-index: 40;
+            margin-top: -100vh;
+            padding-top: 25vh;
             background: linear-gradient(to bottom, transparent, #080808 15%, #080808 100%);
             backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
         }
 
         .product-card {
-            opacity: 0; transform: translate3d(0, 40px, 0);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1), border 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .product-card.revealed { opacity: 1; transform: translate3d(0, 0, 0); }
+        .product-card.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
         #loader {
-            position: fixed; inset: 0; background: #080808; z-index: 9999;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            position: fixed;
+            inset: 0;
+            background: #080808;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             transition: opacity 0.8s ease;
         }
 
-        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 </head>
 
 <body class="antialiased">
 
     <div id="loader">
-        <div style="width: 40px; height: 40px; border-top: 2px solid #D37B42; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+        <div
+            style="width: 40px; height: 40px; border-top: 2px solid #D37B42; border-radius: 50%; animation: spin 1s linear infinite;">
+        </div>
     </div>
 
     <nav class="fixed top-0 w-full z-50 px-6 md:px-10 py-6">
@@ -118,40 +204,98 @@
             <canvas id="hero-canvas"></canvas>
 
             <div id="copy-1" class="hero-text-block top-[30%]" data-speed="0.25">
-                <h1 class="text-6xl md:text-8xl mb-8">MÁQUINAS <br> PARADAS, <br> <span class="animated-stroke">LUCRO ZERO.</span></h1>
-                <p class="text-lg text-white/40 border-l border-[#D37B42] pl-6">A inatividade técnica é o maior dreno financeiro da sua operação.</p>
+                <span style="color: #D37B42; font-size: 9px; font-weight: 800; letter-spacing: 0.4em; text-transform: uppercase; margin-bottom: 24px; display: block;">Diagnóstico de Operação</span>
+                <h1 class="text-6xl md:text-8xl mb-8">
+                    MÁQUINAS <br> PARADAS, <br>
+                    <span class="animated-stroke">LUCRO ZERO.</span>
+                </h1>
+                <p class="text-lg text-white/40 font-light leading-relaxed max-w-md border-l border-[#D37B42] pl-6">
+                    A inatividade técnica é o maior dreno financeiro da sua operação. Proteja sua margem hoje.
+                </p>
             </div>
 
             <div id="copy-2" class="hero-text-block top-[35%]" data-speed="0.2">
-                <h2 class="text-5xl md:text-7xl mb-8">ENGENHARIA <br> DE <span style="color: #D37B42;">ELITE.</span></h2>
-                <p class="text-lg text-white/50 mb-10">Manutenção especializada com diagnóstico avançado.</p>
+                <h2 class="text-5xl md:text-7xl mb-8">
+                    ENGENHARIA <br> DE <span style="color: #D37B42;">ELITE.</span>
+                </h2>
+                <p class="text-lg text-white/50 font-light leading-relaxed mb-10">
+                    <span class="fluid-word" style="--i:1">Manutenção</span>
+                    <span class="fluid-word" style="--i:2">especializada</span>
+                    <span class="fluid-word" style="--i:3">com</span>
+                    <span class="fluid-word" style="--i:4">diagnóstico</span>
+                    <span class="fluid-word" style="--i:5">avançado.</span>
+                    <br>
+                    <span class="fluid-word" style="--i:6">Peças</span>
+                    <span class="fluid-word" style="--i:7">originais</span>
+                    <span class="fluid-word" style="--i:8">e</span>
+                    <span class="fluid-word" style="--i:9">suporte</span>
+                    <span class="fluid-word" style="--i:10">técnico</span>
+                    <span class="fluid-word" style="--i:11">ininterrupdo.</span>
+                </p>
             </div>
 
             <div id="copy-3" class="hero-text-block top-[28%]" data-speed="0.15">
-                <h2 class="text-6xl md:text-8xl mb-8">MÁXIMA <br> <span style="color: #D37B42;">EFICIÊNCIA.</span></h2>
-                <button style="background: linear-gradient(135deg, #D37B42, #B58D67);" class="text-white px-10 py-5 rounded-full font-bold uppercase text-[10px] tracking-[0.3em] shadow-lg cursor-pointer">Ver Catálogo</button>
+                <h2 class="text-6xl md:text-8xl mb-8 title-monumental">
+                    MÁXIMA <br> <span class="text-glow-orange" style="color: #D37B42;">EFICIÊNCIA.</span>
+                </h2>
+                <p
+                    class="text-lg text-white/40 font-light leading-relaxed max-w-md mb-10 border-l border-[#D37B42] pl-6">
+                    Máquinas e peças selecionadas para máximo desempenho no seu trabalho
+                </p>
+                <div class="flex flex-col sm:flex-row gap-6">
+                    <button style="background: linear-gradient(135deg, #D37B42, #B58D67);" class="text-white px-10 py-5 rounded-full font-bold uppercase text-[10px] tracking-[0.3em] shadow-lg flex items-center gap-3 cursor-pointer">
+                        Consultar Especialista
+                    </button>
+                    <button class="glass-premium hover:bg-white/10 text-white px-10 py-5 rounded-full font-bold uppercase text-[10px] tracking-[0.3em] flex items-center gap-3 cursor-pointer">
+                        Ver Catálogo
+                    </button>
+                </div>
+                <div class="scroll-connector"></div>
             </div>
         </div>
     </section>
 
     <section id="produtos" class="relative z-30 py-32 px-[8%]">
-        <div class="max-w-7xl mx-auto text-center">
-            <h2 class="text-5xl md:text-7xl text-white font-black mb-24">SOLUÇÕES TÉCNICAS</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col items-center mb-24 text-center">
+                <span class="text-[10px] tracking-[0.5em] text-[#D37B42] uppercase font-bold mb-4">Menos parada. Mais produção.</span>
+                <h2 class="text-5xl md:text-7xl text-white font-black italic">Soluções completas para manter seus
+                    equipamentos sempre ativos</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="product-card glass-premium p-8 rounded-3xl group">
-                    <div class="h-64 bg-white/5 rounded-2xl mb-6 flex items-center justify-center"><i data-lucide="cog" class="w-16 h-16 text-white/10 transition-all duration-700"></i></div>
+                    <div class="h-64 bg-white/5 rounded-2xl mb-6 overflow-hidden flex items-center justify-center">
+                        <i data-lucide="cog" class="w-16 h-16 text-white/10 group-hover:rotate-90 transition-transform duration-1000"></i>
+                    </div>
                     <h3 class="text-xl font-bold mb-2">MOTORES SÉRIE-T</h3>
-                    <p class="text-white/40 text-sm">Torque extremo para operações contínuas.</p>
+                    <p class="text-white/40 text-sm mb-6">Torque extremo para operações contínuas.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-[#D37B42] font-mono text-xs">READY_TO_SHIP</span>
+                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-white/20 group-hover:text-[#D37B42]"></i>
+                    </div>
                 </div>
                 <div class="product-card glass-premium p-8 rounded-3xl group">
-                    <div class="h-64 bg-white/5 rounded-2xl mb-6 flex items-center justify-center"><i data-lucide="zap" class="w-16 h-16 text-white/10"></i></div>
+                    <div class="h-64 bg-white/5 rounded-2xl mb-6 overflow-hidden flex items-center justify-center">
+                        <i data-lucide="zap" class="w-16 h-16 text-white/10 group-hover:scale-125 transition-transform duration-700"></i>
+                    </div>
                     <h3 class="text-xl font-bold mb-2">SISTEMAS HIDRÁULICOS</h3>
-                    <p class="text-white/40 text-sm">Precisão milimétrica em carga máxima.</p>
+                    <p class="text-white/40 text-sm mb-6">Precisão milimétrica em carga máxima.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-[#D37B42] font-mono text-xs">PREMIUM_BUILD</span>
+                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-white/20 group-hover:text-[#D37B42]"></i>
+                    </div>
                 </div>
                 <div class="product-card glass-premium p-8 rounded-3xl group">
-                    <div class="h-64 bg-white/5 rounded-2xl mb-6 flex items-center justify-center"><i data-lucide="shield-check" class="w-16 h-16 text-white/10"></i></div>
+                    <div class="h-64 bg-white/5 rounded-2xl mb-6 overflow-hidden flex items-center justify-center">
+                        <i data-lucide="shield-check" class="w-16 h-16 text-white/10 group-hover:text-[#D37B42] transition-colors"></i>
+                    </div>
                     <h3 class="text-xl font-bold mb-2">KITS DE REPARO</h3>
-                    <p class="text-white/40 text-sm">Componentes originais com garantia vitalícia.</p>
+                    <p class="text-white/40 text-sm mb-6">Componentes originais com garantia vitalícia.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-[#D37B42] font-mono text-xs">IN_STOCK</span>
+                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-white/20 group-hover:text-[#D37B42]"></i>
+                    </div>
                 </div>
             </div>
         </div>
@@ -160,51 +304,35 @@
     <script>
         {
             const state = {
-                baseUrl: "heroframe/ezgif-frame-",
-                frameCount: 83,
-                bitmaps: [],
+                baseUrl: "https://buildix-user-images.s3.us-east-2.amazonaws.com/scroll-animations/temp-1776436361647/b3fc3ed0-0712-4ea7-9aaf-d2f231f883ba/frame_",
+                frameCount: 100,
+                images: [],
                 loadedCount: 0
             };
-
-            let currentFraction = 0;
-            let targetFraction = 0;
-            let lastScrollY = window.scrollY;
-            const isMobile = window.innerWidth <= 1024;
 
             window.addEventListener('load', () => {
                 if(window.lucide) lucide.createIcons();
 
                 const canvas = document.getElementById('hero-canvas');
-                const ctx = canvas.getContext('2d', { alpha: false });
+                const ctx = canvas.getContext('2d');
+                const heroSection = document.getElementById('scroll-hero');
+                const loader = document.getElementById('loader');
 
-                function resize() {
+                function updateCanvas(fraction) {
+                    const index = Math.min(state.frameCount - 1, Math.floor(fraction * (state.frameCount - 1)));
+                    const img = state.images[index];
+                    if (!img || !img.complete) return;
+
                     canvas.width = window.innerWidth;
                     canvas.height = window.innerHeight;
-                }
-                window.addEventListener('resize', resize);
-                resize();
 
-                function render(fraction) {
-                    const videoProgress = Math.min(1, fraction / 0.9);
-                    const progress = videoProgress * (state.frameCount - 1);
-                    const base = Math.floor(progress);
-                    const t = progress - base;
+                    const hRatio = canvas.width / img.width;
+                    const vRatio = canvas.height / img.height;
+                    const ratio = Math.max(hRatio, vRatio);
+                    const shiftX = (canvas.width - img.width * ratio) / 2;
+                    const shiftY = (canvas.height - img.height * ratio) / 2;
 
-                    const imgA = state.bitmaps[base];
-                    const imgB = state.bitmaps[Math.min(base + 1, state.frameCount - 1)];
-
-                    if (!imgA || !imgB) return;
-
-                    const ratio = Math.max(canvas.width / imgA.width, canvas.height / imgA.height);
-                    const sw = (imgA.width * ratio) | 0, sh = (imgA.height * ratio) | 0;
-                    const sx = ((canvas.width - sw) / 2) | 0, sy = ((canvas.height - sh) / 2) | 0;
-
-                    ctx.globalAlpha = 1;
-                    ctx.drawImage(imgA, sx, sy, sw, sh);
-                    if (t > 0.01) {
-                        ctx.globalAlpha = t;
-                        ctx.drawImage(imgB, sx, sy, sw, sh);
-                    }
+                    ctx.drawImage(img, 0, 0, img.width, img.height, shiftX, shiftY, img.width * ratio, img.height * ratio);
                 }
 
                 function applyParallax(fraction) {
@@ -217,58 +345,75 @@
                     blocks.forEach(block => {
                         const el = document.getElementById(block.id);
                         if (!el) return;
+                        const speed = parseFloat(el.getAttribute('data-speed'));
+                        
                         if (fraction >= block.start && fraction <= block.end) {
                             el.classList.add('active');
-                            const moveY = (fraction - block.start) * (window.innerHeight * 0.6);
-                            el.style.transform = `translate3d(0, ${-moveY}px, 0)`;
+                            const progress = (fraction - block.start);
+                            const moveY = progress * (window.innerHeight * speed * 3);
+                            el.style.transform = `translateY(${-moveY}px)`;
+
                             if(block.id === 'copy-1') {
-                                const fill = Math.min(100, ((fraction - block.start) / 0.12) * 100);
-                                document.documentElement.style.setProperty('--fill-width', `${fill}%`);
+                                const fillPercent = Math.min(100, (progress / 0.12) * 100);
+                                document.documentElement.style.setProperty('--fill-width', `${fillPercent}%`);
                             }
                         } else {
                             el.classList.remove('active');
+                            if (fraction < block.start) {
+                                el.style.transform = `translateY(40px)`;
+                            }
                         }
                     });
-
-                    document.querySelectorAll('.product-card').forEach((card) => {
-                        if (card.getBoundingClientRect().top < window.innerHeight * 0.9) card.classList.add('revealed');
-                    });
                 }
 
-                function loop() {
-                    const velocity = Math.abs(window.scrollY - lastScrollY);
-                    lastScrollY = window.scrollY;
-                    const lerp = Math.min(0.3, (isMobile ? 0.15 : 0.1) + (velocity * 0.001));
-                    
-                    const delta = targetFraction - currentFraction;
-                    if (Math.abs(delta) > 0.0001) {
-                        currentFraction += delta * lerp;
-                        render(currentFraction);
-                        applyParallax(currentFraction);
-                    }
-                    requestAnimationFrame(loop);
-                }
-
-                async function init() {
-                    for (let i = 1; i <= state.frameCount; i++) {
-                        const url = `${state.baseUrl}${i.toString().padStart(3, '0')}.jpg`;
-                        const res = await fetch(url);
-                        const blob = await res.blob();
-                        state.bitmaps[i-1] = await createImageBitmap(blob);
+                for (let i = 1; i <= state.frameCount; i++) {
+                    const img = new Image();
+                    img.crossOrigin = "anonymous";
+                    img.src = `${state.baseUrl}${i.toString().padStart(4, '0')}.jpg`;
+                    img.onload = () => {
                         state.loadedCount++;
                         if (state.loadedCount === state.frameCount) {
-                            document.getElementById('loader').style.display = 'none';
-                            loop();
+                            loader.style.opacity = '0';
+                            setTimeout(() => loader.style.display = 'none', 800);
+                            updateCanvas(0);
                         }
-                    }
+                    };
+                    state.images.push(img);
                 }
-                init();
 
                 window.addEventListener('scroll', () => {
-                    targetFraction = window.scrollY / (document.getElementById('scroll-hero').offsetHeight - window.innerHeight);
+                    const scrollPos = window.scrollY;
+                    const total = heroSection.offsetHeight - window.innerHeight;
+                    const fraction = Math.max(0, Math.min(1, scrollPos / (total || 1)));
+
+                    requestAnimationFrame(() => {
+                        updateCanvas(fraction);
+                        applyParallax(fraction);
+
+                        if (fraction > 0.85) {
+                            const zoomProgress = (fraction - 0.85) / 0.15;
+                            const scale = 1 - (zoomProgress * 0.05);
+                            canvas.style.transform = `scale(${scale})`;
+                            canvas.style.filter = `brightness(${0.55 - (zoomProgress * 0.3)}) blur(${zoomProgress * 10}px)`;
+                        } else {
+                            canvas.style.transform = `scale(1)`;
+                            canvas.style.filter = `brightness(0.55) blur(0px)`;
+                        }
+
+                        const cards = document.querySelectorAll('.product-card');
+                        cards.forEach((card, index) => {
+                            const rect = card.getBoundingClientRect();
+                            if (rect.top < window.innerHeight * 0.85) {
+                                setTimeout(() => {
+                                    card.classList.add('revealed');
+                                }, index * 100);
+                            }
+                        });
+                    });
                 }, { passive: true });
             });
         }
     </script>
 </body>
+
 </html>
