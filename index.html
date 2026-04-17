@@ -164,12 +164,16 @@
         .cta-btn-outline { display: inline-block; background: transparent; color: rgba(255,255,255,0.7); padding: 18px 44px; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; cursor: pointer; border: 0.5px solid rgba(255,255,255,0.2); transition: all 0.2s ease; text-decoration: none; }
         .cta-btn-outline:hover { border-color: rgba(255,255,255,0.45); color: #fff; }
 
-        /* ── PRODUCTS ── */
+        /* ── TRANSIÇÃO PRODUTOS (GAVETA PERFEITA MOBILE E DESKTOP) ── */
         #produtos { 
             position: relative; 
             z-index: 40; 
-            background: #080808; 
+            margin-top: -100vh;
+            margin-top: -100svh; 
+            padding-top: 15vh; 
+            background: linear-gradient(to bottom, transparent, #080808 15vh, #080808 100%); 
         }
+
         .product-card { opacity: 0; transform: translate3d(0, 40px, 0); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1), border 0.3s ease, box-shadow 0.3s ease; cursor: pointer; background: rgba(255,255,255,0.03); backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%); border: 0.5px solid rgba(255,255,255,0.08); will-change: transform, opacity; }
         .product-card:hover { transform: translate3d(0, -5px, 0) scale3d(1.02, 1.02, 1) !important; border-color: rgba(211,123,66,0.35); box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 24px rgba(211,123,66,0.12); background: rgba(255,255,255,0.05); }
         .product-card.revealed { opacity: 1; transform: translate3d(0,0,0); }
@@ -720,8 +724,12 @@
                     if (b.dotEl) b.dotEl.classList.add('active');
                     
                     let calcFraction = fraction;
-                    if (IS_MOBILE && b.id === 'copy-3' && fraction > 0.85) {
-                        calcFraction = 0.85; 
+                    if (IS_MOBILE && b.id === 'copy-3') {
+                        if (fraction > 0.85 && fraction <= 0.94) {
+                            calcFraction = 0.85; 
+                        } else if (fraction > 0.94) {
+                            calcFraction = 0.85 + (fraction - 0.94) * 1.5; 
+                        }
                     }
                     
                     const drift = (calcFraction - b.start) * (window.innerHeight * 0.55);
@@ -739,6 +747,37 @@
                     }
                 }
             });
+
+            const produtosSec = document.getElementById('produtos');
+            if (IS_MOBILE && produtosSec) {
+                let offset_vh = 0;
+                let f = Math.min(1, Math.max(0, fraction));
+                let natural_top = (1 - f) * 500; 
+                let desired_top = natural_top;
+
+                if (f < 0.82) {
+                    desired_top = Math.max(natural_top, 100);
+                } else if (f <= 0.85) {
+                    let p = (f - 0.82) / 0.03;
+                    desired_top = 100 - (p * 25);
+                } else if (f <= 0.94) {
+                    desired_top = 75;
+                } else {
+                    let p = (f - 0.94) / 0.06;
+                    desired_top = 75 - (p * 75);
+                }
+                
+                if (fraction > 1.0) {
+                    offset_vh = 0;
+                } else {
+                    offset_vh = desired_top - natural_top;
+                }
+
+                const offset_px = offset_vh * (window.innerHeight / 100);
+                produtosSec.style.transform = `translate3d(0, ${offset_px.toFixed(2)}px, 0)`;
+            } else if (produtosSec) {
+                produtosSec.style.transform = `translate3d(0, 0, 0)`;
+            }
         }
 
         function loop() {
