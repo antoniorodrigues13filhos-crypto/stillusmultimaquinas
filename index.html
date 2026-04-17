@@ -658,7 +658,7 @@
         const blocks = [
             { id: 'copy-1', dot: 'dot-1', start: 0.04, end: 0.26, el: null, dotEl: null },
             { id: 'copy-2', dot: 'dot-2', start: 0.33, end: 0.57, el: null, dotEl: null },
-            { id: 'copy-3', dot: 'dot-3', start: 0.69, end: IS_MOBILE ? 2.0 : 0.98, el: null, dotEl: null } 
+            { id: 'copy-3', dot: 'dot-3', start: 0.69, end: 2.0, el: null, dotEl: null } 
         ];
 
         function initBlocks() {
@@ -724,12 +724,8 @@
                     if (b.dotEl) b.dotEl.classList.add('active');
                     
                     let calcFraction = fraction;
-                    if (IS_MOBILE && b.id === 'copy-3') {
-                        if (fraction > 0.85 && fraction <= 0.94) {
-                            calcFraction = 0.85; 
-                        } else if (fraction > 0.94) {
-                            calcFraction = 0.85 + (fraction - 0.94) * 1.5; 
-                        }
+                    if (b.id === 'copy-3' && fraction > 0.80) {
+                        calcFraction = 0.80; 
                     }
                     
                     const drift = (calcFraction - b.start) * (window.innerHeight * 0.55);
@@ -747,37 +743,6 @@
                     }
                 }
             });
-
-            const produtosSec = document.getElementById('produtos');
-            if (IS_MOBILE && produtosSec) {
-                let offset_vh = 0;
-                let f = Math.min(1, Math.max(0, fraction));
-                let natural_top = (1 - f) * 500; 
-                let desired_top = natural_top;
-
-                if (f < 0.82) {
-                    desired_top = Math.max(natural_top, 100);
-                } else if (f <= 0.85) {
-                    let p = (f - 0.82) / 0.03;
-                    desired_top = 100 - (p * 25);
-                } else if (f <= 0.94) {
-                    desired_top = 75;
-                } else {
-                    let p = (f - 0.94) / 0.06;
-                    desired_top = 75 - (p * 75);
-                }
-                
-                if (fraction > 1.0) {
-                    offset_vh = 0;
-                } else {
-                    offset_vh = desired_top - natural_top;
-                }
-
-                const offset_px = offset_vh * (window.innerHeight / 100);
-                produtosSec.style.transform = `translate3d(0, ${offset_px.toFixed(2)}px, 0)`;
-            } else if (produtosSec) {
-                produtosSec.style.transform = `translate3d(0, 0, 0)`;
-            }
         }
 
         function loop() {
