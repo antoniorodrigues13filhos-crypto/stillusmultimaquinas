@@ -26,7 +26,6 @@
             margin: 0;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
-            -webkit-overflow-scrolling: touch;
         }
 
         body::before {
@@ -86,13 +85,6 @@
             cursor: pointer;
         }
 
-        .product-card:hover {
-            transform: translate3d(0, -5px, 0) scale(1.02);
-            border-color: rgba(211, 123, 66, 0.4);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(211, 123, 66, 0.1);
-            background: rgba(255, 255, 255, 0.05);
-        }
-
         .product-card.revealed { opacity: 1; transform: translate3d(0, 0, 0); }
 
         #loader {
@@ -127,12 +119,12 @@
 
             <div id="copy-1" class="hero-text-block top-[30%]" data-speed="0.25">
                 <h1 class="text-6xl md:text-8xl mb-8">MÁQUINAS <br> PARADAS, <br> <span class="animated-stroke">LUCRO ZERO.</span></h1>
-                <p class="text-lg text-white/40 font-light leading-relaxed max-w-md border-l border-[#D37B42] pl-6">A inatividade técnica é o maior dreno financeiro da sua operação.</p>
+                <p class="text-lg text-white/40 border-l border-[#D37B42] pl-6">A inatividade técnica é o maior dreno financeiro da sua operação.</p>
             </div>
 
             <div id="copy-2" class="hero-text-block top-[35%]" data-speed="0.2">
                 <h2 class="text-5xl md:text-7xl mb-8">ENGENHARIA <br> DE <span style="color: #D37B42;">ELITE.</span></h2>
-                <p class="text-lg text-white/50 font-light leading-relaxed mb-10">Manutenção especializada com diagnóstico avançado.</p>
+                <p class="text-lg text-white/50 mb-10">Manutenção especializada com diagnóstico avançado.</p>
             </div>
 
             <div id="copy-3" class="hero-text-block top-[28%]" data-speed="0.15">
@@ -144,26 +136,22 @@
 
     <section id="produtos" class="relative z-30 py-32 px-[8%]">
         <div class="max-w-7xl mx-auto text-center">
-            <span class="text-[10px] tracking-[0.5em] text-[#D37B42] uppercase font-bold mb-4">Menos parada. Mais produção.</span>
-            <h2 class="text-5xl md:text-7xl text-white font-black italic mb-24">Soluções completas para manter seus equipamentos sempre ativos</h2>
+            <h2 class="text-5xl md:text-7xl text-white font-black mb-24">SOLUÇÕES TÉCNICAS</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
                 <div class="product-card glass-premium p-8 rounded-3xl group">
-                    <div class="h-64 bg-white/5 rounded-2xl mb-6 flex items-center justify-center overflow-hidden">
-                        <i data-lucide="cog" class="w-16 h-16 text-white/10 transition-all duration-700"></i>
-                    </div>
+                    <div class="h-64 bg-white/5 rounded-2xl mb-6 flex items-center justify-center"><i data-lucide="cog" class="w-16 h-16 text-white/10 transition-all duration-700"></i></div>
                     <h3 class="text-xl font-bold mb-2">MOTORES SÉRIE-T</h3>
+                    <p class="text-white/40 text-sm">Torque extremo para operações contínuas.</p>
                 </div>
                 <div class="product-card glass-premium p-8 rounded-3xl group">
-                    <div class="h-64 bg-white/5 rounded-2xl mb-6 flex items-center justify-center overflow-hidden">
-                        <i data-lucide="zap" class="w-16 h-16 text-white/10"></i>
-                    </div>
+                    <div class="h-64 bg-white/5 rounded-2xl mb-6 flex items-center justify-center"><i data-lucide="zap" class="w-16 h-16 text-white/10"></i></div>
                     <h3 class="text-xl font-bold mb-2">SISTEMAS HIDRÁULICOS</h3>
+                    <p class="text-white/40 text-sm">Precisão milimétrica em carga máxima.</p>
                 </div>
                 <div class="product-card glass-premium p-8 rounded-3xl group">
-                    <div class="h-64 bg-white/5 rounded-2xl mb-6 flex items-center justify-center overflow-hidden">
-                        <i data-lucide="shield-check" class="w-16 h-16 text-white/10"></i>
-                    </div>
+                    <div class="h-64 bg-white/5 rounded-2xl mb-6 flex items-center justify-center"><i data-lucide="shield-check" class="w-16 h-16 text-white/10"></i></div>
                     <h3 class="text-xl font-bold mb-2">KITS DE REPARO</h3>
+                    <p class="text-white/40 text-sm">Componentes originais com garantia vitalícia.</p>
                 </div>
             </div>
         </div>
@@ -188,17 +176,15 @@
 
                 const canvas = document.getElementById('hero-canvas');
                 const ctx = canvas.getContext('2d', { alpha: false });
-                const heroSection = document.getElementById('scroll-hero');
 
-                function handleResize() {
+                function resize() {
                     canvas.width = window.innerWidth;
                     canvas.height = window.innerHeight;
-                    renderFrame(currentFraction);
                 }
-                window.addEventListener('resize', handleResize);
-                handleResize();
+                window.addEventListener('resize', resize);
+                resize();
 
-                function renderFrame(fraction) {
+                function render(fraction) {
                     const videoProgress = Math.min(1, fraction / 0.9);
                     const progress = videoProgress * (state.frameCount - 1);
                     const base = Math.floor(progress);
@@ -210,25 +196,14 @@
                     if (!imgA || !imgB) return;
 
                     const ratio = Math.max(canvas.width / imgA.width, canvas.height / imgA.height);
-                    const sw = (imgA.width * ratio) | 0;
-                    const sh = (imgA.height * ratio) | 0;
-                    const sx = ((canvas.width - sw) / 2) | 0;
-                    const sy = ((canvas.height - sh) / 2) | 0;
+                    const sw = (imgA.width * ratio) | 0, sh = (imgA.height * ratio) | 0;
+                    const sx = ((canvas.width - sw) / 2) | 0, sy = ((canvas.height - sh) / 2) | 0;
 
-                    // Anti-Flicker Blending Logic
                     ctx.globalAlpha = 1;
                     ctx.drawImage(imgA, sx, sy, sw, sh);
                     if (t > 0.01) {
                         ctx.globalAlpha = t;
                         ctx.drawImage(imgB, sx, sy, sw, sh);
-                    }
-                    ctx.globalAlpha = 1;
-
-                    if (fraction > 0.85) {
-                        const zp = (fraction - 0.85) / 0.15;
-                        canvas.style.transform = `scale(${1 - (zp * 0.05)}) translate3d(0,0,0)`;
-                    } else {
-                        canvas.style.transform = `scale(1) translate3d(0,0,0)`;
                     }
                 }
 
@@ -247,7 +222,7 @@
                             const moveY = (fraction - block.start) * (window.innerHeight * 0.6);
                             el.style.transform = `translate3d(0, ${-moveY}px, 0)`;
                             if(block.id === 'copy-1') {
-                                const fill = Math.min(100, (progress / 0.12) * 100);
+                                const fill = Math.min(100, ((fraction - block.start) / 0.12) * 100);
                                 document.documentElement.style.setProperty('--fill-width', `${fill}%`);
                             }
                         } else {
@@ -255,62 +230,45 @@
                         }
                     });
 
-                    document.querySelectorAll('.product-card').forEach((card, index) => {
-                        if (card.getBoundingClientRect().top < window.innerHeight * 0.9) {
-                            setTimeout(() => card.classList.add('revealed'), index * 100);
-                        }
+                    document.querySelectorAll('.product-card').forEach((card) => {
+                        if (card.getBoundingClientRect().top < window.innerHeight * 0.9) card.classList.add('revealed');
                     });
                 }
 
-                function renderLoop() {
-                    const currentY = window.scrollY;
-                    const velocity = Math.abs(currentY - lastScrollY);
-                    lastScrollY = currentY;
-
-                    const baseLerp = isMobile ? 0.18 : 0.12;
-                    const adaptiveLerp = Math.min(0.3, baseLerp + (velocity * 0.001));
+                function loop() {
+                    const velocity = Math.abs(window.scrollY - lastScrollY);
+                    lastScrollY = window.scrollY;
+                    const lerp = Math.min(0.3, (isMobile ? 0.15 : 0.1) + (velocity * 0.001));
                     
                     const delta = targetFraction - currentFraction;
                     if (Math.abs(delta) > 0.0001) {
-                        currentFraction += delta * adaptiveLerp;
-                        renderFrame(currentFraction);
+                        currentFraction += delta * lerp;
+                        render(currentFraction);
                         applyParallax(currentFraction);
                     }
-                    requestAnimationFrame(renderLoop);
+                    requestAnimationFrame(loop);
                 }
 
-                async function preloadImages() {
-                    const loadPromises = [];
+                async function init() {
                     for (let i = 1; i <= state.frameCount; i++) {
                         const url = `${state.baseUrl}${i.toString().padStart(3, '0')}.jpg`;
-                        loadPromises.push(
-                            fetch(url)
-                                .then(r => r.blob())
-                                .then(blob => createImageBitmap(blob))
-                                .then(bitmap => {
-                                    state.bitmaps[i - 1] = bitmap;
-                                    state.loadedCount++;
-                                    if (state.loadedCount === state.frameCount) {
-                                        document.getElementById('loader').style.opacity = '0';
-                                        setTimeout(() => {
-                                            document.getElementById('loader').style.display = 'none';
-                                            renderLoop();
-                                        }, 500);
-                                    }
-                                })
-                        );
+                        const res = await fetch(url);
+                        const blob = await res.blob();
+                        state.bitmaps[i-1] = await createImageBitmap(blob);
+                        state.loadedCount++;
+                        if (state.loadedCount === state.frameCount) {
+                            document.getElementById('loader').style.display = 'none';
+                            loop();
+                        }
                     }
                 }
-
-                preloadImages();
+                init();
 
                 window.addEventListener('scroll', () => {
-                    const total = heroSection.offsetHeight - window.innerHeight;
-                    targetFraction = Math.max(0, Math.min(1, window.scrollY / (total || 1)));
+                    targetFraction = window.scrollY / (document.getElementById('scroll-hero').offsetHeight - window.innerHeight);
                 }, { passive: true });
             });
         }
     </script>
-    <a href="https://buildix.app" target="_blank" rel="noopener noreferrer" style="position:fixed;bottom:16px;right:16px;z-index:9999;display:flex;align-items:center;gap:6px;padding:6px 12px;background:rgba(24,24,27,0.9);backdrop-filter:blur(4px);border-radius:9999px;font-size:12px;color:#a1a1aa;text-decoration:none;border:1px solid rgba(63,63,70,0.5);font-family:system-ui,-apple-system,sans-serif;transition:color 0.2s;">Made in Buildix</a>
 </body>
 </html>
