@@ -98,26 +98,6 @@
             height: 80px;
         }
 
-        /* EFEITO DE REVELAÇÃO FLUIDA */
-        .fluid-word {
-            display: inline-block;
-            opacity: 0;
-            transform: translateY(10px);
-            filter: blur(5px);
-            transition: opacity 0.6s ease, transform 0.6s ease, filter 0.6s ease;
-            margin-right: 0.2em;
-        }
-
-        .hero-text-block.active .fluid-word {
-            opacity: 1;
-            transform: translateY(0);
-            filter: blur(0px);
-        }
-
-        .hero-text-block.active .fluid-word:nth-child(n) {
-            transition-delay: calc(var(--i) * 0.05s);
-        }
-
         .glass-premium {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(20px) saturate(160%);
@@ -150,13 +130,10 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.1s ease-out, filter 0.1s ease-out;
-            /* Otimização Mobile GPU */
             transform: translateZ(0);
             will-change: transform, filter;
         }
 
-        /* TRANSIÇÃO PREMIUM PRODUTOS */
         #produtos {
             position: relative;
             z-index: 40;
@@ -174,7 +151,6 @@
             cursor: pointer;
         }
 
-        /* FEEDBACK TÁTIL / GLASS LIFT */
         .product-card:hover {
             transform: translateY(-5px) scale(1.02) !important;
             border-color: rgba(211, 123, 66, 0.4);
@@ -187,26 +163,13 @@
             transform: translateY(0);
         }
 
-        /* ANIMAÇÃO DE ÍCONES */
         @keyframes slow-rotate {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
 
-        .icon-spin {
-            animation: slow-rotate 8s linear infinite;
-        }
-
-        .product-card:hover .icon-spin {
-            animation-duration: 2s;
-            color: var(--brand-orange);
-        }
-
-        .product-card:hover .icon-pulse {
-            transform: scale(1.2);
-            color: var(--brand-orange);
-            filter: drop-shadow(0 0 8px var(--brand-orange));
-        }
+        .icon-spin { animation: slow-rotate 8s linear infinite; }
+        .product-card:hover .icon-spin { animation-duration: 2s; color: var(--brand-orange); }
 
         #loader {
             position: fixed;
@@ -220,9 +183,7 @@
             transition: opacity 0.8s ease;
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 
@@ -262,18 +223,7 @@
                     ENGENHARIA <br> DE <span style="color: #D37B42;">ELITE.</span>
                 </h2>
                 <p class="text-lg text-white/50 font-light leading-relaxed mb-10">
-                    <span class="fluid-word" style="--i:1">Manutenção</span>
-                    <span class="fluid-word" style="--i:2">especializada</span>
-                    <span class="fluid-word" style="--i:3">com</span>
-                    <span class="fluid-word" style="--i:4">diagnóstico</span>
-                    <span class="fluid-word" style="--i:5">avançado.</span>
-                    <br>
-                    <span class="fluid-word" style="--i:6">Peças</span>
-                    <span class="fluid-word" style="--i:7">originais</span>
-                    <span class="fluid-word" style="--i:8">e</span>
-                    <span class="fluid-word" style="--i:9">suporte</span>
-                    <span class="fluid-word" style="--i:10">técnico</span>
-                    <span class="fluid-word" style="--i:11">ininterrupdo.</span>
+                    Manutenção especializada com diagnóstico avançado. Peças originais e suporte técnico ininterrupto.
                 </p>
             </div>
 
@@ -311,32 +261,20 @@
                     </div>
                     <h3 class="text-xl font-bold mb-2">MOTORES SÉRIE-T</h3>
                     <p class="text-white/40 text-sm mb-6">Torque extremo para operações contínuas.</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-[#D37B42] font-mono text-xs">READY_TO_SHIP</span>
-                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-white/20 group-hover:text-[#D37B42] transition-colors"></i>
-                    </div>
                 </div>
                 <div class="product-card glass-premium p-8 rounded-3xl group">
                     <div class="h-64 bg-white/5 rounded-2xl mb-6 overflow-hidden flex items-center justify-center">
-                        <i data-lucide="zap" class="w-16 h-16 text-white/10 transition-all duration-500 icon-pulse"></i>
+                        <i data-lucide="zap" class="w-16 h-16 text-white/10 transition-all duration-500"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-2">SISTEMAS HIDRÁULICOS</h3>
                     <p class="text-white/40 text-sm mb-6">Precisão milimétrica em carga máxima.</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-[#D37B42] font-mono text-xs">PREMIUM_BUILD</span>
-                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-white/20 group-hover:text-[#D37B42] transition-colors"></i>
-                    </div>
                 </div>
                 <div class="product-card glass-premium p-8 rounded-3xl group">
                     <div class="h-64 bg-white/5 rounded-2xl mb-6 overflow-hidden flex items-center justify-center">
-                        <i data-lucide="shield-check" class="w-16 h-16 text-white/10 transition-all duration-500 icon-pulse"></i>
+                        <i data-lucide="shield-check" class="w-16 h-16 text-white/10 transition-all duration-500"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-2">KITS DE REPARO</h3>
                     <p class="text-white/40 text-sm mb-6">Componentes originais com garantia vitalícia.</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-[#D37B42] font-mono text-xs">IN_STOCK</span>
-                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-white/20 group-hover:text-[#D37B42] transition-colors"></i>
-                    </div>
                 </div>
             </div>
         </div>
@@ -353,8 +291,8 @@
 
             let currentFraction = 0;
             let targetFraction = 0;
-            // Fator de suavização (LERP) apenas para mobile
-            const lerpFactor = window.innerWidth < 768 ? 0.08 : 1; 
+            // Sensibilidade aumentada para 0.2 (mais rápido no toque)
+            const lerpFactor = window.innerWidth < 768 ? 0.2 : 1; 
 
             window.addEventListener('load', () => {
                 if(window.lucide) lucide.createIcons();
@@ -405,36 +343,27 @@
                             }
                         } else {
                             el.classList.remove('active');
-                            if (fraction < block.start) {
-                                el.style.transform = `translateY(40px)`;
-                            }
+                            if (fraction < block.start) el.style.transform = `translateY(40px)`;
                         }
                     });
 
-                    // Comportamento de saída do Canvas
                     if (fraction > 0.85) {
-                        const zoomProgress = (fraction - 0.85) / 0.15;
-                        const scale = 1 - (zoomProgress * 0.05);
-                        canvas.style.transform = `scale(${scale})`;
-                        canvas.style.filter = `brightness(${0.55 - (zoomProgress * 0.3)}) blur(${zoomProgress * 10}px)`;
+                        const zp = (fraction - 0.85) / 0.15;
+                        canvas.style.transform = `scale(${1 - (zp * 0.05)})`;
+                        canvas.style.filter = `brightness(${0.55 - (zp * 0.3)}) blur(${zp * 10}px)`;
                     } else {
                         canvas.style.transform = `scale(1)`;
                         canvas.style.filter = `brightness(0.55) blur(0px)`;
                     }
 
-                    // Revelação de Cards
-                    const cards = document.querySelectorAll('.product-card');
-                    cards.forEach((card, index) => {
+                    document.querySelectorAll('.product-card').forEach((card, index) => {
                         const rect = card.getBoundingClientRect();
                         if (rect.top < window.innerHeight * 0.85) {
-                            setTimeout(() => {
-                                card.classList.add('revealed');
-                            }, index * 100);
+                            setTimeout(() => card.classList.add('revealed'), index * 100);
                         }
                     });
                 }
 
-                // Loop de renderização suave
                 function renderLoop() {
                     if (Math.abs(currentFraction - targetFraction) > 0.0001) {
                         currentFraction += (targetFraction - currentFraction) * lerpFactor;
@@ -454,7 +383,7 @@
                             loader.style.opacity = '0';
                             setTimeout(() => loader.style.display = 'none', 800);
                             updateCanvas(0);
-                            renderLoop(); // Inicia o loop após carregar
+                            renderLoop();
                         }
                     };
                     state.images.push(img);
@@ -468,12 +397,6 @@
             });
         }
     </script>
-
-    <a href="https://buildix.app" target="_blank" rel="noopener noreferrer"
-       style="position:fixed;bottom:16px;right:16px;z-index:9999;display:flex;align-items:center;gap:6px;padding:6px 12px;background:rgba(24,24,27,0.9);backdrop-filter:blur(4px);border-radius:9999px;font-size:12px;color:#a1a1aa;text-decoration:none;border:1px solid rgba(63,63,70,0.5);font-family:system-ui,-apple-system,sans-serif;transition:color 0.2s;"
-       onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#a1a1aa'">
-      Made in Buildix
-    </a>
 
 </body>
 
