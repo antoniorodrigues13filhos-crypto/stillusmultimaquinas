@@ -7,7 +7,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&subset=latin,latin-ext&display=swap" rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -92,12 +92,10 @@
 
         .hero-block { position: absolute; left: 8%; right: 8%; z-index: 20; pointer-events: none; }
         
-        /* ── CORREÇÃO DE CORTE DOS ACENTOS AQUI ── */
         .word-wrap { 
             overflow: hidden; 
             display: inline-block; 
             vertical-align: bottom; 
-            /* Adiciona espaço interno para os acentos não serem cortados pelo overflow */
             padding-top: 0.25em; 
             margin-top: -0.25em; 
             padding-bottom: 0.1em;
@@ -260,11 +258,11 @@
 
             <div id="copy-1" class="hero-block" style="top:28%;">
                 <div class="h-display">
-                    <div><span class="word-wrap"><span class="hero-word">MÁQUINAS</span></span></div>
+                    <div><span class="word-wrap"><span class="hero-word">M&Aacute;QUINAS</span></span></div>
                     <div><span class="word-wrap"><span class="hero-word">PARADAS,</span></span></div>
                     <div><span class="word-wrap"><span class="hero-word animated-stroke">LUCRO ZERO.</span></span></div>
                 </div>
-                <p class="hero-sub side-line">A inatividade técnica é o maior dreno financeiro da sua operação.</p>
+                <p class="hero-sub side-line">A inatividade t&eacute;cnica &eacute; o maior dreno financeiro da sua opera&ccedil;&atilde;o.</p>
             </div>
 
             <div id="copy-2" class="hero-block" style="top:32%;">
@@ -272,19 +270,19 @@
                     <div><span class="word-wrap"><span class="hero-word">ENGENHARIA</span></span></div>
                     <div><span class="word-wrap"><span class="hero-word">DE</span></span> <span class="word-wrap"><span class="hero-word accent">ELITE.</span></span></div>
                 </div>
-                <p class="hero-sub side-line">Manutenção especializada com diagnóstico avançado e resposta imediata.</p>
+                <p class="hero-sub side-line">Manuten&ccedil;&atilde;o especializada com diagn&oacute;stico avan&ccedil;ado e resposta imediata.</p>
             </div>
 
             <div id="copy-3" class="hero-block" style="top:30%;">
                 <div class="h-display">
-                    <div><span class="word-wrap"><span class="hero-word">MÁXIMA</span></span></div>
-                    <div><span class="word-wrap"><span class="hero-word accent">EFICIÊNCIA.</span></span></div>
+                    <div><span class="word-wrap"><span class="hero-word">M&Aacute;XIMA</span></span></div>
+                    <div><span class="word-wrap"><span class="hero-word accent">EFICI&Ecirc;NCIA.</span></span></div>
                 </div>
                 <p class="hero-sub" style="margin-bottom:36px;opacity:0;transform:translateY(18px);transition:opacity 0.8s ease 0.35s,transform 0.8s ease 0.35s;font-size:clamp(13px,1.8vw,17px);color:rgba(255,255,255,0.38);font-weight:300;line-height:1.6;max-width:380px;">
-                    Equipamentos que não param. Produção que não cessa.
+                    Equipamentos que n&atilde;o param. Produ&ccedil;&atilde;o que n&atilde;o cessa.
                 </p>
                 <div class="hero-sub" style="opacity:0;transform:translateY(18px);transition:opacity 0.8s ease 0.5s,transform 0.8s ease 0.5s;display:flex;gap:16px;flex-wrap:wrap;">
-                    <a href="#produtos" class="cta-btn">Ver catálogo</a>
+                    <a href="#produtos" class="cta-btn">Ver cat&aacute;logo</a>
                     <a href="#contato" class="cta-btn-outline hide-on-mobile">Falar com especialista</a>
                 </div>
             </div>
@@ -707,6 +705,14 @@
             } else if (IS_MOBILE) {
                 applyText(currentFraction);
             }
+            
+            // Garante que os cards revelem no desktop sempre que visíveis no scroll
+            document.querySelectorAll('.product-card').forEach((card, i) => {
+                if (!card.classList.contains('revealed') && card.getBoundingClientRect().top < window.innerHeight * 0.9) {
+                    setTimeout(() => card.classList.add('revealed'), (i % 3) * 100);
+                }
+            });
+
             rafId = requestAnimationFrame(loop);
         }
 
