@@ -26,7 +26,6 @@
             margin: 0;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
-            /* Melhora a rolagem tátil no iOS/Android */
             -webkit-overflow-scrolling: touch;
         }
 
@@ -126,7 +125,6 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            /* Força renderização via hardware no mobile */
             transform: translate3d(0,0,0);
             will-change: transform, filter;
             backface-visibility: hidden;
@@ -277,7 +275,7 @@
         {
             const state = {
                 baseUrl: "heroframe/ezgif-frame-",
-                frameCount: 88,
+                frameCount: 83, // Atualizado para 83 frames
                 images: [],
                 loadedCount: 0
             };
@@ -295,7 +293,6 @@
                 const loader = document.getElementById('loader');
 
                 function updateCanvas(fraction) {
-                    // Mobile-Optimized Mapping: 90% do hero dedicado ao movimento da máquina
                     const index = Math.min(state.frameCount - 1, Math.floor(Math.min(1, fraction / 0.9) * (state.frameCount - 1)));
                     const img = state.images[index];
                     if (!img || !img.complete) return;
@@ -306,7 +303,6 @@
                     const sw = img.width * ratio, sh = img.height * ratio;
                     ctx.drawImage(img, (canvas.width - sw) / 2, (canvas.height - sh) / 2, sw, sh);
 
-                    // Efeito de saída (End-of-Hero)
                     if (fraction > 0.85) {
                         const zoomProgress = (fraction - 0.85) / 0.15;
                         canvas.style.transform = `scale(${1 - (zoomProgress * 0.05)}) translate3d(0,0,0)`;
@@ -333,7 +329,6 @@
                             el.classList.add('active');
                             const progress = (fraction - block.start);
                             const moveY = progress * (window.innerHeight * speed * 3);
-                            // Hardware-accelerated translate3d
                             el.style.transform = `translate3d(0, ${-moveY}px, 0)`;
 
                             if(block.id === 'copy-1') {
@@ -359,14 +354,12 @@
                     const velocity = Math.abs(currentY - lastScrollY);
                     lastScrollY = currentY;
 
-                    // MOTION ENGINE: Suavização adaptativa baseada na largura da tela e velocidade
                     const isSmall = window.innerWidth <= 1024;
                     const baseLerp = isSmall ? 0.07 : 0.15;
                     const adaptiveLerp = Math.min(0.3, baseLerp + (velocity * 0.001));
                     
                     const delta = targetFraction - currentFraction;
                     
-                    // Só renderiza se houver mudança significativa para poupar CPU Mobile
                     if (Math.abs(delta) > 0.0001) {
                         currentFraction += delta * adaptiveLerp;
                         updateCanvas(currentFraction);
