@@ -60,9 +60,7 @@
             pointer-events: none; z-index: 20; will-change: transform, opacity;
         }
 
-        .hero-text-block.active {
-            opacity: 1; filter: blur(0px); transform: translate3d(0, 0, 0); pointer-events: auto;
-        }
+        .hero-text-block.active { opacity: 1; filter: blur(0px); transform: translate3d(0, 0, 0); pointer-events: auto; }
 
         #hero-canvas {
             filter: brightness(0.55); width: 100%; height: 100%; object-fit: cover;
@@ -140,6 +138,7 @@
             <div id="copy-3" class="hero-text-block top-[28%]" data-speed="0.15">
                 <h2 class="text-6xl md:text-8xl mb-8">MÁXIMA <br> <span style="color: #D37B42;">EFICIÊNCIA.</span></h2>
                 <button style="background: linear-gradient(135deg, #D37B42, #B58D67);" class="text-white px-10 py-5 rounded-full font-bold uppercase text-[10px] tracking-[0.3em] shadow-lg cursor-pointer">Ver Catálogo</button>
+                <div class="scroll-connector"></div>
             </div>
         </div>
     </section>
@@ -148,7 +147,6 @@
         <div class="max-w-7xl mx-auto text-center">
             <span class="text-[10px] tracking-[0.5em] text-[#D37B42] uppercase font-bold mb-4">Menos parada. Mais produção.</span>
             <h2 class="text-5xl md:text-7xl text-white font-black italic mb-24">Soluções completas para manter seus equipamentos sempre ativos</h2>
-            
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
                 <div class="product-card glass-premium p-8 rounded-3xl group">
                     <div class="h-64 bg-white/5 rounded-2xl mb-6 overflow-hidden flex items-center justify-center">
@@ -156,34 +154,20 @@
                     </div>
                     <h3 class="text-xl font-bold mb-2">MOTORES SÉRIE-T</h3>
                     <p class="text-white/40 text-sm mb-6">Torque extremo para operações contínuas.</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-[#D37B42] font-mono text-xs">READY_TO_SHIP</span>
-                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-white/20 group-hover:text-[#D37B42] transition-colors"></i>
-                    </div>
                 </div>
-
                 <div class="product-card glass-premium p-8 rounded-3xl group">
                     <div class="h-64 bg-white/5 rounded-2xl mb-6 overflow-hidden flex items-center justify-center">
-                        <i data-lucide="zap" class="w-16 h-16 text-white/10 transition-all duration-500"></i>
+                        <i data-lucide="zap" class="w-16 h-16 text-white/10"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-2">SISTEMAS HIDRÁULICOS</h3>
                     <p class="text-white/40 text-sm mb-6">Precisão milimétrica em carga máxima.</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-[#D37B42] font-mono text-xs">PREMIUM_BUILD</span>
-                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-white/20 group-hover:text-[#D37B42] transition-colors"></i>
-                    </div>
                 </div>
-
                 <div class="product-card glass-premium p-8 rounded-3xl group">
                     <div class="h-64 bg-white/5 rounded-2xl mb-6 overflow-hidden flex items-center justify-center">
-                        <i data-lucide="shield-check" class="w-16 h-16 text-white/10 transition-all duration-500"></i>
+                        <i data-lucide="shield-check" class="w-16 h-16 text-white/10"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-2">KITS DE REPARO</h3>
                     <p class="text-white/40 text-sm mb-6">Componentes originais com garantia vitalícia.</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-[#D37B42] font-mono text-xs">IN_STOCK</span>
-                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-white/20 group-hover:text-[#D37B42] transition-colors"></i>
-                    </div>
                 </div>
             </div>
         </div>
@@ -194,7 +178,7 @@
             const state = {
                 baseUrl: "heroframe/ezgif-frame-",
                 frameCount: 83,
-                images: [],
+                bitmaps: [], // FIX 2: Armazenar ImageBitmaps para GPU
                 loadedCount: 0
             };
 
@@ -207,8 +191,17 @@
                 if(window.lucide) lucide.createIcons();
 
                 const canvas = document.getElementById('hero-canvas');
-                const ctx = canvas.getContext('2d');
+                const ctx = canvas.getContext('2d', { alpha: false }); // Performance: desativa alpha channel do canvas
                 const heroSection = document.getElementById('scroll-hero');
+
+                // FIX 4: Separar resize do render loop
+                function handleResize() {
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                    renderFrame(currentFraction); 
+                }
+                window.addEventListener('resize', handleResize);
+                handleResize();
 
                 function renderFrame(fraction) {
                     const videoProgress = Math.min(1, fraction / 0.85);
@@ -216,31 +209,26 @@
                     const base = Math.floor(progress);
                     const t = progress - base;
 
-                    const imgA = state.images[base];
-                    const imgB = state.images[Math.min(base + 1, state.frameCount - 1)];
+                    const imgA = state.bitmaps[base];
+                    const imgB = state.bitmaps[Math.min(base + 1, state.frameCount - 1)];
 
-                    if (!imgA || !imgB || !imgA.complete || !imgB.complete) return;
+                    if (!imgA || !imgB) return;
 
-                    canvas.width = window.innerWidth;
-                    canvas.height = window.innerHeight;
                     const ratio = Math.max(canvas.width / imgA.width, canvas.height / imgA.height);
-                    
-                    // Pixel-perfect rounding using Bitwise OR (| 0) for extra performance
                     const sw = (imgA.width * ratio) | 0;
                     const sh = (imgA.height * ratio) | 0;
                     const sx = ((canvas.width - sw) / 2) | 0;
                     const sy = ((canvas.height - sh) / 2) | 0;
 
-                    // Rendering without clearRect to prevent flicker
+                    // FIX 2: Bitmaps renderizam instantaneamente
                     ctx.globalAlpha = 1;
                     ctx.drawImage(imgA, sx, sy, sw, sh);
-                    if (t > 0.01) {
+                    if (t > 0.05) {
                         ctx.globalAlpha = t;
                         ctx.drawImage(imgB, sx, sy, sw, sh);
                     }
                     ctx.globalAlpha = 1;
 
-                    // Subtle exit zoom
                     if (fraction > 0.88) {
                         const zp = (fraction - 0.88) / 0.12;
                         canvas.style.transform = `scale(${1 - (zp * 0.04)}) translate3d(0,0,0)`;
@@ -273,8 +261,7 @@
                     });
 
                     document.querySelectorAll('.product-card').forEach((card, index) => {
-                        const rect = card.getBoundingClientRect();
-                        if (rect.top < window.innerHeight * 0.92) {
+                        if (card.getBoundingClientRect().top < window.innerHeight * 0.92) {
                             setTimeout(() => card.classList.add('revealed'), index * 80);
                         }
                     });
@@ -285,13 +272,12 @@
                     const velocity = Math.abs(currentY - lastScrollY);
                     lastScrollY = currentY;
 
-                    // Dynamic Smoothness (LerpFactor)
-                    // High velocity = fast response | Low velocity = extra smooth
-                    const baseLerp = isMobile ? 0.12 : 0.15;
-                    const adaptiveLerp = Math.min(0.3, baseLerp + (velocity * 0.0008));
+                    // FIX 3: Lerp agressivo no mobile para evitar lag de burst events
+                    const baseLerp = isMobile ? 0.18 : 0.15;
+                    const adaptiveLerp = Math.min(0.4, baseLerp + (velocity * 0.001));
                     
                     const delta = targetFraction - currentFraction;
-                    if (Math.abs(delta) > 0.00001) {
+                    if (Math.abs(delta) > 0.0001) {
                         currentFraction += delta * adaptiveLerp;
                         renderFrame(currentFraction);
                         applyParallax(currentFraction);
@@ -299,22 +285,31 @@
                     requestAnimationFrame(renderLoop);
                 }
 
-                for (let i = 1; i <= state.frameCount; i++) {
-                    const img = new Image();
-                    img.crossOrigin = "anonymous";
-                    img.src = `${state.baseUrl}${i.toString().padStart(3, '0')}.jpg`;
-                    img.onload = () => {
-                        state.loadedCount++;
-                        if (state.loadedCount === state.frameCount) {
-                            document.getElementById('loader').style.opacity = '0';
-                            setTimeout(() => {
-                                document.getElementById('loader').style.display = 'none';
-                                renderLoop();
-                            }, 500);
-                        }
-                    };
-                    state.images.push(img);
+                async function preloadImages() {
+                    const loadPromises = [];
+                    for (let i = 1; i <= state.frameCount; i++) {
+                        const url = `${state.baseUrl}${i.toString().padStart(3, '0')}.jpg`;
+                        loadPromises.push(
+                            fetch(url)
+                                .then(r => r.blob())
+                                .then(blob => createImageBitmap(blob)) // FIX 2: Converte para Bitmap na GPU
+                                .then(bitmap => {
+                                    state.bitmaps[i - 1] = bitmap;
+                                    state.loadedCount++;
+                                    if (state.loadedCount === state.frameCount) {
+                                        document.getElementById('loader').style.opacity = '0';
+                                        setTimeout(() => {
+                                            document.getElementById('loader').style.display = 'none';
+                                            renderLoop();
+                                        }, 500);
+                                    }
+                                })
+                        );
+                    }
+                    await Promise.all(loadPromises);
                 }
+
+                preloadImages();
 
                 window.addEventListener('scroll', () => {
                     const total = heroSection.offsetHeight - window.innerHeight;
