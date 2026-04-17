@@ -19,13 +19,10 @@
             --fill-width: 0%;
         }
 
-        /* ── TRAVA CONTRA TELA TREMENDO (LAYOUT SHIFT) ── */
+        /* ── TRAVA CONTRA TELA TREMENDO SEM QUEBRAR O STICKY ── */
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         
-        html, body { 
-            overflow-x: hidden; /* Trava scroll horizontal */
-            width: 100%;
-            max-width: 100vw;
+        html { 
             scroll-behavior: smooth; 
         }
 
@@ -34,6 +31,9 @@
             color: #F8F8F8;
             font-family: 'DM Sans', sans-serif;
             -webkit-overflow-scrolling: touch;
+            /* O 'clip' trava o scroll horizontal, mas não quebra o position: sticky do Hero */
+            overflow-x: clip; 
+            max-width: 100vw;
         }
 
         body::before {
@@ -276,7 +276,7 @@
                 </p>
                 <div class="hero-sub" style="opacity:0;transform:translateY(18px);transition:opacity 0.8s ease 0.5s,transform 0.8s ease 0.5s;display:flex;gap:16px;flex-wrap:wrap;">
                     <a href="#produtos" class="cta-btn">Ver catálogo</a>
-                    <a href="#contato" class="cta-btn-outline">Falar com especialista</a>
+                    <a href="#contato" class="cta-btn-outline hide-on-mobile">Falar com especialista</a>
                 </div>
             </div>
         </div>
@@ -387,10 +387,6 @@
 
             </div>
 
-            <div style="text-align:center;margin-top:48px;" class="reveal">
-                <a href="#contato" class="cta-btn-outline" style="display:inline-block;">Ver catálogo completo</a>
-            </div>
-
         </div>
     </section>
 
@@ -426,7 +422,7 @@
                     <span class="section-label reveal">Nossa trajetória</span>
                     <h2 class="section-title reveal reveal-delay-1" style="margin-bottom:24px;">Anos de precisão.<br><span style="color:#D37B42;">Resultados reais.</span></h2>
                     <p class="section-body reveal reveal-delay-2" style="margin-bottom:36px;">Desde nossa fundação, construímos uma reputação sólida no setor industrial de Minas Gerais e região. Não terceirizamos diagnósticos — cada análise é feita por engenheiros próprios, com responsabilidade técnica total.</p>
-                    <a href="#contato" class="cta-btn reveal reveal-delay-3">Solicitar diagnóstico</a>
+                    <a href="#contato" class="cta-btn reveal reveal-delay-3 hide-on-mobile">Solicitar diagnóstico</a>
                 </div>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;">
                     <div style="background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.07);padding:40px 32px;" class="reveal"><div class="stat-num">+<span>18</span></div><div style="font-size:12px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-top:8px;">Anos de mercado</div></div>
@@ -444,7 +440,7 @@
                 <p style="font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,5vw,52px);letter-spacing:0.02em;color:#fff;line-height:1;margin-bottom:8px;">PAROU? ACIONAMOS EM ATÉ 4 HORAS.</p>
                 <p style="font-size:14px;color:rgba(255,255,255,0.6);font-weight:300;">Atendimento emergencial 24/7 para clientes em contrato.</p>
             </div>
-            <a href="#contato" style="display:inline-block;background:#fff;color:#D37B42;padding:18px 44px;border-radius:100px;font-family:'DM Sans',sans-serif;font-size:10px;font-weight:500;letter-spacing:0.3em;text-transform:uppercase;text-decoration:none;white-space:nowrap;transition:transform 0.2s ease,box-shadow 0.2s ease;box-shadow:0 0 40px rgba(0,0,0,0.2);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">Acionar agora</a>
+            <a href="https://wa.me/5534999999999" style="display:inline-block;background:#fff;color:#D37B42;padding:18px 44px;border-radius:100px;font-family:'DM Sans',sans-serif;font-size:10px;font-weight:500;letter-spacing:0.3em;text-transform:uppercase;text-decoration:none;white-space:nowrap;transition:transform 0.2s ease,box-shadow 0.2s ease;box-shadow:0 0 40px rgba(0,0,0,0.2);">Acionar agora</a>
         </div>
     </div>
 
@@ -600,7 +596,7 @@
 
         function recalcLayout() {
             dpr = Math.min(window.devicePixelRatio || 1, IS_MOBILE ? 1.5 : 2);
-            // CORREÇÃO CRÍTICA DO TREMOR (LAYOUT SHIFT): usar clientWidth ignora a barra de scroll
+            // Corrige o recálculo que tremia a tela usando clientWidth
             cW  = document.documentElement.clientWidth; 
             cH  = window.innerHeight;
             canvas.width  = Math.round(cW * dpr);
@@ -636,7 +632,8 @@
                 ctx.globalAlpha = 1;
             }
 
-            if (fraction > 0.88) {
+            // Não encolhe (scale) no final se for mobile
+            if (fraction > 0.88 && !IS_MOBILE) {
                 const zp = (fraction - 0.88) / 0.12;
                 canvas.style.transform = `scale(${1 - zp * 0.04})`;
             } else {
@@ -647,7 +644,8 @@
         const blocks = [
             { id: 'copy-1', dot: 'dot-1', start: 0.04, end: 0.26 },
             { id: 'copy-2', dot: 'dot-2', start: 0.33, end: 0.57 },
-            { id: 'copy-3', dot: 'dot-3', start: 0.69, end: 0.98 }
+            // Alterado para não sumir no mobile
+            { id: 'copy-3', dot: 'dot-3', start: 0.69, end: IS_MOBILE ? 2.0 : 0.98 } 
         ];
 
         function applyText(fraction) {
@@ -662,7 +660,13 @@
                     el.classList.add('active');
                     if (dotEl) dotEl.classList.add('active');
                     
-                    const drift = (fraction - start) * (window.innerHeight * 0.55);
+                    let calcFraction = fraction;
+                    // Trava o último bloco no lugar (não deixa ele subir e sumir) no mobile
+                    if (IS_MOBILE && id === 'copy-3' && fraction > 0.85) {
+                        calcFraction = 0.85; 
+                    }
+                    
+                    const drift = (calcFraction - start) * (window.innerHeight * 0.55);
                     el.style.transform = `translateY(${-drift | 0}px)`;
                     
                     if (id === 'copy-1') {
@@ -690,6 +694,8 @@
                 const lerp = Math.min(IS_MOBILE ? 0.45 : 0.25, base + velocity * 0.0012);
                 currentFraction += delta * lerp;
                 render(currentFraction);
+                applyText(currentFraction);
+            } else if (IS_MOBILE) {
                 applyText(currentFraction);
             }
             rafId = requestAnimationFrame(loop);
