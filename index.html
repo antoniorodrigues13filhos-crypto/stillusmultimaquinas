@@ -19,7 +19,6 @@
             --fill-width: 0%;
         }
 
-        /* ── TRAVA CONTRA TELA TREMENDO SEM QUEBRAR O STICKY ── */
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         
         html { 
@@ -85,7 +84,17 @@
 
         /* ── HERO SECTION ── */
         #scroll-hero { height: 600vh; position: relative; }
-        .hero-sticky { position: sticky; top: 0; height: 100vh; width: 100%; overflow: hidden; }
+        .hero-sticky { 
+            position: sticky; 
+            top: 0; 
+            height: 100vh; 
+            width: 100%; 
+            overflow: hidden; 
+            background-color: #121212; 
+            background-image: url('heroframe/ezgif-frame-001.jpg'); 
+            background-size: cover;
+            background-position: center;
+        }
 
         .scroll-dots { position: fixed; right: 40px; top: 50%; transform: translateY(-50%); z-index: 60; display: flex; flex-direction: column; gap: 24px; pointer-events: none; }
         .dot { width: 4px; height: 4px; background: #fff; border-radius: 50%; opacity: 0.15; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform, opacity; }
@@ -123,8 +132,15 @@
         .cta-btn-outline { display: inline-block; background: transparent; color: rgba(255,255,255,0.7); padding: 18px 44px; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; cursor: pointer; border: 0.5px solid rgba(255,255,255,0.2); transition: all 0.2s ease; text-decoration: none; }
         .cta-btn-outline:hover { border-color: rgba(255,255,255,0.45); color: #fff; }
 
-        /* ── PRODUCTS ── */
-        #produtos { position: relative; z-index: 40; margin-top: -100vh; padding-top: 25vh; background: linear-gradient(to bottom, transparent, #080808 15%, #080808 100%); }
+        /* ── PRODUCTS CORREÇÃO DE TRANSIÇÃO ── */
+        #produtos { 
+            position: relative; 
+            z-index: 40; 
+            /* Correção do overlap: Transição linear após o final do scroll do Hero */
+            margin-top: 0; 
+            padding-top: 100px; 
+            background: #080808; 
+        }
         .product-card { opacity: 0; transform: translate3d(0, 40px, 0); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1), border 0.3s ease, box-shadow 0.3s ease; cursor: pointer; background: rgba(255,255,255,0.03); backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%); border: 0.5px solid rgba(255,255,255,0.08); will-change: transform, opacity; }
         .product-card:hover { transform: translate3d(0, -5px, 0) scale3d(1.02, 1.02, 1) !important; border-color: rgba(211,123,66,0.35); box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 24px rgba(211,123,66,0.12); background: rgba(255,255,255,0.05); }
         .product-card.revealed { opacity: 1; transform: translate3d(0,0,0); }
@@ -290,7 +306,7 @@
         </div>
     </section>
 
-    <section id="produtos" class="relative z-30 py-32 px-[8%]" style="margin-top:-100vh;padding-top:25vh;background:linear-gradient(to bottom, transparent, #080808 15%, #080808 100%);">
+    <section id="produtos" class="py-32 px-[8%]">
         <div style="max-width:1200px;margin:0 auto;">
 
             <div style="text-align:center;margin-bottom:80px;">
@@ -606,7 +622,6 @@
         const ctx    = canvas.getContext('2d', { alpha: false, desynchronized: true });
         let cW, cH, dpr, drawX, drawY, drawW, drawH;
 
-        // Caching DOM elements for performance
         const blocks = [
             { id: 'copy-1', dot: 'dot-1', start: 0.04, end: 0.26, el: null, dotEl: null },
             { id: 'copy-2', dot: 'dot-2', start: 0.33, end: 0.57, el: null, dotEl: null },
@@ -681,7 +696,6 @@
                     }
                     
                     const drift = (calcFraction - b.start) * (window.innerHeight * 0.55);
-                    // Sub-pixel rendering (toFixed(2)) prevents jitter
                     b.el.style.transform = `translate3d(0, ${-drift.toFixed(2)}px, 0)`;
                     
                     if (b.id === 'copy-1') {
@@ -705,7 +719,7 @@
             const delta = targetFraction - currentFraction;
 
             if (Math.abs(delta) > 0.00005) {
-                const base = IS_MOBILE ? 0.20 : 0.08; // Softer base for smoother drag
+                const base = IS_MOBILE ? 0.20 : 0.08; 
                 const lerp = Math.min(IS_MOBILE ? 0.35 : 0.15, base + velocity * 0.0008);
                 currentFraction += delta * lerp;
                 render(currentFraction);
@@ -714,7 +728,6 @@
                 applyText(currentFraction);
             }
             
-            // Checks card reveal smoothly
             document.querySelectorAll('.product-card').forEach((card, i) => {
                 if (!card.classList.contains('revealed') && card.getBoundingClientRect().top < window.innerHeight * 0.9) {
                     setTimeout(() => card.classList.add('revealed'), (i % 3) * 100);
@@ -748,7 +761,7 @@
         const loaderEl  = document.getElementById('loader');
 
         async function loadAll() {
-            initBlocks(); // Init DOM cache
+            initBlocks(); 
             const CONCURRENCY = IS_MOBILE ? 4 : 8;
             const queue = [];
             for (let i = 0; i < FRAME_COUNT; i++) queue.push(i);
