@@ -79,7 +79,7 @@
             height: 100%;
             object-fit: cover;
             transform: translate3d(0,0,0);
-            will-change: transform, filter;
+            will-change: transform;
             backface-visibility: hidden;
         }
 
@@ -223,7 +223,6 @@
 
             let currentFraction = 0;
             let targetFraction = 0;
-            let velocity = 0;
             let lastScrollY = window.scrollY;
             let isMobile = window.innerWidth <= 1024;
 
@@ -235,7 +234,9 @@
                 const heroSection = document.getElementById('scroll-hero');
 
                 function renderFrame(fraction) {
-                    const progress = fraction * (state.frameCount - 1);
+                    // Mapeamento: todos os frames passam em 80% do scroll total
+                    const videoProgress = Math.min(1, fraction / 0.8);
+                    const progress = videoProgress * (state.frameCount - 1);
                     const base = Math.floor(progress);
                     const t = progress - base;
 
@@ -250,25 +251,21 @@
                     const sw = imgA.width * ratio, sh = imgA.height * ratio;
                     const sx = (canvas.width - sw) / 2, sy = (canvas.height - sh) / 2;
 
-                    const blurValue = Math.min(velocity * 0.04, isMobile ? 3 : 6);
-                    
+                    // Lógica Anti-Flicker: Frame A base + Frame B alpha por cima
                     ctx.globalAlpha = 1;
                     ctx.drawImage(imgA, sx, sy, sw, sh);
-                    
                     if (t > 0) {
                         ctx.globalAlpha = t;
                         ctx.drawImage(imgB, sx, sy, sw, sh);
                     }
-                    
                     ctx.globalAlpha = 1;
 
+                    // Final do Hero: Zoom sutil sem blur
                     if (fraction > 0.85) {
                         const zp = (fraction - 0.85) / 0.15;
                         canvas.style.transform = `scale(${1 - (zp * 0.05)}) translate3d(0,0,0)`;
-                        canvas.style.filter = `brightness(0.55) blur(${blurValue + (zp * 10)}px)`;
                     } else {
                         canvas.style.transform = `scale(1) translate3d(0,0,0)`;
-                        canvas.style.filter = `brightness(0.55) blur(${blurValue}px)`;
                     }
                 }
 
@@ -306,21 +303,18 @@
 
                 function renderLoop() {
                     const currentY = window.scrollY;
-                    velocity = Math.abs(currentY - lastScrollY);
+                    const velocity = Math.abs(currentY - lastScrollY);
                     lastScrollY = currentY;
 
                     const baseLerp = isMobile ? 0.08 : 0.12;
                     const adaptiveLerp = Math.min(0.25, baseLerp + (velocity * 0.0005));
                     
-                    const predictedTarget = targetFraction + (velocity * 0.00001);
-                    const delta = predictedTarget - currentFraction;
-                    
+                    const delta = targetFraction - currentFraction;
                     if (Math.abs(delta) > 0.00001) {
                         currentFraction += delta * adaptiveLerp;
                         renderFrame(currentFraction);
                         applyParallax(currentFraction);
                     }
-
                     requestAnimationFrame(renderLoop);
                 }
 
