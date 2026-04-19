@@ -174,9 +174,14 @@
             background: linear-gradient(to bottom, transparent, #080808 15vh, #080808 100%); 
         }
 
-        .product-card { opacity: 0; transform: translate3d(0, 40px, 0); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1), border 0.3s ease, box-shadow 0.3s ease; cursor: pointer; background: rgba(255,255,255,0.03); backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%); border: 0.5px solid rgba(255,255,255,0.08); will-change: transform, opacity; }
-        .product-card:hover { transform: translate3d(0, -5px, 0) scale3d(1.02, 1.02, 1) !important; border-color: rgba(211,123,66,0.35); box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 24px rgba(211,123,66,0.12); background: rgba(255,255,255,0.05); }
+        .product-card { opacity: 0; transform: translate3d(0, 40px, 0); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1), border 0.3s ease, box-shadow 0.3s ease; cursor: pointer; background: rgba(255,255,255,0.03); border: 0.5px solid rgba(255,255,255,0.08); will-change: transform, opacity; }
+        .product-card:hover { transform: translate3d(0, -5px, 0) scale3d(1.02, 1.02, 1) !important; border-color: rgba(211,123,66,0.35); box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 24px rgba(211,123,66,0.12); }
         .product-card.revealed { opacity: 1; transform: translate3d(0,0,0); }
+
+        /* ── OVERLAY CINEMATOGRÁFICO DOS CARDS ── */
+        .cinematic-overlay {
+            background: linear-gradient(to top, #050505 5%, rgba(5,5,5,0.85) 40%, transparent 100%);
+        }
 
         .section-label { font-size: 10px; letter-spacing: 0.5em; color: #D37B42; text-transform: uppercase; font-weight: 500; display: block; margin-bottom: 16px; }
         .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(40px, 8vw, 88px); letter-spacing: 0.02em; line-height: 0.92; color: #F8F8F8; }
@@ -351,94 +356,115 @@
 
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;">
 
-                <div class="product-card" style="padding:32px;border-radius:24px;">
-                    <div style="height:220px;background:rgba(255,255,255,0.04);border-radius:16px;margin-bottom:24px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-                        <div style="position:absolute;inset:0;background:radial-gradient(circle at 60% 40%, rgba(211,123,66,0.08) 0%, transparent 70%);"></div>
-                        <img src="produtos/cortador de grama toyama tlt42-19a.png" alt="Produto" style="position:relative; z-index:1; width:100%; height:100%; object-fit:contain; padding:24px;">
+                <div class="product-card group relative overflow-hidden rounded-[24px] min-h-[420px] flex flex-col justify-end p-8 bg-[#080808]">
+                    <div class="absolute inset-0 z-0 w-full h-full transition-transform duration-[900ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-110">
+                        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(211,123,66,0.12)_0%,transparent_60%)]"></div>
+                        <img src="produtos/cortador de grama toyama tlt42-19a.png" alt="Produto" class="w-full h-full object-contain p-8 drop-shadow-2xl opacity-75 transition-opacity duration-700 group-hover:opacity-100">
                     </div>
-                    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:0.05em;margin-bottom:8px;">MOTORES SÉRIE-T</h3>
-                    <p style="color:rgba(255,255,255,0.38);font-size:13px;font-weight:300;line-height:1.6;margin-bottom:20px;">Torque extremo para operações contínuas de alta demanda industrial.</p>
-                    <div style="display:flex;justify-content:space-between;align-items:center;">
-                        <span style="color:#D37B42;font-family:monospace;font-size:11px;letter-spacing:0.1em;">PRONTO_ENVIO</span>
-                        <i data-lucide="arrow-up-right" style="width:18px;height:18px;color:rgba(255,255,255,0.18);"></i>
-                    </div>
-                </div>
-
-                <div class="product-card" style="padding:32px;border-radius:24px;">
-                    <div style="height:220px;background:rgba(255,255,255,0.04);border-radius:16px;margin-bottom:24px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-                        <div style="position:absolute;inset:0;background:radial-gradient(circle at 40% 60%, rgba(211,123,66,0.08) 0%, transparent 70%);"></div>
-                        <img src="produtos/Motosserra a bateria com sabre de 6 polegadas Tensão da bateria 20V.png" alt="Produto" style="position:relative; z-index:1; width:100%; height:100%; object-fit:contain; padding:24px;">
-                    </div>
-                    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:0.05em;margin-bottom:8px;">SISTEMAS HIDRÁULICOS</h3>
-                    <p style="color:rgba(255,255,255,0.38);font-size:13px;font-weight:300;line-height:1.6;margin-bottom:20px;">Precisão milimétrica sob carga máxima e ciclos contínuos de operação.</p>
-                    <div style="display:flex;justify-content:space-between;align-items:center;">
-                        <span style="color:#D37B42;font-family:monospace;font-size:11px;letter-spacing:0.1em;">LINHA_PREMIUM</span>
-                        <i data-lucide="arrow-up-right" style="width:18px;height:18px;color:rgba(255,255,255,0.18);"></i>
+                    <div class="absolute inset-0 z-10 cinematic-overlay"></div>
+                    <div class="relative z-20 flex flex-col transform transition-transform duration-[800ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:-translate-y-2">
+                        <div class="flex justify-between items-center mb-5">
+                            <span class="text-[#D37B42] font-mono text-[10px] tracking-[0.2em] font-bold px-3 py-1.5 rounded-full bg-[#D37B42]/10 border border-[#D37B42]/30 backdrop-blur-md">PRONTO_ENVIO</span>
+                            <i data-lucide="arrow-up-right" class="w-5 h-5 text-white/30 transition-colors duration-500 group-hover:text-[#D37B42]"></i>
+                        </div>
+                        <h3 class="font-['Bebas_Neue'] text-3xl tracking-[0.05em] text-white mb-2 drop-shadow-lg">MOTORES SÉRIE-T</h3>
+                        <p class="text-white/50 text-[13px] font-light leading-relaxed line-clamp-2 mb-0">Torque extremo para operações contínuas de alta demanda industrial.</p>
                     </div>
                 </div>
 
-                <div class="product-card" style="padding:32px;border-radius:24px;">
-                    <div style="height:220px;background:rgba(255,255,255,0.04);border-radius:16px;margin-bottom:24px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-                        <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, rgba(211,123,66,0.08) 0%, transparent 70%);"></div>
-                        <img src="produtos/O kit perfeito para você fazendeiro.png" alt="Produto" style="position:relative; z-index:1; width:100%; height:100%; object-fit:contain; padding:24px;">
+                <div class="product-card group relative overflow-hidden rounded-[24px] min-h-[420px] flex flex-col justify-end p-8 bg-[#080808]">
+                    <div class="absolute inset-0 z-0 w-full h-full transition-transform duration-[900ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-110">
+                        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(211,123,66,0.12)_0%,transparent_60%)]"></div>
+                        <img src="produtos/Motosserra a bateria com sabre de 6 polegadas Tensão da bateria 20V.png" alt="Produto" class="w-full h-full object-contain p-8 drop-shadow-2xl opacity-75 transition-opacity duration-700 group-hover:opacity-100">
                     </div>
-                    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:0.05em;margin-bottom:8px;">KITS DE REPARO</h3>
-                    <p style="color:rgba(255,255,255,0.38);font-size:13px;font-weight:300;line-height:1.6;margin-bottom:20px;">Componentes originais com garantia de fábrica e entrega expressa para todo o Brasil.</p>
-                    <div style="display:flex;justify-content:space-between;align-items:center;">
-                        <span style="color:#D37B42;font-family:monospace;font-size:11px;letter-spacing:0.1em;">EM_ESTOQUE</span>
-                        <i data-lucide="arrow-up-right" style="width:18px;height:18px;color:rgba(255,255,255,0.18);"></i>
-                    </div>
-                </div>
-
-                <div class="product-card" style="padding:32px;border-radius:24px;">
-                    <div style="height:220px;background:rgba(255,255,255,0.04);border-radius:16px;margin-bottom:24px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-                        <div style="position:absolute;inset:0;background:radial-gradient(circle at 55% 45%, rgba(211,123,66,0.08) 0%, transparent 70%);"></div>
-                        <img src="produtos/motosserra de 25cc da Vulcan.png" alt="Produto" style="position:relative; z-index:1; width:100%; height:100%; object-fit:contain; padding:24px;">
-                    </div>
-                    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:0.05em;margin-bottom:8px;">PAINÉIS DE CONTROLE</h3>
-                    <p style="color:rgba(255,255,255,0.38);font-size:13px;font-weight:300;line-height:1.6;margin-bottom:20px;">Automação e controle inteligente para monitoramento em tempo real da sua linha.</p>
-                    <div style="display:flex;justify-content:space-between;align-items:center;">
-                        <span style="color:#D37B42;font-family:monospace;font-size:11px;letter-spacing:0.1em;">SOB_CONSULTA</span>
-                        <i data-lucide="arrow-up-right" style="width:18px;height:18px;color:rgba(255,255,255,0.18);"></i>
+                    <div class="absolute inset-0 z-10 cinematic-overlay"></div>
+                    <div class="relative z-20 flex flex-col transform transition-transform duration-[800ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:-translate-y-2">
+                        <div class="flex justify-between items-center mb-5">
+                            <span class="text-[#D37B42] font-mono text-[10px] tracking-[0.2em] font-bold px-3 py-1.5 rounded-full bg-[#D37B42]/10 border border-[#D37B42]/30 backdrop-blur-md">LINHA_PREMIUM</span>
+                            <i data-lucide="arrow-up-right" class="w-5 h-5 text-white/30 transition-colors duration-500 group-hover:text-[#D37B42]"></i>
+                        </div>
+                        <h3 class="font-['Bebas_Neue'] text-3xl tracking-[0.05em] text-white mb-2 drop-shadow-lg">SISTEMAS HIDRÁULICOS</h3>
+                        <p class="text-white/50 text-[13px] font-light leading-relaxed line-clamp-2 mb-0">Precisão milimétrica sob carga máxima e ciclos contínuos de operação.</p>
                     </div>
                 </div>
 
-                <div class="product-card" style="padding:32px;border-radius:24px;">
-                    <div style="height:220px;background:rgba(255,255,255,0.04);border-radius:16px;margin-bottom:24px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-                        <div style="position:absolute;inset:0;background:radial-gradient(circle at 45% 55%, rgba(211,123,66,0.08) 0%, transparent 70%);"></div>
-                        <img src="produtos/soprador de folhas.png" alt="Produto" style="position:relative; z-index:1; width:100%; height:100%; object-fit:contain; padding:24px;">
+                <div class="product-card group relative overflow-hidden rounded-[24px] min-h-[420px] flex flex-col justify-end p-8 bg-[#080808]">
+                    <div class="absolute inset-0 z-0 w-full h-full transition-transform duration-[900ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-110">
+                        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(211,123,66,0.12)_0%,transparent_60%)]"></div>
+                        <img src="produtos/O kit perfeito para você fazendeiro.png" alt="Produto" class="w-full h-full object-contain p-8 drop-shadow-2xl opacity-75 transition-opacity duration-700 group-hover:opacity-100">
                     </div>
-                    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:0.05em;margin-bottom:8px;">VÁLVULAS PROPORCIONAIS</h3>
-                    <p style="color:rgba(255,255,255,0.38);font-size:13px;font-weight:300;line-height:1.6;margin-bottom:20px;">Controle dinâmico de fluxo e pressão para sistemas que exigem resposta rápida.</p>
-                    <div style="display:flex;justify-content:space-between;align-items:center;">
-                        <span style="color:#D37B42;font-family:monospace;font-size:11px;letter-spacing:0.1em;">ALTA_PRECISAO</span>
-                        <i data-lucide="arrow-up-right" style="width:18px;height:18px;color:rgba(255,255,255,0.18);"></i>
-                    </div>
-                </div>
-
-                <div class="product-card" style="padding:32px;border-radius:24px;">
-                    <div style="height:220px;background:rgba(255,255,255,0.04);border-radius:16px;margin-bottom:24px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-                        <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 40%, rgba(211,123,66,0.08) 0%, transparent 70%);"></div>
-                        <img src="produtos/soprador marca branco com capacidade do tanque de gasolina de até 2,3litros...png" alt="Produto" style="position:relative; z-index:1; width:100%; height:100%; object-fit:contain; padding:24px;">
-                    </div>
-                    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:0.05em;margin-bottom:8px;">SENSORES INDUSTRIAIS</h3>
-                    <p style="color:rgba(255,255,255,0.38);font-size:13px;font-weight:300;line-height:1.6;margin-bottom:20px;">Monitoramento de temperatura, presença e nível com integração total em I/O Link.</p>
-                    <div style="display:flex;justify-content:space-between;align-items:center;">
-                        <span style="color:#D37B42;font-family:monospace;font-size:11px;letter-spacing:0.1em;">TECNOLOGIA_4.0</span>
-                        <i data-lucide="arrow-up-right" style="width:18px;height:18px;color:rgba(255,255,255,0.18);"></i>
+                    <div class="absolute inset-0 z-10 cinematic-overlay"></div>
+                    <div class="relative z-20 flex flex-col transform transition-transform duration-[800ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:-translate-y-2">
+                        <div class="flex justify-between items-center mb-5">
+                            <span class="text-[#D37B42] font-mono text-[10px] tracking-[0.2em] font-bold px-3 py-1.5 rounded-full bg-[#D37B42]/10 border border-[#D37B42]/30 backdrop-blur-md">EM_ESTOQUE</span>
+                            <i data-lucide="arrow-up-right" class="w-5 h-5 text-white/30 transition-colors duration-500 group-hover:text-[#D37B42]"></i>
+                        </div>
+                        <h3 class="font-['Bebas_Neue'] text-3xl tracking-[0.05em] text-white mb-2 drop-shadow-lg">KITS DE REPARO</h3>
+                        <p class="text-white/50 text-[13px] font-light leading-relaxed line-clamp-2 mb-0">Componentes originais com garantia de fábrica e entrega expressa para todo o Brasil.</p>
                     </div>
                 </div>
 
-                <div class="product-card" style="padding:32px;border-radius:24px;">
-                    <div style="height:220px;background:rgba(255,255,255,0.04);border-radius:16px;margin-bottom:24px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-                        <div style="position:absolute;inset:0;background:radial-gradient(circle at 35% 50%, rgba(211,123,66,0.08) 0%, transparent 70%);"></div>
-                        <i data-lucide="refresh-cw" style="width:56px;height:56px;color:rgba(255,255,255,0.08);position:relative;z-index:1;"></i>
+                <div class="product-card group relative overflow-hidden rounded-[24px] min-h-[420px] flex flex-col justify-end p-8 bg-[#080808]">
+                    <div class="absolute inset-0 z-0 w-full h-full transition-transform duration-[900ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-110">
+                        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(211,123,66,0.12)_0%,transparent_60%)]"></div>
+                        <img src="produtos/motosserra de 25cc da Vulcan.png" alt="Produto" class="w-full h-full object-contain p-8 drop-shadow-2xl opacity-75 transition-opacity duration-700 group-hover:opacity-100">
                     </div>
-                    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:0.05em;margin-bottom:8px;">REDUTORES DE VELOCIDADE</h3>
-                    <p style="color:rgba(255,255,255,0.38);font-size:13px;font-weight:300;line-height:1.6;margin-bottom:20px;">Transmissão de potência otimizada com baixo desgaste e máxima durabilidade térmica.</p>
-                    <div style="display:flex;justify-content:space-between;align-items:center;">
-                        <span style="color:#D37B42;font-family:monospace;font-size:11px;letter-spacing:0.1em;">ESTOQUE_LOCAL</span>
-                        <i data-lucide="arrow-up-right" style="width:18px;height:18px;color:rgba(255,255,255,0.18);"></i>
+                    <div class="absolute inset-0 z-10 cinematic-overlay"></div>
+                    <div class="relative z-20 flex flex-col transform transition-transform duration-[800ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:-translate-y-2">
+                        <div class="flex justify-between items-center mb-5">
+                            <span class="text-[#D37B42] font-mono text-[10px] tracking-[0.2em] font-bold px-3 py-1.5 rounded-full bg-[#D37B42]/10 border border-[#D37B42]/30 backdrop-blur-md">SOB_CONSULTA</span>
+                            <i data-lucide="arrow-up-right" class="w-5 h-5 text-white/30 transition-colors duration-500 group-hover:text-[#D37B42]"></i>
+                        </div>
+                        <h3 class="font-['Bebas_Neue'] text-3xl tracking-[0.05em] text-white mb-2 drop-shadow-lg">PAINÉIS DE CONTROLE</h3>
+                        <p class="text-white/50 text-[13px] font-light leading-relaxed line-clamp-2 mb-0">Automação e controle inteligente para monitoramento em tempo real da sua linha.</p>
+                    </div>
+                </div>
+
+                <div class="product-card group relative overflow-hidden rounded-[24px] min-h-[420px] flex flex-col justify-end p-8 bg-[#080808]">
+                    <div class="absolute inset-0 z-0 w-full h-full transition-transform duration-[900ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-110">
+                        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(211,123,66,0.12)_0%,transparent_60%)]"></div>
+                        <img src="produtos/soprador de folhas.png" alt="Produto" class="w-full h-full object-contain p-8 drop-shadow-2xl opacity-75 transition-opacity duration-700 group-hover:opacity-100">
+                    </div>
+                    <div class="absolute inset-0 z-10 cinematic-overlay"></div>
+                    <div class="relative z-20 flex flex-col transform transition-transform duration-[800ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:-translate-y-2">
+                        <div class="flex justify-between items-center mb-5">
+                            <span class="text-[#D37B42] font-mono text-[10px] tracking-[0.2em] font-bold px-3 py-1.5 rounded-full bg-[#D37B42]/10 border border-[#D37B42]/30 backdrop-blur-md">ALTA_PRECISAO</span>
+                            <i data-lucide="arrow-up-right" class="w-5 h-5 text-white/30 transition-colors duration-500 group-hover:text-[#D37B42]"></i>
+                        </div>
+                        <h3 class="font-['Bebas_Neue'] text-3xl tracking-[0.05em] text-white mb-2 drop-shadow-lg">VÁLVULAS PROPORCIONAIS</h3>
+                        <p class="text-white/50 text-[13px] font-light leading-relaxed line-clamp-2 mb-0">Controle dinâmico de fluxo e pressão para sistemas que exigem resposta rápida.</p>
+                    </div>
+                </div>
+
+                <div class="product-card group relative overflow-hidden rounded-[24px] min-h-[420px] flex flex-col justify-end p-8 bg-[#080808]">
+                    <div class="absolute inset-0 z-0 w-full h-full transition-transform duration-[900ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-110">
+                        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(211,123,66,0.12)_0%,transparent_60%)]"></div>
+                        <img src="produtos/soprador marca branco com capacidade do tanque de gasolina de até 2,3litros...png" alt="Produto" class="w-full h-full object-contain p-8 drop-shadow-2xl opacity-75 transition-opacity duration-700 group-hover:opacity-100">
+                    </div>
+                    <div class="absolute inset-0 z-10 cinematic-overlay"></div>
+                    <div class="relative z-20 flex flex-col transform transition-transform duration-[800ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:-translate-y-2">
+                        <div class="flex justify-between items-center mb-5">
+                            <span class="text-[#D37B42] font-mono text-[10px] tracking-[0.2em] font-bold px-3 py-1.5 rounded-full bg-[#D37B42]/10 border border-[#D37B42]/30 backdrop-blur-md">TECNOLOGIA_4.0</span>
+                            <i data-lucide="arrow-up-right" class="w-5 h-5 text-white/30 transition-colors duration-500 group-hover:text-[#D37B42]"></i>
+                        </div>
+                        <h3 class="font-['Bebas_Neue'] text-3xl tracking-[0.05em] text-white mb-2 drop-shadow-lg">SENSORES INDUSTRIAIS</h3>
+                        <p class="text-white/50 text-[13px] font-light leading-relaxed line-clamp-2 mb-0">Monitoramento de temperatura, presença e nível com integração total em I/O Link.</p>
+                    </div>
+                </div>
+
+                <div class="product-card group relative overflow-hidden rounded-[24px] min-h-[420px] flex flex-col justify-end p-8 bg-[#080808]">
+                    <div class="absolute inset-0 z-0 w-full h-full flex items-center justify-center transition-transform duration-[900ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-110">
+                        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(211,123,66,0.12)_0%,transparent_60%)]"></div>
+                        <i data-lucide="refresh-cw" class="w-24 h-24 text-white/10 drop-shadow-2xl opacity-75 transition-opacity duration-700 group-hover:opacity-100 group-hover:text-white/20 relative z-10"></i>
+                    </div>
+                    <div class="absolute inset-0 z-10 cinematic-overlay"></div>
+                    <div class="relative z-20 flex flex-col transform transition-transform duration-[800ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:-translate-y-2">
+                        <div class="flex justify-between items-center mb-5">
+                            <span class="text-[#D37B42] font-mono text-[10px] tracking-[0.2em] font-bold px-3 py-1.5 rounded-full bg-[#D37B42]/10 border border-[#D37B42]/30 backdrop-blur-md">ESTOQUE_LOCAL</span>
+                            <i data-lucide="arrow-up-right" class="w-5 h-5 text-white/30 transition-colors duration-500 group-hover:text-[#D37B42]"></i>
+                        </div>
+                        <h3 class="font-['Bebas_Neue'] text-3xl tracking-[0.05em] text-white mb-2 drop-shadow-lg">REDUTORES DE VELOCIDADE</h3>
+                        <p class="text-white/50 text-[13px] font-light leading-relaxed line-clamp-2 mb-0">Transmissão de potência otimizada com baixo desgaste e máxima durabilidade térmica.</p>
                     </div>
                 </div>
 
@@ -658,7 +684,7 @@
         const blocks = [
             { id: 'copy-1', dot: 'dot-1', start: 0.04, end: 0.26, el: null, dotEl: null },
             { id: 'copy-2', dot: 'dot-2', start: 0.33, end: 0.57, el: null, dotEl: null },
-            { id: 'copy-3', dot: 'dot-3', start: 0.69, end: 0.98, el: null, dotEl: null } 
+            { id: 'copy-3', dot: 'dot-3', start: 0.69, end: IS_MOBILE ? 2.0 : 0.98, el: null, dotEl: null } 
         ];
 
         function initBlocks() {
@@ -724,8 +750,8 @@
                     if (b.dotEl) b.dotEl.classList.add('active');
                     
                     let calcFraction = fraction;
-                    if (b.id === 'copy-3' && fraction > 0.80) {
-                        calcFraction = 0.80; 
+                    if (IS_MOBILE && b.id === 'copy-3' && fraction > 0.85) {
+                        calcFraction = 0.85; 
                     }
                     
                     const drift = (calcFraction - b.start) * (window.innerHeight * 0.55);
