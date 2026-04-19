@@ -164,19 +164,29 @@
         .cta-btn-outline { display: inline-block; background: transparent; color: rgba(255,255,255,0.7); padding: 18px 44px; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; cursor: pointer; border: 0.5px solid rgba(255,255,255,0.2); transition: all 0.2s ease; text-decoration: none; }
         .cta-btn-outline:hover { border-color: rgba(255,255,255,0.45); color: #fff; }
 
-        /* ── TRANSIÇÃO PRODUTOS (GAVETA PERFEITA MOBILE E DESKTOP) ── */
+        /* ── TRANSIÇÃO PRODUTOS (FLUXO NATURAL) ── */
         #produtos { 
             position: relative; 
             z-index: 40; 
-            margin-top: -100vh;
-            margin-top: -100svh; 
-            padding-top: 15vh; 
-            background: linear-gradient(to bottom, transparent, #080808 15vh, #080808 100%); 
+            padding-top: 100px; 
+            background: #080808; 
         }
 
-        .product-card { opacity: 0; transform: translate3d(0, 40px, 0); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1), border 0.3s ease, box-shadow 0.3s ease; cursor: pointer; background: rgba(255,255,255,0.03); backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%); border: 0.5px solid rgba(255,255,255,0.08); will-change: transform, opacity; }
+        .product-card { 
+            opacity: 0; transform: translate3d(0, 40px, 0); 
+            transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1), border 0.3s ease, box-shadow 0.3s ease; 
+            cursor: pointer; background: rgba(255,255,255,0.03); backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%); 
+            border: 0.5px solid rgba(255,255,255,0.08); 
+            will-change: transform, opacity; 
+            display: flex; flex-direction: column; overflow: hidden; border-radius: 24px; 
+        }
+        
         .product-card:hover { transform: translate3d(0, -5px, 0) scale3d(1.02, 1.02, 1) !important; border-color: rgba(211,123,66,0.35); box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 24px rgba(211,123,66,0.12); }
         .product-card.revealed { opacity: 1; transform: translate3d(0,0,0); }
+        
+        /* Estilos dos hover aplicados na estrutura interna segura */
+        .product-card:hover .product-image { transform: scale(1.05) !important; }
+        .product-card:hover .arrow-icon { color: #D37B42 !important; }
 
         .section-label { font-size: 10px; letter-spacing: 0.5em; color: #D37B42; text-transform: uppercase; font-weight: 500; display: block; margin-bottom: 16px; }
         .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(40px, 8vw, 88px); letter-spacing: 0.02em; line-height: 0.92; color: #F8F8F8; }
@@ -351,101 +361,115 @@
 
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;">
 
-                <div class="product-card group flex flex-col overflow-hidden rounded-[24px]">
-                    <div class="w-full h-[220px] overflow-hidden relative">
-                        <img src="produtos/cortador de grama toyama tlt42-19a.png" alt="Cortador de grama Toyama" class="w-full h-full object-cover transition-transform duration-[800ms] group-hover:scale-105">
+                <div class="product-card">
+                    <div style="width: 100%; height: 220px; overflow: hidden; flex-shrink: 0; position: relative;">
+                        <img src="produtos/cortador de grama toyama tlt42-19a.png" alt="Cortador de grama Toyama" class="product-image" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.16,1,0.3,1);">
                     </div>
-                    <div class="p-8 flex flex-col flex-grow bg-[#080808]">
-                        <div class="flex justify-between items-center mb-4">
-                            <span class="text-[#D37B42] font-mono text-[10px] tracking-[0.2em] font-bold">PRONTO_ENVIO</span>
-                            <i data-lucide="arrow-up-right" class="w-4 h-4 text-white/20 transition-colors duration-500 group-hover:text-[#D37B42]"></i>
+                    <div style="padding: 32px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
+                        <div>
+                            <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 0.05em; color: #F8F8F8; margin-bottom: 8px; line-height: 0.92;">MOTORES SÉRIE-T</h3>
+                            <p style="color: rgba(255,255,255,0.4); font-size: 13px; font-weight: 300; line-height: 1.7; margin-bottom: 20px;">Torque extremo para operações contínuas de alta demanda industrial.</p>
                         </div>
-                        <h3 class="font-['Bebas_Neue'] text-[24px] tracking-[0.05em] text-white mb-2 leading-none">MOTORES SÉRIE-T</h3>
-                        <p class="text-white/40 text-[13px] font-light leading-relaxed m-0">Torque extremo para operações contínuas de alta demanda industrial.</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="color: #D37B42; font-family: monospace; font-size: 11px; letter-spacing: 0.1em; font-weight: bold;">PRONTO_ENVIO</span>
+                            <i data-lucide="arrow-up-right" class="arrow-icon" style="width: 18px; height: 18px; color: rgba(255,255,255,0.2); transition: color 0.5s ease;"></i>
+                        </div>
                     </div>
                 </div>
 
-                <div class="product-card group flex flex-col overflow-hidden rounded-[24px]">
-                    <div class="w-full h-[220px] overflow-hidden relative">
-                        <img src="produtos/Motosserra a bateria com sabre de 6 polegadas Tensão da bateria 20V.png" alt="Motosserra a bateria" class="w-full h-full object-cover transition-transform duration-[800ms] group-hover:scale-105">
+                <div class="product-card">
+                    <div style="width: 100%; height: 220px; overflow: hidden; flex-shrink: 0; position: relative;">
+                        <img src="produtos/Motosserra a bateria com sabre de 6 polegadas Tensão da bateria 20V.png" alt="Motosserra a bateria" class="product-image" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.16,1,0.3,1);">
                     </div>
-                    <div class="p-8 flex flex-col flex-grow bg-[#080808]">
-                        <div class="flex justify-between items-center mb-4">
-                            <span class="text-[#D37B42] font-mono text-[10px] tracking-[0.2em] font-bold">LINHA_PREMIUM</span>
-                            <i data-lucide="arrow-up-right" class="w-4 h-4 text-white/20 transition-colors duration-500 group-hover:text-[#D37B42]"></i>
+                    <div style="padding: 32px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
+                        <div>
+                            <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 0.05em; color: #F8F8F8; margin-bottom: 8px; line-height: 0.92;">SISTEMAS HIDRÁULICOS</h3>
+                            <p style="color: rgba(255,255,255,0.4); font-size: 13px; font-weight: 300; line-height: 1.7; margin-bottom: 20px;">Precisão milimétrica sob carga máxima e ciclos contínuos de operação.</p>
                         </div>
-                        <h3 class="font-['Bebas_Neue'] text-[24px] tracking-[0.05em] text-white mb-2 leading-none">SISTEMAS HIDRÁULICOS</h3>
-                        <p class="text-white/40 text-[13px] font-light leading-relaxed m-0">Precisão milimétrica sob carga máxima e ciclos contínuos de operação.</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="color: #D37B42; font-family: monospace; font-size: 11px; letter-spacing: 0.1em; font-weight: bold;">LINHA_PREMIUM</span>
+                            <i data-lucide="arrow-up-right" class="arrow-icon" style="width: 18px; height: 18px; color: rgba(255,255,255,0.2); transition: color 0.5s ease;"></i>
+                        </div>
                     </div>
                 </div>
 
-                <div class="product-card group flex flex-col overflow-hidden rounded-[24px]">
-                    <div class="w-full h-[220px] overflow-hidden relative">
-                        <img src="produtos/O kit perfeito para você fazendeiro.png" alt="Kit Fazendeiro" class="w-full h-full object-cover transition-transform duration-[800ms] group-hover:scale-105">
+                <div class="product-card">
+                    <div style="width: 100%; height: 220px; overflow: hidden; flex-shrink: 0; position: relative;">
+                        <img src="produtos/O kit perfeito para você fazendeiro.png" alt="Kit Fazendeiro" class="product-image" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.16,1,0.3,1);">
                     </div>
-                    <div class="p-8 flex flex-col flex-grow bg-[#080808]">
-                        <div class="flex justify-between items-center mb-4">
-                            <span class="text-[#D37B42] font-mono text-[10px] tracking-[0.2em] font-bold">EM_ESTOQUE</span>
-                            <i data-lucide="arrow-up-right" class="w-4 h-4 text-white/20 transition-colors duration-500 group-hover:text-[#D37B42]"></i>
+                    <div style="padding: 32px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
+                        <div>
+                            <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 0.05em; color: #F8F8F8; margin-bottom: 8px; line-height: 0.92;">KITS DE REPARO</h3>
+                            <p style="color: rgba(255,255,255,0.4); font-size: 13px; font-weight: 300; line-height: 1.7; margin-bottom: 20px;">Componentes originais com garantia de fábrica e entrega expressa para todo o Brasil.</p>
                         </div>
-                        <h3 class="font-['Bebas_Neue'] text-[24px] tracking-[0.05em] text-white mb-2 leading-none">KITS DE REPARO</h3>
-                        <p class="text-white/40 text-[13px] font-light leading-relaxed m-0">Componentes originais com garantia de fábrica e entrega expressa para todo o Brasil.</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="color: #D37B42; font-family: monospace; font-size: 11px; letter-spacing: 0.1em; font-weight: bold;">EM_ESTOQUE</span>
+                            <i data-lucide="arrow-up-right" class="arrow-icon" style="width: 18px; height: 18px; color: rgba(255,255,255,0.2); transition: color 0.5s ease;"></i>
+                        </div>
                     </div>
                 </div>
 
-                <div class="product-card group flex flex-col overflow-hidden rounded-[24px]">
-                    <div class="w-full h-[220px] overflow-hidden relative">
-                        <img src="produtos/motosserra de 25cc da Vulcan.png" alt="Motosserra Vulcan" class="w-full h-full object-cover transition-transform duration-[800ms] group-hover:scale-105">
+                <div class="product-card">
+                    <div style="width: 100%; height: 220px; overflow: hidden; flex-shrink: 0; position: relative;">
+                        <img src="produtos/motosserra de 25cc da Vulcan.png" alt="Motosserra Vulcan" class="product-image" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.16,1,0.3,1);">
                     </div>
-                    <div class="p-8 flex flex-col flex-grow bg-[#080808]">
-                        <div class="flex justify-between items-center mb-4">
-                            <span class="text-[#D37B42] font-mono text-[10px] tracking-[0.2em] font-bold">SOB_CONSULTA</span>
-                            <i data-lucide="arrow-up-right" class="w-4 h-4 text-white/20 transition-colors duration-500 group-hover:text-[#D37B42]"></i>
+                    <div style="padding: 32px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
+                        <div>
+                            <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 0.05em; color: #F8F8F8; margin-bottom: 8px; line-height: 0.92;">PAINÉIS DE CONTROLE</h3>
+                            <p style="color: rgba(255,255,255,0.4); font-size: 13px; font-weight: 300; line-height: 1.7; margin-bottom: 20px;">Automação e controle inteligente para monitoramento em tempo real da sua linha.</p>
                         </div>
-                        <h3 class="font-['Bebas_Neue'] text-[24px] tracking-[0.05em] text-white mb-2 leading-none">PAINÉIS DE CONTROLE</h3>
-                        <p class="text-white/40 text-[13px] font-light leading-relaxed m-0">Automação e controle inteligente para monitoramento em tempo real da sua linha.</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="color: #D37B42; font-family: monospace; font-size: 11px; letter-spacing: 0.1em; font-weight: bold;">SOB_CONSULTA</span>
+                            <i data-lucide="arrow-up-right" class="arrow-icon" style="width: 18px; height: 18px; color: rgba(255,255,255,0.2); transition: color 0.5s ease;"></i>
+                        </div>
                     </div>
                 </div>
 
-                <div class="product-card group flex flex-col overflow-hidden rounded-[24px]">
-                    <div class="w-full h-[220px] overflow-hidden relative">
-                        <img src="produtos/soprador de folhas.png" alt="Soprador de folhas" class="w-full h-full object-cover transition-transform duration-[800ms] group-hover:scale-105">
+                <div class="product-card">
+                    <div style="width: 100%; height: 220px; overflow: hidden; flex-shrink: 0; position: relative;">
+                        <img src="produtos/soprador de folhas.png" alt="Soprador de folhas" class="product-image" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.16,1,0.3,1);">
                     </div>
-                    <div class="p-8 flex flex-col flex-grow bg-[#080808]">
-                        <div class="flex justify-between items-center mb-4">
-                            <span class="text-[#D37B42] font-mono text-[10px] tracking-[0.2em] font-bold">ALTA_PRECISAO</span>
-                            <i data-lucide="arrow-up-right" class="w-4 h-4 text-white/20 transition-colors duration-500 group-hover:text-[#D37B42]"></i>
+                    <div style="padding: 32px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
+                        <div>
+                            <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 0.05em; color: #F8F8F8; margin-bottom: 8px; line-height: 0.92;">VÁLVULAS PROPORCIONAIS</h3>
+                            <p style="color: rgba(255,255,255,0.4); font-size: 13px; font-weight: 300; line-height: 1.7; margin-bottom: 20px;">Controle dinâmico de fluxo e pressão para sistemas que exigem resposta rápida.</p>
                         </div>
-                        <h3 class="font-['Bebas_Neue'] text-[24px] tracking-[0.05em] text-white mb-2 leading-none">VÁLVULAS PROPORCIONAIS</h3>
-                        <p class="text-white/40 text-[13px] font-light leading-relaxed m-0">Controle dinâmico de fluxo e pressão para sistemas que exigem resposta rápida.</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="color: #D37B42; font-family: monospace; font-size: 11px; letter-spacing: 0.1em; font-weight: bold;">ALTA_PRECISAO</span>
+                            <i data-lucide="arrow-up-right" class="arrow-icon" style="width: 18px; height: 18px; color: rgba(255,255,255,0.2); transition: color 0.5s ease;"></i>
+                        </div>
                     </div>
                 </div>
 
-                <div class="product-card group flex flex-col overflow-hidden rounded-[24px]">
-                    <div class="w-full h-[220px] overflow-hidden relative">
-                        <img src="produtos/soprador marca branco com capacidade do tanque de gasolina de até 2,3litros...png" alt="Soprador Branco" class="w-full h-full object-cover transition-transform duration-[800ms] group-hover:scale-105">
+                <div class="product-card">
+                    <div style="width: 100%; height: 220px; overflow: hidden; flex-shrink: 0; position: relative;">
+                        <img src="produtos/soprador marca branco com capacidade do tanque de gasolina de até 2,3litros...png" alt="Soprador Branco" class="product-image" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.16,1,0.3,1);">
                     </div>
-                    <div class="p-8 flex flex-col flex-grow bg-[#080808]">
-                        <div class="flex justify-between items-center mb-4">
-                            <span class="text-[#D37B42] font-mono text-[10px] tracking-[0.2em] font-bold">TECNOLOGIA_4.0</span>
-                            <i data-lucide="arrow-up-right" class="w-4 h-4 text-white/20 transition-colors duration-500 group-hover:text-[#D37B42]"></i>
+                    <div style="padding: 32px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
+                        <div>
+                            <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 0.05em; color: #F8F8F8; margin-bottom: 8px; line-height: 0.92;">SENSORES INDUSTRIAIS</h3>
+                            <p style="color: rgba(255,255,255,0.4); font-size: 13px; font-weight: 300; line-height: 1.7; margin-bottom: 20px;">Monitoramento de temperatura, presença e nível com integração total em I/O Link.</p>
                         </div>
-                        <h3 class="font-['Bebas_Neue'] text-[24px] tracking-[0.05em] text-white mb-2 leading-none">SENSORES INDUSTRIAIS</h3>
-                        <p class="text-white/40 text-[13px] font-light leading-relaxed m-0">Monitoramento de temperatura, presença e nível com integração total em I/O Link.</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="color: #D37B42; font-family: monospace; font-size: 11px; letter-spacing: 0.1em; font-weight: bold;">TECNOLOGIA_4.0</span>
+                            <i data-lucide="arrow-up-right" class="arrow-icon" style="width: 18px; height: 18px; color: rgba(255,255,255,0.2); transition: color 0.5s ease;"></i>
+                        </div>
                     </div>
                 </div>
 
-                <div class="product-card group flex flex-col overflow-hidden rounded-[24px]">
-                    <div class="w-full h-[220px] overflow-hidden relative bg-[#121212] flex items-center justify-center">
-                        <i data-lucide="refresh-cw" class="w-16 h-16 text-white/10 transition-transform duration-[800ms] group-hover:scale-110 group-hover:text-white/20"></i>
+                <div class="product-card">
+                    <div style="width: 100%; height: 220px; overflow: hidden; flex-shrink: 0; position: relative; background: #121212; display: flex; align-items: center; justify-content: center;">
+                        <i data-lucide="refresh-cw" class="product-image" style="width: 64px; height: 64px; color: rgba(255,255,255,0.1); transition: all 0.8s cubic-bezier(0.16,1,0.3,1);"></i>
                     </div>
-                    <div class="p-8 flex flex-col flex-grow bg-[#080808]">
-                        <div class="flex justify-between items-center mb-4">
-                            <span class="text-[#D37B42] font-mono text-[10px] tracking-[0.2em] font-bold">ESTOQUE_LOCAL</span>
-                            <i data-lucide="arrow-up-right" class="w-4 h-4 text-white/20 transition-colors duration-500 group-hover:text-[#D37B42]"></i>
+                    <div style="padding: 32px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
+                        <div>
+                            <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 0.05em; color: #F8F8F8; margin-bottom: 8px; line-height: 0.92;">REDUTORES DE VELOCIDADE</h3>
+                            <p style="color: rgba(255,255,255,0.4); font-size: 13px; font-weight: 300; line-height: 1.7; margin-bottom: 20px;">Transmissão de potência otimizada com baixo desgaste e máxima durabilidade térmica.</p>
                         </div>
-                        <h3 class="font-['Bebas_Neue'] text-[24px] tracking-[0.05em] text-white mb-2 leading-none">REDUTORES DE VELOCIDADE</h3>
-                        <p class="text-white/40 text-[13px] font-light leading-relaxed m-0">Transmissão de potência otimizada com baixo desgaste e máxima durabilidade térmica.</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="color: #D37B42; font-family: monospace; font-size: 11px; letter-spacing: 0.1em; font-weight: bold;">ESTOQUE_LOCAL</span>
+                            <i data-lucide="arrow-up-right" class="arrow-icon" style="width: 18px; height: 18px; color: rgba(255,255,255,0.2); transition: color 0.5s ease;"></i>
+                        </div>
                     </div>
                 </div>
 
@@ -665,7 +689,7 @@
         const blocks = [
             { id: 'copy-1', dot: 'dot-1', start: 0.04, end: 0.26, el: null, dotEl: null },
             { id: 'copy-2', dot: 'dot-2', start: 0.33, end: 0.57, el: null, dotEl: null },
-            { id: 'copy-3', dot: 'dot-3', start: 0.69, end: 0.98, el: null, dotEl: null } 
+            { id: 'copy-3', dot: 'dot-3', start: 0.69, end: 2.0, el: null, dotEl: null } 
         ];
 
         function initBlocks() {
@@ -731,10 +755,6 @@
                     if (b.dotEl) b.dotEl.classList.add('active');
                     
                     let calcFraction = fraction;
-                    if (b.id === 'copy-3' && fraction > 0.80) {
-                        calcFraction = 0.80; 
-                    }
-                    
                     const drift = (calcFraction - b.start) * (window.innerHeight * 0.55);
                     b.el.style.transform = `translate3d(0, ${-drift.toFixed(2)}px, 0)`;
                     
