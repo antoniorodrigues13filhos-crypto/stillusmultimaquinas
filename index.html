@@ -658,7 +658,7 @@
         const blocks = [
             { id: 'copy-1', dot: 'dot-1', start: 0.04, end: 0.26, el: null, dotEl: null },
             { id: 'copy-2', dot: 'dot-2', start: 0.33, end: 0.57, el: null, dotEl: null },
-            { id: 'copy-3', dot: 'dot-3', start: 0.69, end: 2.0, el: null, dotEl: null } 
+            { id: 'copy-3', dot: 'dot-3', start: 0.69, end: 0.98, el: null, dotEl: null } 
         ];
 
         function initBlocks() {
@@ -821,7 +821,12 @@
 
             await Promise.all(Array.from({ length: CONCURRENCY }, worker));
             loaderEl.style.opacity = '0';
-            setTimeout(() => { loaderEl.style.display = 'none'; loop(); initReveal(); }, 600);
+            setTimeout(() => { 
+                loaderEl.style.display = 'none'; 
+                loop(); 
+                initReveal(); 
+                initCounters();
+            }, 600);
         }
 
         function initReveal() {
@@ -832,6 +837,48 @@
                 });
             }, { threshold: 0.12 });
             els.forEach(el => io.observe(el));
+        }
+
+        function initCounters() {
+            const counters = document.querySelectorAll('.stat-num span:first-child');
+            counters.forEach(counter => {
+                counter.setAttribute('data-target', counter.innerText);
+                counter.innerText = '0';
+            });
+
+            const duration = 2000;
+            const io = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const counter = entry.target;
+                        const targetStr = counter.getAttribute('data-target');
+                        const target = parseFloat(targetStr);
+                        const isFloat = targetStr.includes('.');
+                        let startTime = null;
+
+                        function updateCount(currentTime) {
+                            if (!startTime) startTime = currentTime;
+                            const elapsedTime = currentTime - startTime;
+                            const progress = Math.min(elapsedTime / duration, 1);
+                            
+                            const easeOut = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+                            const currentVal = target * easeOut;
+
+                            if (progress < 1) {
+                                counter.innerText = isFloat ? currentVal.toFixed(1) : Math.floor(currentVal);
+                                requestAnimationFrame(updateCount);
+                            } else {
+                                counter.innerText = targetStr;
+                            }
+                        }
+                        
+                        requestAnimationFrame(updateCount);
+                        observer.unobserve(counter);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            counters.forEach(counter => io.observe(counter));
         }
 
         if (window.lucide) lucide.createIcons();
