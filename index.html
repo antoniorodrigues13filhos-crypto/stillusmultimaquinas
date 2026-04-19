@@ -274,6 +274,167 @@
 
         .orange-stripe { position: relative; background: linear-gradient(135deg, #D37B42 0%, #B55A22 100%); overflow: hidden; padding: 80px 8%; }
 
+        /* ── ÍCONE WHATSAPP FLUTUANTE COM MOTION ── */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
+            z-index: 9999;
+            cursor: pointer;
+            animation: float-icon 3s ease-in-out infinite;
+            filter: drop-shadow(0px 10px 15px rgba(0, 0, 0, 0.4));
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            filter: drop-shadow(0px 15px 25px rgba(211, 123, 66, 0.5));
+            animation-play-state: paused;
+        }
+        .whatsapp-float img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        @keyframes float-icon {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0); }
+        }
+
+        /* ── CHATBOT WIDGET (DEMO) ── */
+        .chat-container {
+            position: fixed;
+            bottom: 110px;
+            right: 30px;
+            width: 350px;
+            max-height: 500px;
+            height: 60vh;
+            background: rgba(8, 8, 8, 0.65);
+            backdrop-filter: blur(24px) saturate(160%);
+            -webkit-backdrop-filter: blur(24px) saturate(160%);
+            border: 0.5px solid rgba(255,255,255,0.12);
+            border-radius: 20px;
+            z-index: 9998;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(20px) scale(0.95);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 20px rgba(211,123,66,0.1);
+        }
+        .chat-container.open {
+            opacity: 1;
+            pointer-events: all;
+            transform: translateY(0) scale(1);
+        }
+        .chat-header {
+            padding: 18px 24px;
+            border-bottom: 0.5px solid rgba(255,255,255,0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.02);
+        }
+        .chat-header-info h4 {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 15px;
+            color: #F8F8F8;
+            font-weight: 500;
+        }
+        .chat-header-info p {
+            font-size: 11px;
+            color: #D37B42;
+            letter-spacing: 0.05em;
+            margin-top: 2px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .status-dot { width: 6px; height: 6px; background: #2a9d6f; border-radius: 50%; box-shadow: 0 0 8px #2a9d6f; }
+        .close-chat { color: rgba(255,255,255,0.4); cursor: pointer; transition: color 0.2s; }
+        .close-chat:hover { color: #fff; }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .chat-messages::-webkit-scrollbar { width: 4px; }
+        .chat-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+
+        .msg-bubble {
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: 16px;
+            font-size: 13px;
+            line-height: 1.5;
+            animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        @keyframes popIn { to { opacity: 1; transform: translateY(0); } }
+        
+        .msg-bot {
+            align-self: flex-start;
+            background: rgba(255,255,255,0.05);
+            color: rgba(255,255,255,0.85);
+            border: 0.5px solid rgba(255,255,255,0.05);
+            border-bottom-left-radius: 4px;
+        }
+        .msg-user {
+            align-self: flex-end;
+            background: linear-gradient(135deg, #D37B42, #B55A22);
+            color: #fff;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-input-area {
+            padding: 16px;
+            border-top: 0.5px solid rgba(255,255,255,0.08);
+            display: flex;
+            gap: 12px;
+            background: rgba(255,255,255,0.01);
+        }
+        .chat-input-area input {
+            flex: 1;
+            background: rgba(255,255,255,0.05);
+            border: 0.5px solid rgba(255,255,255,0.1);
+            border-radius: 100px;
+            padding: 10px 16px;
+            color: #fff;
+            font-size: 13px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .chat-input-area input:focus { border-color: rgba(211,123,66,0.4); }
+        .chat-send-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #D37B42;
+            border: none;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+        }
+        .chat-send-btn:hover { transform: scale(1.05); background: #B55A22; }
+
+        .typing-indicator { display: flex; gap: 4px; padding: 4px 8px; }
+        .typing-indicator span { width: 4px; height: 4px; background: rgba(255,255,255,0.4); border-radius: 50%; animation: blink 1.4s infinite both; }
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes blink { 0%, 80%, 100% { opacity: 0.2; } 40% { opacity: 1; } }
+
         /* ── MOBILE CSS REGRAS E ESCONDER FAQ/CONTATO ── */
         @media (max-width: 768px) {
             .nav-links { display: none; }
@@ -289,6 +450,9 @@
             .hide-on-mobile { display: none !important; }
             
             .product-card { opacity: 1 !important; transform: translate3d(0,0,0) !important; }
+
+            .chat-container { width: calc(100% - 40px); bottom: 90px; right: 20px; }
+            .whatsapp-float { bottom: 20px; right: 20px; width: 60px; height: 60px; }
         }
     </style>
 </head>
@@ -923,6 +1087,111 @@
             setTimeout(() => { btn.textContent = 'Enviar mensagem'; btn.style.background = 'linear-gradient(135deg,#D37B42,#B55A22)'; btn.disabled = false; }, 3000);
         }, 1400);
     }
+    
+    // ── Lógica do Chatbot de Demonstração ──
+    function toggleChat() {
+        const chat = document.getElementById('chatbot');
+        chat.classList.toggle('open');
+        if (chat.classList.contains('open')) {
+            document.getElementById('chat-input').focus();
+        }
+    }
+
+    function handleChatEnter(e) {
+        if (e.key === 'Enter') sendChatMessage();
+    }
+
+    function sendChatMessage() {
+        const input = document.getElementById('chat-input');
+        const text = input.value.trim();
+        if (!text) return;
+
+        appendMessage(text, 'user');
+        input.value = '';
+
+        // Simula o tempo de digitação da atendente
+        showTypingIndicator();
+        
+        setTimeout(() => {
+            removeTypingIndicator();
+            const response = generateBotResponse(text);
+            appendMessage(response, 'bot');
+        }, 1500 + Math.random() * 1000); // Responde entre 1.5s e 2.5s
+    }
+
+    function appendMessage(text, sender) {
+        const chatBox = document.getElementById('chat-messages');
+        const div = document.createElement('div');
+        div.className = `msg-bubble msg-${sender}`;
+        div.textContent = text;
+        chatBox.appendChild(div);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function showTypingIndicator() {
+        const chatBox = document.getElementById('chat-messages');
+        const div = document.createElement('div');
+        div.className = 'msg-bubble msg-bot typing-indicator-container';
+        div.id = 'typing-indicator';
+        div.innerHTML = '<div class="typing-indicator"><span></span><span></span><span></span></div>';
+        chatBox.appendChild(div);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function removeTypingIndicator() {
+        const indicator = document.getElementById('typing-indicator');
+        if (indicator) indicator.remove();
+    }
+
+    // Regras de Resposta Dinâmica (Palavras-chave)
+    function generateBotResponse(msg) {
+        const lowerMsg = msg.toLowerCase();
+        
+        if (lowerMsg.includes('orçamento') || lowerMsg.includes('valor') || lowerMsg.includes('preço') || lowerMsg.includes('custo')) {
+            return "Para passar um orçamento preciso, um de nossos engenheiros precisa entender seu equipamento. Qual a marca e o modelo?";
+        } 
+        else if (lowerMsg.includes('emergência') || lowerMsg.includes('urgente') || lowerMsg.includes('parou') || lowerMsg.includes('parada')) {
+            return "Entendi a urgência. Para máquinas paradas, nosso acionamento técnico ocorre em até 4 horas (para clientes em contrato). Qual equipamento parou?";
+        } 
+        else if (lowerMsg.includes('weg') || lowerMsg.includes('siemens') || lowerMsg.includes('motor')) {
+            return "Sim, somos especialistas e possuímos certificação para atuar com essa marca. Qual a anomalia que o motor está apresentando (ex: aquecimento, vibração)?";
+        } 
+        else if (lowerMsg.includes('preventiva') || lowerMsg.includes('contrato')) {
+            return "Nossos contratos de manutenção preventiva são montados sob medida para reduzir o downtime da sua planta. Quer que eu agende uma visita técnica de avaliação?";
+        } 
+        else if (lowerMsg.includes('ola') || lowerMsg.includes('olá') || lowerMsg.includes('bom dia') || lowerMsg.includes('boa tarde')) {
+            return "Olá! Como posso ajudar a garantir a eficiência da sua indústria hoje?";
+        } 
+        else {
+            return "Compreendo. Como isso é uma demonstração básica, meu conhecimento é limitado. Mas nossa equipe técnica real está pronta para te atender no (62) 98108-5787!";
+        }
+    }
     </script>
+
+    <div class="chat-container" id="chatbot">
+        <div class="chat-header">
+            <div class="chat-header-info">
+                <h4>Assistente Stillus</h4>
+                <p><span class="status-dot"></span> Online agora</p>
+            </div>
+            <i data-lucide="x" class="close-chat" onclick="toggleChat()" style="width:20px;height:20px;"></i>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            <div class="msg-bubble msg-bot">
+                Olá! Sou a assistente virtual da Stillus Multimáquinas. Como posso ajudar com a sua indústria hoje?
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" placeholder="Digite sua dúvida..." onkeypress="handleChatEnter(event)">
+            <button class="chat-send-btn" onclick="sendChatMessage()">
+                <i data-lucide="send" style="width:16px;height:16px;margin-left: -2px;margin-top: 2px;"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="whatsapp-float" onclick="toggleChat()" aria-label="Abrir chat virtual">
+        <img src="midia w/3d-icon-social-media-app.png" alt="WhatsApp 3D Icon">
+    </div>
+
 </body>
 </html>
