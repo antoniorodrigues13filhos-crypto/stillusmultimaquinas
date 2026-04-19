@@ -164,7 +164,7 @@
         .cta-btn-outline { display: inline-block; background: transparent; color: rgba(255,255,255,0.7); padding: 18px 44px; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; cursor: pointer; border: 0.5px solid rgba(255,255,255,0.2); transition: all 0.2s ease; text-decoration: none; }
         .cta-btn-outline:hover { border-color: rgba(255,255,255,0.45); color: #fff; }
 
-        /* ── TRANSIÇÃO PRODUTOS (FLUXO NATURAL PREMIUM) ── */
+        /* ── TRANSIÇÃO PRODUTOS ── */
         #produtos { 
             position: relative; 
             z-index: 40; 
@@ -173,39 +173,11 @@
             padding-top: 15vh; 
             background: linear-gradient(to bottom, transparent, #080808 15vh, #080808 100%); 
         }
-        
-        /* O Glowing Edge separador entre Hero e Produtos */
-        #produtos::before {
-            content: '';
-            position: absolute;
-            top: 15vh; left: 0; width: 100%; height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(211,123,66,0.25), transparent);
-            z-index: 10;
-        }
 
-        /* Animação Spatial Reveal pros Cards */
-        .product-card { 
-            opacity: 0; 
-            transform: translate3d(0, 60px, 0) scale(0.95); 
-            transition: opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1), transform 1.2s cubic-bezier(0.22, 1, 0.36, 1), border 0.3s ease, box-shadow 0.3s ease; 
-            cursor: pointer; background: rgba(255,255,255,0.03); backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%); 
-            border: 0.5px solid rgba(255,255,255,0.08); 
-            will-change: transform, opacity; 
-            display: flex; flex-direction: column; overflow: hidden; border-radius: 24px; 
-        }
+        .product-card { opacity: 0; transform: translate3d(0, 40px, 0); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1), border 0.3s ease, box-shadow 0.3s ease; cursor: pointer; background: rgba(255,255,255,0.03); backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%); border: 0.5px solid rgba(255,255,255,0.08); will-change: transform, opacity; display: flex; flex-direction: column; overflow: hidden; border-radius: 24px; }
+        .product-card:hover { transform: translate3d(0, -5px, 0) scale3d(1.02, 1.02, 1) !important; border-color: rgba(211,123,66,0.35); box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 24px rgba(211,123,66,0.12); }
+        .product-card.revealed { opacity: 1; transform: translate3d(0,0,0); }
         
-        .product-card:hover { 
-            transform: translate3d(0, -8px, 0) scale3d(1.02, 1.02, 1) !important; 
-            border-color: rgba(211,123,66,0.4); 
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5), 0 0 30px rgba(211,123,66,0.15); 
-        }
-        
-        .product-card.revealed { 
-            opacity: 1; 
-            transform: translate3d(0,0,0) scale(1); 
-        }
-        
-        /* Estilos dos hover aplicados na estrutura interna segura */
         .product-card:hover .product-image { transform: scale(1.05) !important; }
         .product-card:hover .arrow-icon { color: #D37B42 !important; }
 
@@ -213,10 +185,24 @@
         .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(40px, 8vw, 88px); letter-spacing: 0.02em; line-height: 0.92; color: #F8F8F8; }
         .section-body { font-size: clamp(14px, 1.6vw, 16px); color: rgba(255,255,255,0.38); font-weight: 300; line-height: 1.7; }
         
-        /* A seção de reveal padrão (não afeta os produtos) */
+        /* Sistema de Revelação Global */
         .reveal { opacity: 0; transform: translate3d(0, 32px, 0); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); will-change: transform, opacity; }
         .reveal.visible { opacity: 1; transform: translate3d(0, 0, 0); }
         .reveal-delay-1 { transition-delay: 0.1s; } .reveal-delay-2 { transition-delay: 0.2s; } .reveal-delay-3 { transition-delay: 0.3s; } .reveal-delay-4 { transition-delay: 0.4s; }
+
+        /* ── EFEITO SWEEP (CORTE DA ESQUERDA PRA DIREITA) NA FAIXA LARANJA ── */
+        .reveal-sweep {
+            opacity: 1 !important; /* Sobrescreve a opacidade da classe .reveal genérica */
+            transform: translate3d(0,0,0) !important; 
+            -webkit-clip-path: inset(0 100% 0 0);
+            clip-path: inset(0 100% 0 0);
+            transition: -webkit-clip-path 1.2s cubic-bezier(0.19, 1, 0.22, 1), clip-path 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+            will-change: clip-path;
+        }
+        .reveal-sweep.visible {
+            -webkit-clip-path: inset(0 0 0 0);
+            clip-path: inset(0 0 0 0);
+        }
 
         /* ── ESTRUTURAS ORIGINAIS ── */
         .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: clamp(48px, 8vw, 80px); letter-spacing: 0.02em; line-height: 1; color: #F8F8F8; }
@@ -517,8 +503,8 @@
         </div>
     </section>
 
-    <div class="orange-stripe">
-        <div style="max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:40px;flex-wrap:wrap;">
+    <div class="orange-stripe reveal reveal-sweep">
+        <div class="reveal reveal-delay-2" style="max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:40px;flex-wrap:wrap;">
             <div>
                 <p style="font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,5vw,52px);letter-spacing:0.02em;color:#fff;line-height:1;margin-bottom:8px;">PAROU? ACIONAMOS EM ATÉ 4 HORAS.</p>
                 <p style="font-size:14px;color:rgba(255,255,255,0.6);font-weight:300;">Atendimento emergencial 24/7 para clientes em contrato.</p>
