@@ -24,6 +24,7 @@
         
         html { 
             scroll-behavior: smooth; 
+            background-color: #080808; /* Trava o overscroll branco do mobile */
         }
 
         body {
@@ -47,10 +48,19 @@
         #hero-canvas {
             position: absolute; inset: 0;
             width: 100%; height: 100%;
-            filter: brightness(0.5) saturate(0.85);
             will-change: transform;
             backface-visibility: hidden;
             transform-style: preserve-3d;
+            background-color: #080808; /* Fallback anti-flash branco */
+            z-index: 1;
+        }
+        
+        /* OVERLAY FÍSICO (Substitui o filter: brightness do CSS para não dar lag no mobile) */
+        .hero-overlay {
+            position: absolute; inset: 0;
+            background: rgba(8, 8, 8, 0.65); /* Escurece a imagem instantaneamente */
+            z-index: 10;
+            pointer-events: none;
         }
 
         /* ── LOADER ── */
@@ -84,7 +94,7 @@
         .nav-icons { display: flex; gap: 16px; color: rgba(255,255,255,0.3); }
 
         /* ── HERO SECTION ── */
-        #scroll-hero { height: 600vh; position: relative; }
+        #scroll-hero { height: 600vh; position: relative; background-color: #080808; }
         .hero-sticky { 
             position: sticky; 
             top: 0; 
@@ -92,8 +102,7 @@
             height: 100svh;
             width: 100%; 
             overflow: hidden; 
-            background-color: #121212; 
-            background-image: url('heroframe/ezgif-frame-001.jpg'); 
+            background-color: #080808; 
             background-size: cover;
             background-position: center;
         }
@@ -155,7 +164,8 @@
         .animated-stroke { color: transparent; -webkit-text-stroke: 1.5px rgba(255,255,255,0.18); position: relative; display: inline-block; }
         .animated-stroke::after { content: "LUCRO ZERO."; position: absolute; left: 0; top: 0; width: var(--fill-width); height: 100%; color: var(--brand-orange); -webkit-text-stroke: 1.5px var(--brand-orange); overflow: hidden; white-space: nowrap; filter: drop-shadow(0 0 14px rgba(211,123,66,0.5)); transition: width 0.08s linear; will-change: width; }
 
-        .h-display { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.05em; line-height: 0.92; font-size: clamp(52px, 11vw, 120px); color: #F8F8F8; display: block; margin-bottom: 28px; }
+        /* Ajuste do Clamp para não quebrar no mobile */
+        .h-display { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.05em; line-height: 0.92; font-size: clamp(40px, 11vw, 120px); color: #F8F8F8; display: block; margin-bottom: 28px; }
         .accent { color: #D37B42; }
         .side-line { border-left: 2px solid #D37B42; padding-left: 20px; font-size: clamp(13px, 1.8vw, 17px); color: rgba(255,255,255,0.38); font-weight: 300; line-height: 1.6; max-width: 420px; }
 
@@ -460,6 +470,7 @@
 
         /* ── MOBILE CSS REGRAS E ESCONDER FAQ/CONTATO ── */
         @media (max-width: 768px) {
+            .nav-inner { justify-content: space-between; } /* Alinha a logo e icones corretamente */
             .nav-links { display: none; }
             .scroll-dots { right: 20px; }
             .service-item { grid-template-columns: 30px 1fr; }
@@ -511,8 +522,7 @@
     <section id="scroll-hero">
         <div class="hero-sticky">
             <canvas id="hero-canvas"></canvas>
-
-            <div id="copy-1" class="hero-block" style="top:28%;">
+            <div class="hero-overlay"></div> <div id="copy-1" class="hero-block" style="top:28%;">
                 <div class="h-display">
                     <div><span class="word-wrap"><span class="hero-word">M&Aacute;QUINAS</span></span></div>
                     <div><span class="word-wrap"><span class="hero-word">PARADAS,</span></span></div>
