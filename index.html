@@ -10,7 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&subset=latin,latin-ext&display=swap" rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
         :root {
@@ -243,18 +242,38 @@
         .visible { opacity: 1 !important; pointer-events: all !important; }
         .orange-stripe { position: relative; background: linear-gradient(135deg, #D37B42 0%, #B55A22 100%); overflow: hidden; padding: 80px 8%; }
 
-        /* ── ÍCONE WHATSAPP FLUTUANTE ── */
-        .whatsapp-float { position: fixed; bottom: 30px; right: 30px; width: 70px; height: 70px; z-index: 9999; cursor: pointer; background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%); border: 0.5px solid rgba(255, 255, 255, 0.12); border-radius: 50%; display: flex; align-items: center; justify-content: center; animation: float-icon 3s ease-in-out infinite; filter: drop-shadow(0px 10px 15px rgba(0, 0, 0, 0.4)); transition: all 0.3s ease; }
-        .whatsapp-float img { width: 100%; height: 100%; object-fit: contain; padding: 14px; transition: transform 0.3s ease; }
-        .whatsapp-float:hover { border-color: rgba(211, 123, 66, 0.4); background: rgba(211, 123, 66, 0.1); filter: drop-shadow(0px 15px 25px rgba(211, 123, 66, 0.5)); animation-play-state: paused; }
-        .whatsapp-float:hover img { transform: scale(1.1); }
+        /* ── ÍCONE WHATSAPP FLUTUANTE PREMIUM GLASSMORPHISM ── */
+        .whatsapp-float {
+            position: fixed; bottom: 30px; right: 30px; width: 70px; height: 70px; z-index: 9999; cursor: pointer;
+            background: rgba(255, 255, 255, 0.05); 
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255,255,255,0.05);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            animation: float-icon 4s ease-in-out infinite; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .whatsapp-float::before {
+            content: ''; position: absolute; inset: 0; border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.2), transparent 60%);
+            pointer-events: none;
+        }
+        .whatsapp-float img { width: 60%; height: 60%; object-fit: contain; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); }
+        .whatsapp-float:hover {
+            transform: translateY(-5px) scale(1.05);
+            border-color: rgba(211, 123, 66, 0.5); 
+            background: rgba(211, 123, 66, 0.15);
+            box-shadow: 0 15px 35px rgba(211, 123, 66, 0.3), inset 0 0 0 1px rgba(211,123,66,0.2);
+            animation-play-state: paused;
+        }
+        .whatsapp-float:hover img { transform: scale(1.15) rotate(-5deg); filter: drop-shadow(0 6px 10px rgba(0,0,0,0.4)); }
         @keyframes float-icon { 0% { transform: translateY(0); } 50% { transform: translateY(-15px); } 100% { transform: translateY(0); } }
 
         /* ── BALÃO DE AVISO (TOOLTIP) PARA O CHAT ── */
-        .chat-tooltip { position: fixed; bottom: 110px; right: 35px; background: rgba(8, 8, 8, 0.85); backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%); border: 0.5px solid rgba(211, 123, 66, 0.4); border-radius: 12px; padding: 12px 16px; display: flex; align-items: center; gap: 16px; z-index: 9998; box-shadow: 0 10px 25px rgba(0,0,0,0.5); animation: float-tooltip 3s ease-in-out infinite; transition: opacity 0.3s ease, transform 0.3s ease; transform-origin: bottom right; }
+        .chat-tooltip { position: fixed; bottom: 110px; right: 35px; background: rgba(8, 8, 8, 0.85); backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%); border: 0.5px solid rgba(211, 123, 66, 0.4); border-radius: 12px; padding: 12px 16px; display: flex; align-items: center; gap: 16px; z-index: 9998; box-shadow: 0 10px 25px rgba(0,0,0,0.5); animation: float-tooltip 3s ease-in-out infinite; transition: opacity 0.3s ease, transform 0.3s ease; transform-origin: bottom right; cursor: pointer; }
         .chat-tooltip::after { content: ''; position: absolute; bottom: -6px; right: 24px; width: 12px; height: 12px; background: #080808; border-right: 0.5px solid rgba(211, 123, 66, 0.4); border-bottom: 0.5px solid rgba(211, 123, 66, 0.4); transform: rotate(45deg); }
         .chat-tooltip span { font-family: 'DM Sans', sans-serif; font-size: 12px; color: #F8F8F8; font-weight: 500; white-space: nowrap; }
-        .tooltip-close { color: rgba(255,255,255,0.4); cursor: pointer; transition: color 0.2s ease; }
+        .tooltip-close { color: rgba(255,255,255,0.4); cursor: pointer; transition: color 0.2s ease; margin-left: 8px;}
         .tooltip-close:hover { color: #fff; }
         .chat-tooltip.hidden { opacity: 0; pointer-events: none; transform: scale(0.9); }
         @keyframes float-tooltip { 0% { transform: translateY(0); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0); } }
@@ -276,7 +295,7 @@
         .chat-messages::-webkit-scrollbar { width: 4px; }
         .chat-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
         
-        .msg-bubble { max-width: 85%; padding: 12px 16px; border-radius: 16px; font-size: 13px; line-height: 1.5; animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; transform: translateY(10px); white-space: pre-wrap; } /* white-space adicionado para respeitar quebras de linha nas listas de produtos */
+        .msg-bubble { max-width: 85%; padding: 12px 16px; border-radius: 16px; font-size: 13px; line-height: 1.5; animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; transform: translateY(10px); white-space: pre-wrap; } 
         @keyframes popIn { to { opacity: 1; transform: translateY(0); } }
         
         .msg-bot { align-self: flex-start; background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.85); border: 0.5px solid rgba(255,255,255,0.05); border-bottom-left-radius: 4px; }
@@ -286,7 +305,6 @@
         .chat-input-area input { flex: 1; background: rgba(255,255,255,0.05); border: 0.5px solid rgba(255,255,255,0.1); border-radius: 100px; padding: 12px 16px; color: #fff; font-size: 13px; outline: none; transition: border-color 0.2s; }
         .chat-input-area input:focus { border-color: rgba(211,123,66,0.4); }
         
-        /* Botão Enviar com Ícone Seguro (SVG Inline) */
         .chat-send-btn { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #D37B42, #B55A22); border: none; color: #fff; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; flex-shrink: 0; }
         .chat-send-btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(211,123,66,0.4); }
         
@@ -314,7 +332,6 @@
             /* Ajustes do Chat para Mobile */
             .chat-container { width: calc(100% - 40px); bottom: 90px; right: 20px; }
             .whatsapp-float { bottom: 20px; right: 20px; width: 60px; height: 60px; }
-            .whatsapp-float img { padding: 10px; }
             .chat-tooltip { bottom: 95px; right: 25px; } 
 
             .process-line-bg, .process-line-fill { display: none; }
@@ -734,6 +751,37 @@
         </div>
     </footer>
 
+    <div class="whatsapp-float" onclick="toggleChat()">
+        <img src="assetschat/whatsapp-apps-logo-3d-icon.png" alt="Chat Assistente IA">
+    </div>
+
+    <div class="chat-tooltip" id="chat-tooltip" onclick="toggleChat()">
+        <span class="status-dot"></span>
+        <span>Assistência IA Online</span>
+        <svg class="tooltip-close" onclick="closeChatTooltip(event)" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </div>
+
+    <div class="chat-container" id="chatbot">
+        <div class="chat-header">
+            <div class="chat-header-info">
+                <h4>Assistente Virtual Stillus</h4>
+                <p><span class="status-dot"></span> Online agora</p>
+            </div>
+            <button class="premium-close-btn" onclick="toggleChat()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            <div class="msg-bubble msg-bot">Olá! Sou a assistente de engenharia da Stillus Multimáquinas. Como posso ajudar a maximizar a eficiência da sua operação hoje?</div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" placeholder="Digite sua mensagem..." onkeypress="handleChatEnter(event)">
+            <button class="chat-send-btn" onclick="sendChatMessage()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </button>
+        </div>
+    </div>
+
     <script>
     (() => {
         const BASE_URL    = 'heroframe/ezgif-frame-';
@@ -1041,19 +1089,20 @@
         }, 1400);
     }
     
-    // ── MÁQUINA DE ESTADOS DO CHATBOT (LEAD GEN) ──
+    // ── MÁQUINA DE ESTADOS DO CHATBOT (LEAD GEN & SAUDAÇÕES) ──
     const IS_MOBILE_CHAT = /iPhone|Android|iPad/i.test(navigator.userAgent) || window.innerWidth <= 768;
     
     let chatState = 'IDLE';
     let userData = { product: '', name: '', city: '', email: '' };
-    const productsList = "1. Linha Jardim Profissional\n2. Lavadoras de Alta Pressão\n3. Linha Portátil a Bateria 20V\n4. Kits Completos para Campo\n5. Sopradores\n6. Sensores Industriais";
+    
+    // Produtos alinhados 100% com os cadastrados no site
+    const productsList = "• Cortador de Grama Toyama TLT42-19A (Jardim Profissional)\n• Lavadora 2100 PSI Tramontina (Alta Pressão)\n• Motosserra a bateria 20V (Linha Portátil)\n• Kits Completos para Campo\n• Soprador de Folhas Branco 2,3L (Limpeza Externa)\n• Sensores Industriais 4.0";
 
     function toggleChat() {
         const chat = document.getElementById('chatbot');
         chat.classList.toggle('open');
         
         if (chat.classList.contains('open')) {
-            // Anti-pulo: Foca apenas se for desktop
             setTimeout(() => {
                 if (!IS_MOBILE_CHAT) {
                     document.getElementById('chat-input').focus();
@@ -1103,7 +1152,6 @@
         div.textContent = text;
         chatBox.appendChild(div);
         
-        // Mantém a rolagem sempre acompanhando as mensagens
         setTimeout(() => {
             chatBox.scrollTop = chatBox.scrollHeight;
         }, 50);
@@ -1149,14 +1197,23 @@
             return `Tudo certo, ${userData.name}! Nossa equipe de engenharia avaliará sua solicitação para a cidade de ${userData.city} e entrará em contato em breve no e-mail fornecido. Posso ajudar com mais alguma dúvida técnica no momento?`;
         }
 
-        // Gatilhos Iniciais
-        if (lowerMsg.includes('orçamento') || lowerMsg.includes('valor') || lowerMsg.includes('preço') || lowerMsg.includes('custo') || lowerMsg.includes('produtos')) {
+        // Saudações e Cumprimentos Abertos
+        if (lowerMsg.match(/(bom dia|boa tarde|boa noite|olá|ola|oi)/)) {
+            let greeting = "Olá!";
+            if (lowerMsg.includes('bom dia')) greeting = "Bom dia!";
+            else if (lowerMsg.includes('boa tarde')) greeting = "Boa tarde!";
+            else if (lowerMsg.includes('boa noite')) greeting = "Boa noite!";
+
+            return `${greeting} Sou a Inteligência Artificial da Stillus Multimáquinas. Como posso ajudar a maximizar a eficiência da sua operação hoje?`;
+        } 
+
+        // Listagem de Produtos / Interesse de Compra
+        if (lowerMsg.includes('orçamento') || lowerMsg.includes('valor') || lowerMsg.includes('preço') || lowerMsg.includes('produto') || lowerMsg.includes('quais') || lowerMsg.includes('vende') || lowerMsg.includes('catalogo')) {
             chatState = 'AWAITING_PRODUCT_CHOICE';
-            return "Temos diversas soluções de alta performance prontas para sua indústria. Qual equipamento em especial você gostaria de cotar?\n\n" + productsList;
+            return "Depende de qual você estaria interessado(a). Temos as seguintes opções de alta performance prontas para sua indústria:\n\n" + productsList + "\n\nQual desses equipamentos chama mais a sua atenção?";
         } 
-        if (lowerMsg.includes('bom dia') || lowerMsg.includes('boa tarde') || lowerMsg.includes('boa noite') || lowerMsg.includes('olá') || lowerMsg.includes('ola') || lowerMsg.includes('oi')) {
-            return "Olá! Sou a assistente de engenharia da Stillus Multimáquinas. Como posso ajudar a maximizar a eficiência da sua operação hoje?";
-        } 
+        
+        // Acionamento de Manutenção / Urgência
         if (lowerMsg.includes('emergência') || lowerMsg.includes('urgente') || lowerMsg.includes('parou') || lowerMsg.includes('parada')) {
             return "Entendi a urgência. Para máquinas paradas, nosso acionamento técnico ocorre em até 4 horas (para clientes em contrato). Qual equipamento parou?";
         } 
@@ -1167,6 +1224,7 @@
             return "Nossos contratos de manutenção preventiva são montados sob medida para reduzir o downtime da sua planta a zero. Quer que eu agende uma visita técnica de avaliação?";
         } 
         
+        // Fallback / Dúvidas Gerais
         return "Entendo. Como sou uma assistente virtual inicial, caso prefira um atendimento técnico mais aprofundado, nossa engenharia está disponível no WhatsApp (62) 98108-5787.";
     }
     </script>
