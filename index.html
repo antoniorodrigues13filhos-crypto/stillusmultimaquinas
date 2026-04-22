@@ -295,7 +295,7 @@
         .chat-messages::-webkit-scrollbar { width: 4px; }
         .chat-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
         
-        .msg-bubble { max-width: 85%; padding: 12px 16px; border-radius: 16px; font-size: 13px; line-height: 1.5; animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; transform: translateY(10px); white-space: pre-wrap; } 
+        .msg-bubble { max-width: 85%; padding: 12px 16px; border-radius: 16px; font-size: 13px; line-height: 1.5; animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; transform: translateY(10px); word-break: break-word; } 
         @keyframes popIn { to { opacity: 1; transform: translateY(0); } }
         
         .msg-bot { align-self: flex-start; background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.85); border: 0.5px solid rgba(255,255,255,0.05); border-bottom-left-radius: 4px; }
@@ -314,7 +314,7 @@
         .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
         @keyframes blink { 0%, 80%, 100% { opacity: 0.2; } 40% { opacity: 1; } }
 
-        /* ── MOBILE CSS REGRAS ── */
+        /* ── MOBILE CSS REGRAS ATUALIZADAS (Proporção Segura para Telas Menores) ── */
         @media (max-width: 768px) {
             .nav-inner { justify-content: space-between; } 
             .nav-links { display: none; }
@@ -329,8 +329,8 @@
             .hide-on-mobile { display: none !important; }
             .product-card { opacity: 1 !important; transform: translate3d(0,0,0) !important; }
             
-            /* Ajustes do Chat para Mobile */
-            .chat-container { width: calc(100% - 40px); bottom: 90px; right: 20px; }
+            /* Ajustes Finos do Chat para Mobile */
+            .chat-container { width: calc(100vw - 40px); bottom: 95px; right: 20px; height: calc(100svh - 130px); max-height: 500px; }
             .whatsapp-float { bottom: 20px; right: 20px; width: 60px; height: 60px; }
             .chat-tooltip { bottom: 95px; right: 25px; } 
 
@@ -1089,14 +1089,11 @@
         }, 1400);
     }
     
-    // ── MÁQUINA DE ESTADOS DO CHATBOT (LEAD GEN & SAUDAÇÕES) ──
+    // ── MÁQUINA DE ESTADOS DO CHATBOT (MULTIMENSAGENS) ──
     const IS_MOBILE_CHAT = /iPhone|Android|iPad/i.test(navigator.userAgent) || window.innerWidth <= 768;
     
     let chatState = 'IDLE';
     let userData = { product: '', name: '', city: '', email: '' };
-    
-    // Produtos alinhados 100% com os cadastrados no site
-    const productsList = "• Cortador de Grama Toyama TLT42-19A (Jardim Profissional)\n• Lavadora 2100 PSI Tramontina (Alta Pressão)\n• Motosserra a bateria 20V (Linha Portátil)\n• Kits Completos para Campo\n• Soprador de Folhas Branco 2,3L (Limpeza Externa)\n• Sensores Industriais 4.0";
 
     function toggleChat() {
         const chat = document.getElementById('chatbot');
@@ -1136,13 +1133,34 @@
             input.focus();
         }
 
-        showTypingIndicator();
+        // Recupera as respostas (pode ser String ou Array de Strings)
+        const responses = generateBotResponse(text);
+        const messagesArray = Array.isArray(responses) ? responses : [responses];
         
-        setTimeout(() => {
-            removeTypingIndicator();
-            const response = generateBotResponse(text);
-            appendMessage(response, 'bot');
-        }, 1200 + Math.random() * 800); 
+        let i = 0;
+        
+        // Função recursiva para enviar múltiplas mensagens com delays naturais
+        function sendNext() {
+            if (i >= messagesArray.length) return;
+            
+            showTypingIndicator();
+            
+            // Delays dinâmicos: rápido se for só lista de tópicos, mais lento se for texto novo
+            const isSequence = messagesArray.length > 2 && i > 0;
+            const delay = isSequence ? 700 : 1200 + Math.random() * 600;
+
+            setTimeout(() => {
+                removeTypingIndicator();
+                appendMessage(messagesArray[i], 'bot');
+                i++;
+                
+                if (i < messagesArray.length) {
+                    setTimeout(sendNext, 200); // Pausa super curta antes de recomeçar a "digitar" o próximo item
+                }
+            }, delay);
+        }
+        
+        sendNext();
     }
 
     function appendMessage(text, sender) {
@@ -1197,7 +1215,7 @@
             return `Tudo certo, ${userData.name}! Nossa equipe de engenharia avaliará sua solicitação para a cidade de ${userData.city} e entrará em contato em breve no e-mail fornecido. Posso ajudar com mais alguma dúvida técnica no momento?`;
         }
 
-        // Saudações e Cumprimentos Abertos
+        // Saudações
         if (lowerMsg.match(/(bom dia|boa tarde|boa noite|olá|ola|oi)/)) {
             let greeting = "Olá!";
             if (lowerMsg.includes('bom dia')) greeting = "Bom dia!";
@@ -1207,13 +1225,22 @@
             return `${greeting} Sou a Inteligência Artificial da Stillus Multimáquinas. Como posso ajudar a maximizar a eficiência da sua operação hoje?`;
         } 
 
-        // Listagem de Produtos / Interesse de Compra
+        // Listagem de Produtos "Um por Um" (Retorna um Array)
         if (lowerMsg.includes('orçamento') || lowerMsg.includes('valor') || lowerMsg.includes('preço') || lowerMsg.includes('produto') || lowerMsg.includes('quais') || lowerMsg.includes('vende') || lowerMsg.includes('catalogo')) {
             chatState = 'AWAITING_PRODUCT_CHOICE';
-            return "Depende de qual você estaria interessado(a). Temos as seguintes opções de alta performance prontas para sua indústria:\n\n" + productsList + "\n\nQual desses equipamentos chama mais a sua atenção?";
+            return [
+                "Depende de qual você estaria interessado(a). Temos as seguintes opções prontas para sua indústria:",
+                "• Cortador de Grama Toyama TLT42-19A",
+                "• Lavadora 2100 PSI Tramontina",
+                "• Motosserra a bateria 20V",
+                "• Kits Completos para Campo",
+                "• Soprador de Folhas Branco 2,3L",
+                "• Sensores Industriais 4.0",
+                "Qual desses equipamentos chama mais a sua atenção?"
+            ];
         } 
         
-        // Acionamento de Manutenção / Urgência
+        // Acionamento
         if (lowerMsg.includes('emergência') || lowerMsg.includes('urgente') || lowerMsg.includes('parou') || lowerMsg.includes('parada')) {
             return "Entendi a urgência. Para máquinas paradas, nosso acionamento técnico ocorre em até 4 horas (para clientes em contrato). Qual equipamento parou?";
         } 
@@ -1224,7 +1251,7 @@
             return "Nossos contratos de manutenção preventiva são montados sob medida para reduzir o downtime da sua planta a zero. Quer que eu agende uma visita técnica de avaliação?";
         } 
         
-        // Fallback / Dúvidas Gerais
+        // Fallback
         return "Entendo. Como sou uma assistente virtual inicial, caso prefira um atendimento técnico mais aprofundado, nossa engenharia está disponível no WhatsApp (62) 98108-5787.";
     }
     </script>
