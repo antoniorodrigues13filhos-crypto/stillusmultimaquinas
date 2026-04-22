@@ -51,14 +51,13 @@
             will-change: transform;
             backface-visibility: hidden;
             transform-style: preserve-3d;
-            background-color: #080808; /* Fallback anti-flash branco */
+            background-color: #080808; 
             z-index: 1;
         }
         
-        /* OVERLAY FÍSICO (Substitui o filter: brightness do CSS para não dar lag no mobile) */
         .hero-overlay {
             position: absolute; inset: 0;
-            background: rgba(8, 8, 8, 0.65); /* Escurece a imagem instantaneamente */
+            background: rgba(8, 8, 8, 0.65); 
             z-index: 10;
             pointer-events: none;
         }
@@ -114,62 +113,27 @@
         /* ── ANIMAÇÕES ULTRA-FLUIDAS (HERO) ── */
         .hero-block { position: absolute; left: 8%; right: 8%; z-index: 20; pointer-events: none; will-change: transform; backface-visibility: hidden; }
         
-        .word-wrap { 
-            overflow: hidden; 
-            display: inline-block; 
-            vertical-align: bottom; 
-            padding-top: 0.25em; 
-            margin-top: -0.25em; 
-            padding-bottom: 0.1em;
-            margin-bottom: -0.1em;
-        }
-
-        .hero-word { 
-            display: inline-block; 
-            transform: translate3d(0, 110%, 0); 
-            opacity: 0; 
-            transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1), opacity 1.2s cubic-bezier(0.19, 1, 0.22, 1); 
-            will-change: transform, opacity; 
-            backface-visibility: hidden;
-        }
+        .word-wrap { overflow: hidden; display: inline-block; vertical-align: bottom; padding-top: 0.25em; margin-top: -0.25em; padding-bottom: 0.1em; margin-bottom: -0.1em; }
+        .hero-word { display: inline-block; transform: translate3d(0, 110%, 0); opacity: 0; transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1), opacity 1.2s cubic-bezier(0.19, 1, 0.22, 1); will-change: transform, opacity; backface-visibility: hidden; }
         .hero-block.active .hero-word { transform: translate3d(0, 0, 0); opacity: 1; }
         
         .hero-word:nth-child(1) { transition-delay: 0s; } 
         .hero-word:nth-child(2) { transition-delay: 0.12s; } 
         .hero-word:nth-child(3) { transition-delay: 0.24s; }
 
-        .hero-sub { 
-            opacity: 0; 
-            transform: translate3d(0, 25px, 0); 
-            transition: opacity 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.45s, transform 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.45s; 
-            will-change: transform, opacity; 
-            backface-visibility: hidden;
-        }
+        .hero-sub { opacity: 0; transform: translate3d(0, 25px, 0); transition: opacity 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.45s, transform 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.45s; will-change: transform, opacity; backface-visibility: hidden; }
         .hero-block.active .hero-sub { opacity: 1; transform: translate3d(0, 0, 0); }
         
-        .hero-block.exiting .hero-word { 
-            transform: translate3d(0, -110%, 0); 
-            opacity: 0; 
-            transition-duration: 0.7s; 
-            transition-timing-function: cubic-bezier(0.55, 0.085, 0.68, 0.53); 
-        }
-        .hero-block.exiting .hero-sub { 
-            opacity: 0; 
-            transform: translate3d(0, -20px, 0); 
-            transition-duration: 0.5s; 
-            transition-delay: 0s; 
-            transition-timing-function: cubic-bezier(0.55, 0.085, 0.68, 0.53); 
-        }
+        .hero-block.exiting .hero-word { transform: translate3d(0, -110%, 0); opacity: 0; transition-duration: 0.7s; transition-timing-function: cubic-bezier(0.55, 0.085, 0.68, 0.53); }
+        .hero-block.exiting .hero-sub { opacity: 0; transform: translate3d(0, -20px, 0); transition-duration: 0.5s; transition-delay: 0s; transition-timing-function: cubic-bezier(0.55, 0.085, 0.68, 0.53); }
 
         .animated-stroke { color: transparent; -webkit-text-stroke: 1.5px rgba(255,255,255,0.18); position: relative; display: inline-block; }
         .animated-stroke::after { content: "LUCRO ZERO."; position: absolute; left: 0; top: 0; width: var(--fill-width); height: 100%; color: var(--brand-orange); -webkit-text-stroke: 1.5px var(--brand-orange); overflow: hidden; white-space: nowrap; filter: drop-shadow(0 0 14px rgba(211,123,66,0.5)); transition: width 0.08s linear; will-change: width; }
 
-        /* Ajuste do Clamp para não quebrar no mobile */
         .h-display { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.05em; line-height: 0.92; font-size: clamp(40px, 11vw, 120px); color: #F8F8F8; display: block; margin-bottom: 28px; }
         .accent { color: #D37B42; }
         .side-line { border-left: 2px solid #D37B42; padding-left: 20px; font-size: clamp(13px, 1.8vw, 17px); color: rgba(255,255,255,0.38); font-weight: 300; line-height: 1.6; max-width: 420px; }
 
-        /* Botões CTA Premium */
         .cta-btn { display: inline-block; background: linear-gradient(135deg, #D37B42, #B58D67); color: #fff; padding: 18px 44px; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; cursor: pointer; border: none; box-shadow: 0 0 40px rgba(211,123,66,0.15); transition: transform 0.3s ease, box-shadow 0.3s ease; text-decoration: none; position: relative; overflow: hidden; }
         .cta-btn::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); transition: left 0.5s ease; }
         .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px -10px rgba(211,123,66,0.6); }
@@ -179,19 +143,10 @@
         .cta-btn-outline:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.45); color: #fff; box-shadow: 0 10px 30px -10px rgba(255,255,255,0.1); }
 
         /* ── TRANSIÇÃO PRODUTOS ── */
-        #produtos { 
-            position: relative; 
-            z-index: 40; 
-            margin-top: -100vh;
-            margin-top: -100svh; 
-            padding-top: 15vh; 
-            background: linear-gradient(to bottom, transparent, #080808 15vh, #080808 100%); 
-        }
-
+        #produtos { position: relative; z-index: 40; margin-top: -100vh; margin-top: -100svh; padding-top: 15vh; background: linear-gradient(to bottom, transparent, #080808 15vh, #080808 100%); }
         .product-card { opacity: 0; transform: translate3d(0, 40px, 0); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1), border 0.3s ease, box-shadow 0.3s ease; cursor: pointer; background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%); backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%); border: 0.5px solid rgba(255,255,255,0.08); box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.2), inset 0 1px 0 0 rgba(255, 255, 255, 0.1); will-change: transform, opacity; display: flex; flex-direction: column; overflow: hidden; border-radius: 24px; }
         .product-card:hover { transform: translate3d(0, -5px, 0) !important; border-color: rgba(211,123,66,0.35); box-shadow: 0 20px 40px rgba(0,0,0,0.6), inset 0 1px 0 0 rgba(211,123,66,0.3); }
         .product-card.revealed { opacity: 1; transform: translate3d(0,0,0); }
-        
         .product-image { filter: drop-shadow(0px 20px 30px rgba(0, 0, 0, 0.6)); }
         .product-card:hover .product-image { transform: scale(1.05) !important; }
         .product-card:hover .arrow-icon { color: #D37B42 !important; }
@@ -200,33 +155,14 @@
         .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(40px, 8vw, 88px); letter-spacing: 0.05em; line-height: 0.92; color: #F8F8F8; }
         .section-body { font-size: clamp(14px, 1.6vw, 16px); color: rgba(255,255,255,0.38); font-weight: 300; line-height: 1.7; }
         
-        /* Sistema de Revelação Global */
         .reveal { opacity: 0; transform: translate3d(0, 32px, 0); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); will-change: transform, opacity; }
         .reveal.visible { opacity: 1; transform: translate3d(0, 0, 0); }
         .reveal-delay-1 { transition-delay: 0.1s; } .reveal-delay-2 { transition-delay: 0.2s; } .reveal-delay-3 { transition-delay: 0.3s; } .reveal-delay-4 { transition-delay: 0.4s; }
 
-        /* ── EFEITO SWEEP 100% COMPATÍVEL MOBILE/DESKTOP ── */
-        .reveal-sweep {
-            opacity: 1 !important; 
-            transform: translate3d(0,0,0) !important; 
-        }
-        /* A "cortina" preta que cobre a faixa */
-        .reveal-sweep::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #080808; 
-            transform-origin: right center;
-            transform: scaleX(1);
-            transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
-            z-index: 1;
-        }
-        /* Quando visível, a cortina encolhe pra direita, revelando o laranja da esquerda pra direita */
-        .reveal-sweep.visible::after {
-            transform: scaleX(0);
-        }
+        .reveal-sweep { opacity: 1 !important; transform: translate3d(0,0,0) !important; }
+        .reveal-sweep::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: #080808; transform-origin: right center; transform: scaleX(1); transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1); z-index: 1; }
+        .reveal-sweep.visible::after { transform: scaleX(0); }
 
-        /* ── ESTRUTURAS ORIGINAIS ── */
         .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: clamp(48px, 8vw, 80px); letter-spacing: 0.02em; line-height: 1; color: #F8F8F8; }
         .stat-num span { color: #D37B42; }
 
@@ -239,7 +175,33 @@
         .service-arrow { color: rgba(255,255,255,0.15); transition: color 0.2s ease, transform 0.2s ease; padding-top: 6px; }
         .service-item:hover .service-arrow { color: #D37B42; transform: translate3d(4px, -4px, 0); }
 
-        .process-line-h { position: absolute; top: 16px; left: calc(10% + 16px); right: calc(10% + 16px); height: 0.5px; background: rgba(255,255,255,0.07); z-index: 0; }
+        /* ── SCROLL ANIMATION: COMO TRABALHAMOS ── */
+        .process-container { position: relative; }
+        
+        /* Linha Desktop */
+        .process-line-bg { position: absolute; top: 16px; left: 10%; right: 10%; height: 1px; background: rgba(255,255,255,0.07); z-index: 0; }
+        .process-line-fill { position: absolute; top: 16px; left: 10%; width: 0%; height: 1px; background: var(--brand-orange); z-index: 1; box-shadow: 0 0 15px var(--brand-orange); will-change: width; transition: width 0.1s linear; }
+
+        /* Linha Mobile (Escondida no Desktop) */
+        .process-line-v-bg { display: none; position: absolute; top: 16px; bottom: 16px; left: 15px; width: 2px; background: rgba(255,255,255,0.07); z-index: 0; }
+        .process-line-v-fill { display: none; position: absolute; top: 16px; left: 15px; width: 2px; height: 0%; background: var(--brand-orange); z-index: 1; box-shadow: 0 0 15px var(--brand-orange); will-change: height; transition: height 0.1s linear; }
+
+        /* Layout e Estados Ativos dos Ícones */
+        .process-step { text-align: center; padding: 0 24px; position: relative; z-index: 2; opacity: 0.4; transition: opacity 0.5s ease, transform 0.5s ease; transform: translateY(20px); }
+        .process-step.active { opacity: 1; transform: translateY(0); }
+
+        .process-icon-wrap { width: 32px; height: 32px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); background: #080808; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; transition: all 0.5s cubic-bezier(0.16,1,0.3,1); box-shadow: inset 0 0 0 0 rgba(211,123,66,0); }
+        .process-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.15); transition: all 0.5s cubic-bezier(0.16,1,0.3,1); }
+
+        /* Magia do Acionamento */
+        .process-step.active .process-icon-wrap { border-color: var(--brand-orange); transform: scale(1.15); box-shadow: inset 0 0 20px rgba(211,123,66,0.2), 0 0 20px rgba(211,123,66,0.3); }
+        .process-step.active .process-dot { background: var(--brand-orange); transform: scale(1.3); box-shadow: 0 0 10px var(--brand-orange); }
+
+        .process-title { font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 0.1em; margin-bottom: 8px; color: #F8F8F8; transition: color 0.4s ease; }
+        .process-step.active .process-title { color: var(--brand-orange); }
+        
+        .process-desc { font-size: 12px; color: rgba(255,255,255,0.3); font-weight: 300; line-height: 1.6; transition: color 0.4s ease; }
+        .process-step.active .process-desc { color: rgba(255,255,255,0.7); }
 
         .testimonial-card { background: rgba(255,255,255,0.03); border: 0.5px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 32px; transition: border-color 0.3s ease; }
         .testimonial-card:hover { border-color: rgba(211,123,66,0.25); }
@@ -286,189 +248,43 @@
         .footer-link:hover { color: rgba(255,255,255,0.6); }
 
         .visible { opacity: 1 !important; pointer-events: all !important; }
-
         .orange-stripe { position: relative; background: linear-gradient(135deg, #D37B42 0%, #B55A22 100%); overflow: hidden; padding: 80px 8%; }
 
-        /* ── ÍCONE WHATSAPP FLUTUANTE COM MOTION ── */
-        .whatsapp-float {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 70px;
-            height: 70px;
-            z-index: 9999;
-            cursor: pointer;
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px) saturate(160%);
-            -webkit-backdrop-filter: blur(20px) saturate(160%);
-            border: 0.5px solid rgba(255, 255, 255, 0.12);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: float-icon 3s ease-in-out infinite;
-            filter: drop-shadow(0px 10px 15px rgba(0, 0, 0, 0.4));
-            transition: all 0.3s ease;
-        }
-        
-        .whatsapp-float img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            padding: 14px; 
-            transition: transform 0.3s ease;
-        }
+        /* ── ÍCONE WHATSAPP FLUTUANTE ── */
+        .whatsapp-float { position: fixed; bottom: 30px; right: 30px; width: 70px; height: 70px; z-index: 9999; cursor: pointer; background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%); border: 0.5px solid rgba(255, 255, 255, 0.12); border-radius: 50%; display: flex; align-items: center; justify-content: center; animation: float-icon 3s ease-in-out infinite; filter: drop-shadow(0px 10px 15px rgba(0, 0, 0, 0.4)); transition: all 0.3s ease; }
+        .whatsapp-float img { width: 100%; height: 100%; object-fit: contain; padding: 14px; transition: transform 0.3s ease; }
+        .whatsapp-float:hover { border-color: rgba(211, 123, 66, 0.4); background: rgba(211, 123, 66, 0.1); filter: drop-shadow(0px 15px 25px rgba(211, 123, 66, 0.5)); animation-play-state: paused; }
+        .whatsapp-float:hover img { transform: scale(1.1); }
+        @keyframes float-icon { 0% { transform: translateY(0); } 50% { transform: translateY(-15px); } 100% { transform: translateY(0); } }
 
-        .whatsapp-float:hover {
-            border-color: rgba(211, 123, 66, 0.4);
-            background: rgba(211, 123, 66, 0.1);
-            filter: drop-shadow(0px 15px 25px rgba(211, 123, 66, 0.5));
-            animation-play-state: paused;
-        }
-        
-        .whatsapp-float:hover img {
-            transform: scale(1.1);
-        }
-
-        @keyframes float-icon {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0); }
-        }
-
-        /* ── CHATBOT WIDGET (DEMO) ── */
-        .chat-container {
-            position: fixed;
-            bottom: 110px;
-            right: 30px;
-            width: 350px;
-            max-height: 500px;
-            height: 60vh;
-            background: rgba(8, 8, 8, 0.65);
-            backdrop-filter: blur(24px) saturate(160%);
-            -webkit-backdrop-filter: blur(24px) saturate(160%);
-            border: 0.5px solid rgba(255,255,255,0.12);
-            border-radius: 20px;
-            z-index: 9998;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            opacity: 0;
-            pointer-events: none;
-            transform: translateY(20px) scale(0.95);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 20px rgba(211,123,66,0.1);
-        }
-        .chat-container.open {
-            opacity: 1;
-            pointer-events: all;
-            transform: translateY(0) scale(1);
-        }
-        .chat-header {
-            padding: 18px 24px;
-            border-bottom: 0.5px solid rgba(255,255,255,0.08);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(255,255,255,0.02);
-        }
-        .chat-header-info h4 {
-            font-family: 'DM Sans', sans-serif;
-            font-size: 15px;
-            color: #F8F8F8;
-            font-weight: 500;
-        }
-        .chat-header-info p {
-            font-size: 11px;
-            color: #D37B42;
-            letter-spacing: 0.05em;
-            margin-top: 2px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
+        /* ── CHATBOT WIDGET ── */
+        .chat-container { position: fixed; bottom: 110px; right: 30px; width: 350px; max-height: 500px; height: 60vh; background: rgba(8, 8, 8, 0.65); backdrop-filter: blur(24px) saturate(160%); -webkit-backdrop-filter: blur(24px) saturate(160%); border: 0.5px solid rgba(255,255,255,0.12); border-radius: 20px; z-index: 9998; display: flex; flex-direction: column; overflow: hidden; opacity: 0; pointer-events: none; transform: translateY(20px) scale(0.95); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 20px rgba(211,123,66,0.1); }
+        .chat-container.open { opacity: 1; pointer-events: all; transform: translateY(0) scale(1); }
+        .chat-header { padding: 18px 24px; border-bottom: 0.5px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.02); }
+        .chat-header-info h4 { font-family: 'DM Sans', sans-serif; font-size: 15px; color: #F8F8F8; font-weight: 500; }
+        .chat-header-info p { font-size: 11px; color: #D37B42; letter-spacing: 0.05em; margin-top: 2px; display: flex; align-items: center; gap: 6px; }
         .status-dot { width: 6px; height: 6px; background: #2a9d6f; border-radius: 50%; box-shadow: 0 0 8px #2a9d6f; }
         .close-chat { color: rgba(255,255,255,0.4); cursor: pointer; transition: color 0.2s; }
         .close-chat:hover { color: #fff; }
-        
-        .chat-messages {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
+        .chat-messages { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
         .chat-messages::-webkit-scrollbar { width: 4px; }
         .chat-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
-
-        .msg-bubble {
-            max-width: 85%;
-            padding: 12px 16px;
-            border-radius: 16px;
-            font-size: 13px;
-            line-height: 1.5;
-            animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            opacity: 0;
-            transform: translateY(10px);
-        }
+        .msg-bubble { max-width: 85%; padding: 12px 16px; border-radius: 16px; font-size: 13px; line-height: 1.5; animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; transform: translateY(10px); }
         @keyframes popIn { to { opacity: 1; transform: translateY(0); } }
-        
-        .msg-bot {
-            align-self: flex-start;
-            background: rgba(255,255,255,0.05);
-            color: rgba(255,255,255,0.85);
-            border: 0.5px solid rgba(255,255,255,0.05);
-            border-bottom-left-radius: 4px;
-        }
-        .msg-user {
-            align-self: flex-end;
-            background: linear-gradient(135deg, #D37B42, #B55A22);
-            color: #fff;
-            border-bottom-right-radius: 4px;
-        }
-
-        .chat-input-area {
-            padding: 16px;
-            border-top: 0.5px solid rgba(255,255,255,0.08);
-            display: flex;
-            gap: 12px;
-            background: rgba(255,255,255,0.01);
-        }
-        .chat-input-area input {
-            flex: 1;
-            background: rgba(255,255,255,0.05);
-            border: 0.5px solid rgba(255,255,255,0.1);
-            border-radius: 100px;
-            padding: 10px 16px;
-            color: #fff;
-            font-size: 13px;
-            outline: none;
-            transition: border-color 0.2s;
-        }
+        .msg-bot { align-self: flex-start; background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.85); border: 0.5px solid rgba(255,255,255,0.05); border-bottom-left-radius: 4px; }
+        .msg-user { align-self: flex-end; background: linear-gradient(135deg, #D37B42, #B55A22); color: #fff; border-bottom-right-radius: 4px; }
+        .chat-input-area { padding: 16px; border-top: 0.5px solid rgba(255,255,255,0.08); display: flex; gap: 12px; background: rgba(255,255,255,0.01); }
+        .chat-input-area input { flex: 1; background: rgba(255,255,255,0.05); border: 0.5px solid rgba(255,255,255,0.1); border-radius: 100px; padding: 10px 16px; color: #fff; font-size: 13px; outline: none; transition: border-color 0.2s; }
         .chat-input-area input:focus { border-color: rgba(211,123,66,0.4); }
-        .chat-send-btn {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background: #D37B42;
-            border: none;
-            color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            transition: transform 0.2s, background 0.2s;
-        }
+        .chat-send-btn { width: 38px; height: 38px; border-radius: 50%; background: #D37B42; border: none; color: #fff; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: transform 0.2s, background 0.2s; }
         .chat-send-btn:hover { transform: scale(1.05); background: #B55A22; }
-
         .typing-indicator { display: flex; gap: 4px; padding: 4px 8px; }
         .typing-indicator span { width: 4px; height: 4px; background: rgba(255,255,255,0.4); border-radius: 50%; animation: blink 1.4s infinite both; }
         .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
         .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
         @keyframes blink { 0%, 80%, 100% { opacity: 0.2; } 40% { opacity: 1; } }
 
-        /* ── MOBILE CSS REGRAS E ESCONDER FAQ/CONTATO ── */
+        /* ── MOBILE CSS REGRAS ── */
         @media (max-width: 768px) {
             .nav-inner { justify-content: space-between; } 
             .nav-links { display: none; }
@@ -480,14 +296,19 @@
             .process-line-h { display: none; }
             .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 32px !important; }
             .footer-grid > div:first-child { grid-column: 1 / -1; }
-
             .hide-on-mobile { display: none !important; }
-            
             .product-card { opacity: 1 !important; transform: translate3d(0,0,0) !important; }
-
             .chat-container { width: calc(100% - 40px); bottom: 90px; right: 20px; }
             .whatsapp-float { bottom: 20px; right: 20px; width: 60px; height: 60px; }
             .whatsapp-float img { padding: 10px; }
+
+            /* Ajustes Processos Mobile */
+            .process-line-bg, .process-line-fill { display: none; }
+            .process-line-v-bg, .process-line-v-fill { display: block; }
+            .process-grid { display: flex !important; flex-direction: column; gap: 48px !important; }
+            .process-step { display: flex; gap: 24px; text-align: left; padding: 0 !important; align-items: flex-start; transform: translateX(-20px); }
+            .process-step.active { transform: translateX(0); }
+            .process-icon-wrap { margin: 0 !important; flex-shrink: 0; }
         }
     </style>
 </head>
@@ -522,7 +343,9 @@
     <section id="scroll-hero">
         <div class="hero-sticky">
             <canvas id="hero-canvas"></canvas>
-            <div class="hero-overlay"></div> <div id="copy-1" class="hero-block" style="top:28%;">
+            <div class="hero-overlay"></div> 
+
+            <div id="copy-1" class="hero-block" style="top:28%;">
                 <div class="h-display">
                     <div><span class="word-wrap"><span class="hero-word">M&Aacute;QUINAS</span></span></div>
                     <div><span class="word-wrap"><span class="hero-word">PARADAS,</span></span></div>
@@ -557,7 +380,6 @@
 
     <section id="produtos" class="py-32 px-[8%]">
         <div style="max-width:1200px;margin:0 auto;">
-
             <div style="text-align:center;margin-bottom:80px;">
                 <span class="section-label reveal">Menos paradas. Mais produção.</span>
                 <h2 class="section-title reveal reveal-delay-1" style="margin-bottom:0;">
@@ -566,7 +388,6 @@
             </div>
 
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;">
-
                 <div class="product-card">
                     <div style="width: 100%; height: 220px; overflow: hidden; flex-shrink: 0; position: relative;">
                         <img src="produtos/cortador de grama toyama tlt42-19a.png" alt="Cortador de Grama Toyama TLT42-19A" class="product-image" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.16,1,0.3,1);">
@@ -745,16 +566,63 @@
         </div>
     </section>
 
-    <section style="padding:100px 8%;background:#080808;border-top:0.5px solid rgba(255,255,255,0.05);">
+    <section id="como-trabalhamos" style="padding:100px 8%;background:#080808;border-top:0.5px solid rgba(255,255,255,0.05);">
         <div style="max-width:1200px;margin:0 auto;">
-            <div style="text-align:center;margin-bottom:72px;"><span class="section-label reveal">Como trabalhamos</span><h2 class="section-title reveal reveal-delay-1">Do contato ao resultado</h2></div>
-            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0;position:relative;">
-                <div class="process-line-h"></div>
-                <div style="text-align:center;padding:0 24px;position:relative;z-index:1;" class="reveal"><div style="width:32px;height:32px;border-radius:50%;border:0.5px solid rgba(211,123,66,0.35);background:#080808;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;"><div style="width:8px;height:8px;border-radius:50%;background:#D37B42;"></div></div><div style="font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:0.1em;margin-bottom:8px;color:#F8F8F8;">CONTATO</div><p style="font-size:12px;color:rgba(255,255,255,0.3);font-weight:300;line-height:1.6;">Você nos aciona por telefone, WhatsApp ou formulário.</p></div>
-                <div style="text-align:center;padding:0 24px;position:relative;z-index:1;" class="reveal reveal-delay-1"><div style="width:32px;height:32px;border-radius:50%;border:0.5px solid rgba(211,123,66,0.35);background:#080808;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;"><div style="width:8px;height:8px;border-radius:50%;background:#D37B42;"></div></div><div style="font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:0.1em;margin-bottom:8px;color:#F8F8F8;">DIAGNÓSTICO</div><p style="font-size:12px;color:rgba(255,255,255,0.3);font-weight:300;line-height:1.6;">Técnico especializado avalia o equipamento pessoalmente.</p></div>
-                <div style="text-align:center;padding:0 24px;position:relative;z-index:1;" class="reveal reveal-delay-2"><div style="width:32px;height:32px;border-radius:50%;border:0.5px solid rgba(211,123,66,0.35);background:#080808;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;"><div style="width:8px;height:8px;border-radius:50%;background:#D37B42;"></div></div><div style="font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:0.1em;margin-bottom:8px;color:#F8F8F8;">ORÇAMENTO</div><p style="font-size:12px;color:rgba(255,255,255,0.3);font-weight:300;line-height:1.6;">Proposta clara, sem surpresas, com prazo de entrega definido.</p></div>
-                <div style="text-align:center;padding:0 24px;position:relative;z-index:1;" class="reveal reveal-delay-3"><div style="width:32px;height:32px;border-radius:50%;border:0.5px solid rgba(211,123,66,0.35);background:#080808;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;"><div style="width:8px;height:8px;border-radius:50%;background:#D37B42;"></div></div><div style="font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:0.1em;margin-bottom:8px;color:#F8F8F8;">EXECUÇÃO</div><p style="font-size:12px;color:rgba(255,255,255,0.3);font-weight:300;line-height:1.6;">Serviço executado com componentes certificados e rastreáveis.</p></div>
-                <div style="text-align:center;padding:0 24px;position:relative;z-index:1;" class="reveal reveal-delay-4"><div style="width:32px;height:32px;border-radius:50%;border:0.5px solid rgba(211,123,66,0.35);background:#080808;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;"><div style="width:8px;height:8px;border-radius:50%;background:#D37B42;"></div></div><div style="font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:0.1em;margin-bottom:8px;color:#F8F8F8;">GARANTIA</div><p style="font-size:12px;color:rgba(255,255,255,0.3);font-weight:300;line-height:1.6;">Acompanhamento pós-serviço e garantia documentada.</p></div>
+            <div style="text-align:center;margin-bottom:72px;">
+                <span class="section-label reveal">Como trabalhamos</span>
+                <h2 class="section-title reveal reveal-delay-1">Do contato ao resultado</h2>
+            </div>
+            
+            <div class="process-container">
+                <div class="process-line-bg"></div>
+                <div class="process-line-fill" id="process-fill-h"></div>
+                
+                <div class="process-line-v-bg"></div>
+                <div class="process-line-v-fill" id="process-fill-v"></div>
+
+                <div class="process-grid" style="display:grid;grid-template-columns:repeat(5, 1fr);gap:0;position:relative;z-index:2;">
+                    
+                    <div class="process-step">
+                        <div class="process-icon-wrap"><div class="process-dot"></div></div>
+                        <div>
+                            <div class="process-title">CONTATO</div>
+                            <p class="process-desc">Você nos aciona por telefone, WhatsApp ou formulário.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="process-step">
+                        <div class="process-icon-wrap"><div class="process-dot"></div></div>
+                        <div>
+                            <div class="process-title">DIAGNÓSTICO</div>
+                            <p class="process-desc">Técnico especializado avalia o equipamento pessoalmente.</p>
+                        </div>
+                    </div>
+
+                    <div class="process-step">
+                        <div class="process-icon-wrap"><div class="process-dot"></div></div>
+                        <div>
+                            <div class="process-title">ORÇAMENTO</div>
+                            <p class="process-desc">Proposta clara, sem surpresas, com prazo definido.</p>
+                        </div>
+                    </div>
+
+                    <div class="process-step">
+                        <div class="process-icon-wrap"><div class="process-dot"></div></div>
+                        <div>
+                            <div class="process-title">EXECUÇÃO</div>
+                            <p class="process-desc">Serviço executado com componentes certificados.</p>
+                        </div>
+                    </div>
+
+                    <div class="process-step">
+                        <div class="process-icon-wrap"><div class="process-dot"></div></div>
+                        <div>
+                            <div class="process-title">GARANTIA</div>
+                            <p class="process-desc">Acompanhamento pós-serviço e garantia documentada.</p>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
     </section>
@@ -869,6 +737,7 @@
 
         const bitmaps = new Array(FRAME_COUNT);
         let loaded = 0, currentFraction = 0, targetFraction = 0, lastScrollY = window.scrollY, rafId = null;
+        let currentProcessProgress = 0; // Adicionado para a nova animação de Scroll
 
         const canvas = document.getElementById('hero-canvas');
         const ctx    = canvas.getContext('2d', { alpha: false, desynchronized: true });
@@ -966,6 +835,7 @@
             lastScrollY      = curScrollY;
             const delta = targetFraction - currentFraction;
 
+            /* Lógica Original Hero Canvas */
             if (Math.abs(delta) > 0.00005) {
                 const base = IS_MOBILE ? 0.12 : 0.08; 
                 const lerp = Math.min(IS_MOBILE ? 0.35 : 0.15, base + velocity * 0.0008);
@@ -976,17 +846,47 @@
                 applyText(currentFraction);
             }
             
+            /* Lógica de Revelação de Cards (Otimizada para o loop) */
             document.querySelectorAll('.product-card').forEach((card, i) => {
                 if (!card.classList.contains('revealed') && card.getBoundingClientRect().top < window.innerHeight * 0.85) {
                     setTimeout(() => card.classList.add('revealed'), (i % 3) * 150);
                 }
             });
-            
             document.querySelectorAll('.reveal-sweep').forEach((elem) => {
                 if (!elem.classList.contains('visible') && elem.getBoundingClientRect().top < window.innerHeight * 0.85) {
                     elem.classList.add('visible');
                 }
             });
+
+            /* ── NOVA LÓGICA: SCROLL ANIMATION (Como Trabalhamos) ── */
+            const processSection = document.getElementById('como-trabalhamos');
+            if (processSection) {
+                const rect = processSection.getBoundingClientRect();
+                const viewH = window.innerHeight;
+                
+                // Calcula o progresso baseado na entrada da seção na tela
+                const startY = viewH * 0.8; // Linha começa a encher quando o topo chega a 80% da tela
+                let rawProgress = (startY - rect.top) / (rect.height * 0.8); // 0.8 compensa o padding final
+                rawProgress = Math.max(0, Math.min(1, rawProgress));
+                
+                // Aplica o progresso nas linhas
+                const fillH = document.getElementById('process-fill-h');
+                const fillV = document.getElementById('process-fill-v');
+                if (fillH && window.innerWidth > 768) fillH.style.width = (rawProgress * 100) + '%';
+                if (fillV && window.innerWidth <= 768) fillV.style.height = (rawProgress * 100) + '%';
+
+                // Ativa os ícones sincronizadamente
+                const steps = document.querySelectorAll('.process-step');
+                steps.forEach((step, i) => {
+                    // Distribui os 5 passos proporcionalmente no progresso (0.0 até 0.8)
+                    const triggerPoint = i * (1 / (steps.length - 1)) * 0.8; 
+                    if (rawProgress >= triggerPoint) {
+                        step.classList.add('active');
+                    } else {
+                        step.classList.remove('active');
+                    }
+                });
+            }
 
             rafId = requestAnimationFrame(loop);
         }
@@ -1032,12 +932,8 @@
                 }
             }
 
-            // Espera TODAS as imagens carregarem
             await Promise.all(Array.from({ length: CONCURRENCY }, worker));
             
-            // TRAVA DE SEGURANÇA VIBE CODE: 
-            // Força a renderização imediata do Frame 0 exato no momento em que tudo terminou,
-            // garantindo que quando o display do loader sumir, a imagem já esteja desenhada no fundo.
             recalcLayout();
             if(bitmaps[0]) {
                 computeDraw(bitmaps[0]);
@@ -1063,7 +959,7 @@
             }, { threshold: 0.12 });
             
             els.forEach(el => {
-                if(!el.classList.contains('reveal-sweep')) {
+                if(!el.classList.contains('reveal-sweep') && !el.closest('#como-trabalhamos')) {
                     io.observe(el);
                 }
             });
@@ -1151,14 +1047,13 @@
         appendMessage(text, 'user');
         input.value = '';
 
-        // Simula o tempo de digitação da atendente
         showTypingIndicator();
         
         setTimeout(() => {
             removeTypingIndicator();
             const response = generateBotResponse(text);
             appendMessage(response, 'bot');
-        }, 1500 + Math.random() * 1000); // Responde entre 1.5s e 2.5s
+        }, 1500 + Math.random() * 1000); 
     }
 
     function appendMessage(text, sender) {
@@ -1185,26 +1080,19 @@
         if (indicator) indicator.remove();
     }
 
-    // Regras de Resposta Dinâmica (Palavras-chave)
     function generateBotResponse(msg) {
         const lowerMsg = msg.toLowerCase();
-        
         if (lowerMsg.includes('orçamento') || lowerMsg.includes('valor') || lowerMsg.includes('preço') || lowerMsg.includes('custo')) {
             return "Para passar um orçamento preciso, um de nossos engenheiros precisa entender seu equipamento. Qual a marca e o modelo?";
-        } 
-        else if (lowerMsg.includes('emergência') || lowerMsg.includes('urgente') || lowerMsg.includes('parou') || lowerMsg.includes('parada')) {
+        } else if (lowerMsg.includes('emergência') || lowerMsg.includes('urgente') || lowerMsg.includes('parou') || lowerMsg.includes('parada')) {
             return "Entendi a urgência. Para máquinas paradas, nosso acionamento técnico ocorre em até 4 horas (para clientes em contrato). Qual equipamento parou?";
-        } 
-        else if (lowerMsg.includes('weg') || lowerMsg.includes('siemens') || lowerMsg.includes('motor')) {
+        } else if (lowerMsg.includes('weg') || lowerMsg.includes('siemens') || lowerMsg.includes('motor')) {
             return "Sim, somos especialistas e possuímos certificação para atuar com essa marca. Qual a anomalia que o motor está apresentando (ex: aquecimento, vibração)?";
-        } 
-        else if (lowerMsg.includes('preventiva') || lowerMsg.includes('contrato')) {
+        } else if (lowerMsg.includes('preventiva') || lowerMsg.includes('contrato')) {
             return "Nossos contratos de manutenção preventiva são montados sob medida para reduzir o downtime da sua planta. Quer que eu agende uma visita técnica de avaliação?";
-        } 
-        else if (lowerMsg.includes('ola') || lowerMsg.includes('olá') || lowerMsg.includes('bom dia') || lowerMsg.includes('boa tarde')) {
+        } else if (lowerMsg.includes('ola') || lowerMsg.includes('olá') || lowerMsg.includes('bom dia') || lowerMsg.includes('boa tarde')) {
             return "Olá! Como posso ajudar a garantir a eficiência da sua indústria hoje?";
-        } 
-        else {
+        } else {
             return "Compreendo. Como isso é uma demonstração básica, meu conhecimento é limitado. Mas nossa equipe técnica real está pronta para te atender no (62) 98108-5787!";
         }
     }
