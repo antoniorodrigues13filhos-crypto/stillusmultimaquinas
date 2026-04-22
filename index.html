@@ -315,7 +315,7 @@
             width: 100%;
             height: 100%;
             object-fit: contain;
-            padding: 14px; /* Mantém a imagem proporcional e cria espaço para o vidro em volta */
+            padding: 14px; 
             transition: transform 0.3s ease;
         }
 
@@ -327,7 +327,7 @@
         }
         
         .whatsapp-float:hover img {
-            transform: scale(1.1); /* Anima a imagem em vez de todo o botão ao passar o mouse */
+            transform: scale(1.1);
         }
 
         @keyframes float-icon {
@@ -470,7 +470,7 @@
 
         /* ── MOBILE CSS REGRAS E ESCONDER FAQ/CONTATO ── */
         @media (max-width: 768px) {
-            .nav-inner { justify-content: space-between; } /* Alinha a logo e icones corretamente */
+            .nav-inner { justify-content: space-between; } 
             .nav-links { display: none; }
             .scroll-dots { right: 20px; }
             .service-item { grid-template-columns: 30px 1fr; }
@@ -487,7 +487,7 @@
 
             .chat-container { width: calc(100% - 40px); bottom: 90px; right: 20px; }
             .whatsapp-float { bottom: 20px; right: 20px; width: 60px; height: 60px; }
-            .whatsapp-float img { padding: 10px; } /* Ajuste de padding para mobile */
+            .whatsapp-float img { padding: 10px; }
         }
     </style>
 </head>
@@ -1029,14 +1029,22 @@
                     const pct = Math.round((loaded / FRAME_COUNT) * 100);
                     loaderBar.style.width = pct + '%';
                     loaderPct.textContent = pct + '%';
-
-                    if (loaded === 1 && bitmaps[i]) {
-                        recalcLayout(); computeDraw(bitmaps[i]); render(0); applyText(0);
-                    }
                 }
             }
 
+            // Espera TODAS as imagens carregarem
             await Promise.all(Array.from({ length: CONCURRENCY }, worker));
+            
+            // TRAVA DE SEGURANÇA VIBE CODE: 
+            // Força a renderização imediata do Frame 0 exato no momento em que tudo terminou,
+            // garantindo que quando o display do loader sumir, a imagem já esteja desenhada no fundo.
+            recalcLayout();
+            if(bitmaps[0]) {
+                computeDraw(bitmaps[0]);
+            }
+            render(0);
+            applyText(0);
+
             loaderEl.style.opacity = '0';
             setTimeout(() => { 
                 loaderEl.style.display = 'none'; 
