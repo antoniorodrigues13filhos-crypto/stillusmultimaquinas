@@ -797,9 +797,9 @@
         let cW, cH, dpr, drawX, drawY, drawW, drawH;
 
         const blocks = [
-            { id: 'copy-1', dot: 'dot-1', start: 0.04, end: 0.26, el: null, dotEl: null },
-            { id: 'copy-2', dot: 'dot-2', start: 0.33, end: 0.57, el: null, dotEl: null },
-            { id: 'copy-3', dot: 'dot-3', start: 0.69, end: 0.98, el: null, dotEl: null } 
+            { id: 'copy-1', dot: 'dot-1', start: 0.04, end: 0.26, el: null, dotEl: null, tId: null },
+            { id: 'copy-2', dot: 'dot-2', start: 0.33, end: 0.57, el: null, dotEl: null, tId: null },
+            { id: 'copy-3', dot: 'dot-3', start: 0.69, end: 0.98, el: null, dotEl: null, tId: null } 
         ];
 
         function initBlocks() {
@@ -871,6 +871,7 @@
 
                 const inRange = fraction >= b.start && fraction <= b.end;
                 if (inRange) {
+                    clearTimeout(b.tId); // Correção do Bug de scroll rápido no mobile
                     b.el.classList.remove('exiting');
                     b.el.classList.add('active');
                     if (b.dotEl) b.dotEl.classList.add('active');
@@ -886,8 +887,16 @@
                 } else {
                     if (b.dotEl) b.dotEl.classList.remove('active');
                     if (b.el.classList.contains('active')) {
+                        b.el.classList.remove('active');
                         b.el.classList.add('exiting');
-                        setTimeout(() => { b.el.classList.remove('active', 'exiting'); b.el.style.transform = ''; }, 750);
+                        
+                        clearTimeout(b.tId);
+                        b.tId = setTimeout(() => { 
+                            if (!b.el.classList.contains('active')) {
+                                b.el.classList.remove('exiting'); 
+                                b.el.style.transform = ''; 
+                            }
+                        }, 750);
                     }
                 }
             });
