@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Oferta Exclusiva | Cortador Toyama TLT42-19A - Stillus Multimáquinas</title>
+    <title>Trator Cortador Toyama 19.5HP | Oferta Exclusiva - Stillus</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&subset=latin,latin-ext&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,700&subset=latin,latin-ext&display=swap" rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
@@ -30,7 +30,6 @@
             overflow-x: hidden; 
         }
 
-        /* ── BACKGROUND NOISE ── */
         body::before {
             content: "";
             position: fixed;
@@ -39,143 +38,154 @@
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
         }
 
-        /* ── TYPOGRAPHY & CINEMATIC REVEAL ── */
-        .title-bebas { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.05em; line-height: 0.92; }
+        /* ── CORREÇÃO DE TYPOGRAFIA (FIM DAS LETRAS CORTADAS) ── */
+        .title-bebas { 
+            font-family: 'Bebas Neue', sans-serif; 
+            letter-spacing: 0.05em; 
+            line-height: 1.1; /* Aumentado para respirar */
+            padding-bottom: 0.1em; /* Impede corte de letras por overflow */
+        }
         
         .st-reveal { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(0.19, 1, 0.22, 1); will-change: opacity, transform; }
         .st-reveal.loaded { opacity: 1; transform: translateY(0); }
-        .delay-1 { transition-delay: 0.1s; }
-        .delay-2 { transition-delay: 0.2s; }
-        .delay-3 { transition-delay: 0.3s; }
-        .delay-4 { transition-delay: 0.4s; }
+        .delay-1 { transition-delay: 0.1s; } .delay-2 { transition-delay: 0.2s; } .delay-3 { transition-delay: 0.3s; } .delay-4 { transition-delay: 0.4s; }
 
-        /* ── EXTREME GLASSMORPHISM PANEL ── */
+        /* ── PAINÉIS PREMIUM E RESPIRÁVEIS ── */
         .glass-panel { 
-            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%); 
-            backdrop-filter: blur(40px) saturate(180%); 
-            -webkit-backdrop-filter: blur(40px) saturate(180%); 
-            border: 0.5px solid rgba(255,255,255,0.1); 
-            box-shadow: inset 0 1px 1px rgba(255,255,255,0.15), 0 20px 40px rgba(0,0,0,0.5);
+            background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%); 
+            backdrop-filter: blur(30px) saturate(160%); 
+            -webkit-backdrop-filter: blur(30px) saturate(160%); 
+            border: 0.5px solid rgba(255,255,255,0.08); 
+            border-radius: 16px;
         }
-        
-        /* ── URGENCY BANNER ── */
-        .urgency-banner { background: linear-gradient(90deg, #110000, var(--danger-red), #110000); background-size: 200% 100%; animation: pulse-banner 3s ease infinite; border-bottom: 1px solid rgba(255,0,0,0.3); }
-        @keyframes pulse-banner { 0% { background-position: 100% 0; } 100% { background-position: -100% 0; } }
 
-        /* ── CRONÔMETRO ── */
-        .timer-box { display: flex; gap: 12px; justify-content: center; margin-top: 16px; }
-        .time-unit { background: rgba(0,0,0,0.8); border: 1px solid rgba(211,123,66,0.4); border-radius: 8px; padding: 12px 16px; min-width: 70px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.5), inset 0 0 15px rgba(211,123,66,0.15); }
-        .time-value { font-family: 'Bebas Neue', sans-serif; font-size: 36px; color: #fff; line-height: 1; }
-        .time-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--brand-orange); margin-top: 4px; }
+        .urgency-border {
+            border: 1px solid rgba(211,123,66,0.3);
+            background: linear-gradient(180deg, rgba(211,123,66,0.05) 0%, rgba(8,8,8,0) 100%);
+        }
 
-        /* ── CTA WHATSAPP PULSING ── */
+        /* ── CRONÔMETRO MINIMALISTA ── */
+        .timer-box { display: flex; gap: 8px; justify-content: center; align-items: center; }
+        .time-unit { background: rgba(0,0,0,0.6); border: 1px solid rgba(211,123,66,0.2); border-radius: 8px; padding: 10px 14px; min-width: 65px; text-align: center; }
+        .time-value { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: #fff; line-height: 1; }
+        .time-label { font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--brand-orange); margin-top: 4px; }
+
+        /* ── BOTAO WHATSAPP ── */
         .btn-whatsapp-giant {
             display: inline-flex; align-items: center; justify-content: center; gap: 16px;
             background: linear-gradient(135deg, #25D366, #128C7E); color: #fff;
-            padding: 24px 48px; border-radius: 100px;
-            font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: bold; letter-spacing: 0.2em; text-transform: uppercase;
+            padding: 22px 40px; border-radius: 100px;
+            font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
             text-decoration: none; position: relative; overflow: hidden;
-            box-shadow: 0 0 30px rgba(37, 211, 102, 0.4);
+            box-shadow: 0 0 25px rgba(37, 211, 102, 0.3);
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            animation: pulse-green 2.5s infinite;
         }
-        .btn-whatsapp-giant:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 15px 40px rgba(37, 211, 102, 0.6); animation-play-state: paused; border: 1px solid rgba(255,255,255,0.3); }
-        @keyframes pulse-green {
-            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
-            70% { box-shadow: 0 0 0 20px rgba(37, 211, 102, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
-        }
+        .btn-whatsapp-giant:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 15px 30px rgba(37, 211, 102, 0.5); }
 
-        /* ── PRODUTO IMAGE GLOW RESPIRANDO ── */
-        .product-glow-wrapper { position: relative; display: flex; justify-content: center; align-items: center; padding: 40px; }
+        /* ── IMAGEM DO PRODUTO (SEM SUFOCAR) ── */
+        .product-glow-wrapper { position: relative; display: flex; justify-content: center; align-items: center; padding: 20px; }
         .product-glow-wrapper::before { 
-            content: ''; position: absolute; width: 50%; height: 50%; 
-            background: var(--brand-orange); filter: blur(120px); opacity: 0.15; 
+            content: ''; position: absolute; width: 60%; height: 60%; 
+            background: var(--brand-orange); filter: blur(140px); opacity: 0.15; 
             border-radius: 50%; z-index: 0; 
-            animation: pulse-glow 4s ease-in-out infinite alternate;
         }
         .product-img-main { 
             position: relative; z-index: 1; max-width: 100%; height: auto; 
             filter: drop-shadow(0 30px 40px rgba(0,0,0,0.8)); 
             transform: scale(1.05); 
-            animation: float-img 6s ease-in-out infinite;
         }
-        
-        @keyframes float-img { 0% { transform: translateY(0px) scale(1.05); } 50% { transform: translateY(-15px) scale(1.05); } 100% { transform: translateY(0px) scale(1.05); } }
-        @keyframes pulse-glow { 0% { opacity: 0.10; transform: scale(0.9); } 100% { opacity: 0.25; transform: scale(1.2); } }
 
-        /* ── CORREÇÕES MOBILE ABSOLUTAS ── */
-        @media (max-width: 768px) {
-            .btn-whatsapp-giant { width: 100%; padding: 20px 16px; font-size: 11px; gap: 10px; }
-            .time-unit { min-width: 60px; padding: 10px 12px; }
-            .time-value { font-size: 28px; }
-            .product-glow-wrapper { padding: 10px; margin-bottom: 20px; }
-            .product-img-main { animation: none; /* Desativa flutuação no mobile para não gerar scroll horizontal invisível */ }
-            .st-reveal { transform: translateY(15px); } /* Entrada mais curta no mobile */
+        /* ── RESPONSIVO FINO ── */
+        @media (max-width: 1024px) {
+            .hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+            .product-img-main { transform: scale(1); max-height: 45vh; object-fit: contain; }
+            .content-area { text-align: center; }
+            .desc-text { margin-left: auto; margin-right: auto; border-left: none; border-top: 2px solid var(--brand-orange); padding-left: 0; padding-top: 16px; }
+            .tech-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 640px) {
+            .btn-whatsapp-giant { width: 100%; padding: 18px 12px; font-size: 11px; gap: 8px; }
+            .tech-grid { gap: 8px; }
+            .tech-box { padding: 12px; }
+            .urgency-border { padding: 20px 16px !important; }
         }
     </style>
 </head>
 <body class="antialiased">
 
-    <div class="urgency-banner py-3 px-4 text-center z-50 relative st-reveal delay-1">
-        <p class="text-[11px] md:text-[13px] tracking-[0.2em] uppercase font-bold text-white">
-            ⚠️ Alerta de Estoque: <span class="text-red-300">Últimas unidades disponíveis.</span> Oportunidade encerra em breve.
+    <div class="bg-[#110000] border-b border-red-900/30 py-3 px-4 text-center z-50 relative st-reveal">
+        <p class="text-[11px] md:text-[12px] tracking-[0.15em] uppercase font-bold text-white">
+            ⚠️ Alerta: <span class="text-[#D37B42]">Acesso Liberado a Preço de Fábrica.</span> Estoque limitado.
         </p>
     </div>
 
-    <nav class="w-full py-6 px-8 flex justify-between items-center border-b-[0.5px] border-white/10 glass-panel relative z-40">
-        <a href="index.html" class="title-bebas text-xl tracking-widest text-white/90 hover:text-white transition-colors decoration-transparent">
-            <span class="text-[#D37B42] mr-2">←</span> VOLTAR
+    <nav class="w-full py-5 px-6 flex justify-between items-center border-b-[0.5px] border-white/10 glass-panel !rounded-none relative z-40">
+        <a href="index.html" class="title-bebas text-lg tracking-widest text-white/70 hover:text-white transition-colors decoration-transparent flex items-center gap-2">
+            <span class="text-[#D37B42]">←</span> Voltar
         </a>
         <div class="title-bebas tracking-[0.15em] text-[18px] text-white/90">
             Stillus <span class="text-[#D37B42]">Multimáquinas</span>
         </div>
     </nav>
 
-    <section class="min-h-[85vh] flex items-center py-16 px-[5%] md:px-[8%] relative">
-        <div class="max-w-[1200px] mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-8 items-center">
+    <section class="min-h-[85vh] py-12 md:py-20 px-[5%] md:px-[8%] relative">
+        <div class="max-w-[1200px] mx-auto w-full grid grid-cols-[1fr_1.1fr] gap-16 items-center hero-grid">
             
-            <div class="product-glow-wrapper order-1 lg:order-1 st-reveal delay-2">
-                <img src="produtos page/cortador de grama toyama tlt42-19a.png" alt="Cortador de Grama Toyama TLT42-19A" class="product-img-main">
+            <div class="product-glow-wrapper st-reveal delay-1">
+                <img src="produtos page/cortador de grama toyama tlt42-19a.png" alt="Trator Cortador de Grama Toyama TLT42-19A" class="product-img-main">
             </div>
 
-            <div class="order-2 lg:order-2 flex flex-col justify-center">
-                <span class="text-[11px] tracking-[0.4em] text-[#D37B42] uppercase font-bold mb-4 block st-reveal delay-1">Acesso Prioritário · Linha Jardim Profissional</span>
+            <div class="flex flex-col justify-center content-area">
+                <span class="text-[10px] tracking-[0.4em] text-[#D37B42] uppercase font-bold mb-4 block st-reveal delay-1">Lançamento · Linha Jardim Profissional</span>
                 
-                <h1 class="title-bebas text-[clamp(48px,6vw,80px)] text-white mb-6 st-reveal delay-2">
-                    Cortador de Grama <br><span class="text-[#D37B42]">Toyama TLT42-19A</span>
+                <h1 class="title-bebas text-[clamp(42px,5vw,72px)] text-white mb-6 st-reveal delay-2">
+                    Trator Cortador Toyama <br><span class="text-[#D37B42]">Motor Brutal 19.5 HP</span>
                 </h1>
                 
-                <p class="text-[15px] text-white/70 font-light leading-relaxed mb-8 max-w-[500px] border-l-2 border-[#D37B42] pl-5 st-reveal delay-3">
-                    Pare de perder dinheiro com manutenções frequentes de equipamentos amadores. A engenharia de precisão da Toyama garante um corte impecável, força bruta e resistência para as áreas verdes mais desafiadoras.
+                <p class="desc-text text-[15px] md:text-[16px] text-white/70 font-light leading-relaxed mb-8 max-w-[540px] border-l-2 border-[#D37B42] pl-5 st-reveal delay-2">
+                    O cortador dirigível mais potente da categoria. O motor Toyama TE195VE aliado à <strong>Transmissão Automática CVT</strong> garante aceleração constante, corte perfeito em até 7,5 km/h e uma brutal economia de combustível. O campo não espera.
                 </p>
 
-                <div class="glass-panel p-6 md:p-8 rounded-2xl mb-10 relative overflow-hidden st-reveal delay-4">
-                    <div class="absolute top-0 left-0 w-1 h-full bg-[#D37B42]"></div>
-                    <h3 class="title-bebas text-2xl text-white tracking-wide text-center mb-2">Lote Especial c/ Condição Oculta</h3>
-                    <p class="text-center text-sm text-white/50 mb-6">Esta oferta e a disponibilidade do equipamento não serão garantidas após o cronômetro zerar.</p>
-                    
-                    <div class="timer-box">
-                        <div class="time-unit">
-                            <div class="time-value" id="minutes">14</div>
-                            <div class="time-label">Minutos</div>
-                        </div>
-                        <div class="text-3xl text-white/30 font-bold self-start mt-2">:</div>
-                        <div class="time-unit">
-                            <div class="time-value" id="seconds">59</div>
-                            <div class="time-label">Segundos</div>
-                        </div>
+                <div class="grid grid-cols-2 gap-3 mb-10 tech-grid st-reveal delay-3">
+                    <div class="glass-panel p-4 tech-box flex flex-col gap-1 border-l-2 !border-l-[#D37B42]/50">
+                        <span class="text-[10px] uppercase tracking-widest text-white/40">Força Pura</span>
+                        <strong class="title-bebas text-2xl text-white">19.5 HP <span class="text-sm font-sans font-normal text-white/50">/ 546cc</span></strong>
+                    </div>
+                    <div class="glass-panel p-4 tech-box flex flex-col gap-1 border-l-2 !border-l-[#D37B42]/50">
+                        <span class="text-[10px] uppercase tracking-widest text-white/40">Desempenho</span>
+                        <strong class="title-bebas text-2xl text-white">Câmbio CVT</strong>
+                    </div>
+                    <div class="glass-panel p-4 tech-box flex flex-col gap-1 border-l-2 !border-l-[#D37B42]/50">
+                        <span class="text-[10px] uppercase tracking-widest text-white/40">Área de Ação</span>
+                        <strong class="title-bebas text-2xl text-white">Corte de 42" <span class="text-sm font-sans font-normal text-white/50">/ 1.07m</span></strong>
+                    </div>
+                    <div class="glass-panel p-4 tech-box flex flex-col gap-1 border-l-2 !border-l-[#D37B42]/50">
+                        <span class="text-[10px] uppercase tracking-widest text-white/40">Praticidade</span>
+                        <strong class="title-bebas text-2xl text-white">Partida Elétrica</strong>
                     </div>
                 </div>
 
-                <div class="text-center lg:text-left st-reveal delay-4">
-                    <a href="https://wa.me/5562981085787?text=Ol%C3%A1%2C%20gostaria%20de%20garantir%20o%20Cortador%20de%20Grama%20Toyama%20TLT42-19A%20antes%20que%20o%20lote%20acabe.%20Podem%20me%20passar%20a%20condi%C3%A7%C3%A3o%20exclusiva%3F" target="_blank" class="btn-whatsapp-giant">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                        REVELAR CONDIÇÃO NO WHATSAPP
+                <div class="glass-panel urgency-border p-6 mb-8 flex flex-col md:flex-row items-center justify-between gap-6 st-reveal delay-4">
+                    <div class="text-center md:text-left">
+                        <h3 class="title-bebas text-2xl text-white tracking-wide mb-1">Estoque Crítico</h3>
+                        <p class="text-xs text-white/50 leading-relaxed max-w-[250px] mx-auto md:mx-0">Oportunidade de fábrica liberada. Condição válida apenas enquanto o cronômetro estiver ativo.</p>
+                    </div>
+                    
+                    <div class="timer-box shrink-0">
+                        <div class="time-unit"><div class="time-value" id="minutes">14</div><div class="time-label">Min</div></div>
+                        <div class="text-2xl text-white/30 font-bold">:</div>
+                        <div class="time-unit"><div class="time-value" id="seconds">59</div><div class="time-label">Seg</div></div>
+                    </div>
+                </div>
+
+                <div class="st-reveal delay-4 text-center lg:text-left w-full">
+                    <a href="https://wa.me/5562981085787?text=Ol%C3%A1%2C%20quero%20aproveitar%20a%20condi%C3%A7%C3%A3o%20de%20f%C3%A1brica%20para%20o%20Trator%20Toyama%2019.5HP%20(TLT42-19A).%20Ainda%20tem%20no%20estoque%3F" target="_blank" class="btn-whatsapp-giant w-full md:w-auto">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                        ACESSAR CONDIÇÃO NO WHATSAPP
                     </a>
-                    <p class="text-[11px] text-white/30 uppercase tracking-widest mt-6 flex items-center justify-center lg:justify-start gap-2">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                        Atendimento seguro e direto com a engenharia
+                    <p class="text-[10px] text-white/30 uppercase tracking-widest mt-4 flex items-center justify-center lg:justify-start gap-2">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        Negociação direta e segura
                     </p>
                 </div>
 
@@ -183,22 +193,17 @@
         </div>
     </section>
 
-    <footer class="py-10 border-t-[0.5px] border-white/10 bg-[#050505] text-center">
-        <div class="title-bebas tracking-[0.15em] text-[18px] text-white/50 mb-2">
-            Stillus <span class="text-[#D37B42]/50">Multimáquinas</span>
-        </div>
-        <p class="text-[11px] text-white/20">© 2026. Todos os direitos reservados. Vendas sujeitas à disponibilidade de estoque.</p>
+    <footer class="py-8 border-t-[0.5px] border-white/10 bg-[#050505] text-center">
+        <p class="text-[11px] text-white/20">© 2026 Stillus Multimáquinas. Vendas sujeitas à disponibilidade de estoque.</p>
     </footer>
 
     <script>
-        // Dispara a animação cinematográfica de entrada
         document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => {
                 document.querySelectorAll('.st-reveal').forEach(el => el.classList.add('loaded'));
             }, 100);
         });
 
-        // Configuração de um cronômetro agressivo de 15 minutos
         const startingMinutes = 15;
         let time = startingMinutes * 60;
 
