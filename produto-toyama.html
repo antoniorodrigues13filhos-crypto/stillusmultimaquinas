@@ -77,14 +77,42 @@
         }
         .btn-primary:hover { background: #fff; color: #000; border-color: #fff; }
 
+        /* ── BOTÃO WHATSAPP EM DESTAQUE ── */
         .btn-wpp {
             display: inline-flex; align-items: center; justify-content: center; gap: 10px;
             background: #1aab54; color: #fff;
             padding: 16px 32px; border-radius: 4px;
             font-size: 13px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
-            text-decoration: none; transition: background 0.2s;
+            text-decoration: none; transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(26, 171, 84, 0.15); /* Glow verde muito sutil */
         }
-        .btn-wpp:hover { background: #148f45; }
+        
+        .btn-wpp:hover { 
+            background: #148f45; 
+            box-shadow: 0 0 30px rgba(26, 171, 84, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Efeito de Reflexo (Shimmer) */
+        .btn-wpp::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: skewX(-25deg);
+            animation: shimmer-swipe 4s infinite;
+        }
+
+        @keyframes shimmer-swipe {
+            0% { left: -100%; }
+            15% { left: 200%; }
+            100% { left: 200%; }
+        }
 
         .product-img {
             max-width: 100%; max-height: 50vh; object-fit: contain;
@@ -282,7 +310,7 @@
             const startCounter = (counter) => {
                 const target = +counter.getAttribute('data-target');
                 const decimals = counter.getAttribute('data-decimals') ? parseInt(counter.getAttribute('data-decimals')) : 0;
-                const duration = 1500; // Tempo da animação em ms
+                const duration = 1500; 
                 const stepTime = 20; 
                 const steps = duration / stepTime;
                 const increment = target / steps;
