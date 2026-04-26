@@ -41,6 +41,13 @@
             padding-bottom: 72px;
         }
 
+        /* ── BACKGROUND GRAIN (Muito sutil) ── */
+        body::before {
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0.02; z-index: -1; pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+
         .bb { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.05em; }
 
         /* ─── REVEAL ─── */
@@ -251,8 +258,30 @@
             cursor: pointer;
             font-family: 'Inter', sans-serif;
             width: 100%;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(26, 171, 84, 0.15); /* Glow sutil */
         }
-        .btn-wpp:hover { background: var(--gr-dk); transform: translateY(-2px); }
+        .btn-wpp:hover { background: var(--gr-dk); transform: translateY(-2px); box-shadow: 0 0 30px rgba(26, 171, 84, 0.3); }
+        
+        /* Efeito de Reflexo (Shimmer) no Botão do Hero */
+        .hero-copy .btn-wpp::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: skewX(-25deg);
+            animation: shimmer-swipe 4s infinite;
+        }
+
+        @keyframes shimmer-swipe {
+            0% { left: -100%; }
+            15% { left: 200%; }
+            100% { left: 200%; }
+        }
 
         .btn-ghost {
             display: inline-flex;
@@ -497,13 +526,11 @@
 </head>
 <body>
 
-    <!-- TOP STRIP -->
     <div class="strip">
         <p class="strip-msg"><b>Disponível:</b> Estoque local · Expedição em até 24h úteis</p>
         <a href="https://wa.me/5562981085787" target="_blank" class="strip-contact">Falar com consultor →</a>
     </div>
 
-    <!-- NAV -->
     <nav>
         <a href="index.html" class="nav-back">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
@@ -517,10 +544,9 @@
 
     <main>
 
-        <!-- HERO -->
         <section class="hero">
             <div class="hero-vis rv">
-                <img src="produtos page/cortador de grama toyama tlt42-19a.png" alt="Trator Cortador Toyama TLT42-19A 19.5HP" loading="eager">
+                <img src="produto.png" alt="Trator Cortador Toyama TLT42-19A 19.5HP" loading="eager">
             </div>
 
             <div class="hero-copy">
@@ -573,7 +599,6 @@
             </div>
         </section>
 
-        <!-- SPECS STRIP -->
         <div class="specs-strip rv" id="ficha">
             <div class="spec-cell">
                 <div class="spec-val">19.5 HP</div>
@@ -593,7 +618,6 @@
             </div>
         </div>
 
-        <!-- FICHA + DEPOIMENTOS -->
         <section class="sec-tech">
 
             <div class="sec-col rv">
@@ -670,7 +694,6 @@
             </div>
         </section>
 
-        <!-- MAP -->
         <div class="map-wrap">
             <iframe
                 src="https://maps.google.com/maps?q=Stillus%20Multim%C3%A1quinas,%20Av.%20Brasil%20Sul,%202168,%20An%C3%A1polis&t=&z=15&ie=UTF8&iwloc=&output=embed"
@@ -690,7 +713,6 @@
         <div class="foot-copy">© 2026 · CNPJ sob consulta · Vendas sujeitas a disponibilidade</div>
     </footer>
 
-    <!-- MOBILE STICKY CTA -->
     <div class="mob-cta">
         <a href="https://wa.me/5562981085787?text=Ol%C3%A1.%20Tenho%20interesse%20no%20Trator%20Toyama%2019.5HP.%20Gostaria%20de%20receber%20a%20proposta%20comercial." target="_blank" class="btn-wpp" style="font-size:12px;padding:13px 16px;">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.123.557 4.116 1.532 5.845L0 24l6.335-1.509C8.05 23.447 9.991 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.659-.525-5.166-1.437l-.371-.22-3.762.896.93-3.638-.242-.381C2.525 15.61 2 13.869 2 12 2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
