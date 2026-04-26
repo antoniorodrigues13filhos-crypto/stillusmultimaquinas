@@ -32,7 +32,7 @@
             font-family: 'Inter', sans-serif;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
-            padding-bottom: 70px; /* Espaço mobile CTA */
+            padding-bottom: 70px;
         }
 
         /* ── BACKGROUND GRAIN (Muito sutil) ── */
@@ -44,10 +44,18 @@
 
         .font-bebas { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.05em; }
 
-        /* ── ANIMATIONS (Suaves e profissionais) ── */
-        .reveal { opacity: 0; transform: translateY(15px); transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
-        .delay-1 { transition-delay: 0.1s; } .delay-2 { transition-delay: 0.2s; }
+        /* ── ANIMATIONS (Cinemático com Blur) ── */
+        .reveal { 
+            opacity: 0; 
+            transform: translateY(25px); 
+            filter: blur(5px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+                        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                        filter 0.8s cubic-bezier(0.16, 1, 0.3, 1); 
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); filter: blur(0); }
+        .delay-1 { transition-delay: 0.15s; } 
+        .delay-2 { transition-delay: 0.3s; }
 
         /* ── ESTÉTICA INDUSTRIAL/CLEAN ── */
         .card-tech {
@@ -132,12 +140,12 @@
                     </h1>
 
                     <p class="text-[15px] text-[#888] font-light leading-relaxed max-w-[480px] mb-8 reveal delay-1">
-                        Projetado para suportar regimes intensos de trabalho. O casamento perfeito entre um motor de 546cc com lubrificação otimizada e uma transmissão automática responsiva.
+                        Projetado para suportar regimes intensos de trabalho. O casamento perfeito entre um motor de <span class="counter text-white font-medium" data-target="546">0</span>cc com lubrificação otimizada e uma transmissão automática responsiva.
                     </p>
                     
                     <ul class="data-list mb-10 reveal delay-1">
                         <li><strong>Torque Sustentado:</strong> Motor monocilíndrico OHV que não perde rotação em capim denso.</li>
-                        <li><strong>Produtividade:</strong> Plataforma de 42 polegadas (107cm) com sistema anti-scalp.</li>
+                        <li><strong>Produtividade:</strong> Plataforma de <span class="counter text-white font-medium" data-target="42">0</span> polegadas (<span class="counter text-white font-medium" data-target="107">0</span>cm) com sistema anti-scalp.</li>
                         <li><strong>Durabilidade:</strong> Câmbio CVT Integrado, reduzindo trancos e desgaste de correias.</li>
                     </ul>
 
@@ -165,25 +173,25 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div class="card-tech reveal">
                         <span class="text-[10px] uppercase tracking-[0.15em] text-[#666] block mb-2">Unidade de Potência</span>
-                        <strong class="font-bebas text-3xl text-white block">19.5 HP</strong>
+                        <strong class="font-bebas text-4xl text-white block"><span class="counter" data-target="19.5" data-decimals="1">0</span> HP</strong>
                         <p class="text-[12px] text-[#888] mt-3 font-light leading-relaxed">Cilindrada de 546cc. Arquitetura OHV garante menor temperatura operacional e maior vida útil do óleo.</p>
                     </div>
                     
                     <div class="card-tech reveal delay-1">
                         <span class="text-[10px] uppercase tracking-[0.15em] text-[#666] block mb-2">Sistema de Transmissão</span>
-                        <strong class="font-bebas text-3xl text-white block">Automática CVT</strong>
+                        <strong class="font-bebas text-4xl text-white block">Auto CVT</strong>
                         <p class="text-[12px] text-[#888] mt-3 font-light leading-relaxed">Ajuste infinito de velocidade no pedal. Permite manobras precisas ao redor de obstáculos sem uso de embreagem.</p>
                     </div>
 
                     <div class="card-tech reveal delay-2">
                         <span class="text-[10px] uppercase tracking-[0.15em] text-[#666] block mb-2">Deck de Corte</span>
-                        <strong class="font-bebas text-3xl text-white block">42" (107 cm)</strong>
+                        <strong class="font-bebas text-4xl text-white block"><span class="counter" data-target="42">0</span>" (<span class="counter" data-target="107">0</span> cm)</strong>
                         <p class="text-[12px] text-[#888] mt-3 font-light leading-relaxed">Aço estampado reforçado com 2 lâminas. Equipado com rodas antideslizantes (anti-scalp) para preservar o relevo.</p>
                     </div>
 
                     <div class="card-tech reveal delay-2">
                         <span class="text-[10px] uppercase tracking-[0.15em] text-[#666] block mb-2">Capacidade Tanque</span>
-                        <strong class="font-bebas text-3xl text-white block">5.7 Litros</strong>
+                        <strong class="font-bebas text-4xl text-white block"><span class="counter" data-target="5.7" data-decimals="1">0</span> Litros</strong>
                         <p class="text-[12px] text-[#888] mt-3 font-light leading-relaxed">Autonomia projetada para cobrir extensas áreas de pasto e gramado sem necessidade de reabastecimento constante.</p>
                     </div>
                 </div>
@@ -216,7 +224,7 @@
                     <ul class="data-list">
                         <li><strong>Fornecedor Credenciado:</strong> Somos revenda e assistência técnica autorizada Toyama. Seu equipamento com rastreabilidade total.</li>
                         <li><strong>Garantia Oficial:</strong> Faturamento direto com Nota Fiscal e cobertura do fabricante aplicável em todo território nacional.</li>
-                        <li><strong>Logística:</strong> Estrutura de Centro de Distribuição e Loja Física. Produto em estoque para pronto envio.</li>
+                        <li><strong>Logística:</strong> Mais de <span class="counter text-white font-medium" data-target="340">0</span> unidades entregues. Estrutura de CD e Loja Física para pronto envio.</li>
                     </ul>
                     <div class="mt-8">
                         <a href="https://wa.me/5562981085787" target="_blank" class="text-[13px] text-white border-b border-[#333] pb-1 hover:border-white transition-colors">
@@ -263,24 +271,52 @@
     </div>
 
     <script>
-        // Animação de Scroll Nativa (IntersectionObserver)
         document.addEventListener("DOMContentLoaded", () => {
+            
+            // Função do Contador (Efeito Apple)
+            const startCounter = (counter) => {
+                const target = +counter.getAttribute('data-target');
+                const decimals = counter.getAttribute('data-decimals') ? parseInt(counter.getAttribute('data-decimals')) : 0;
+                const duration = 1500; // Tempo da animação em ms
+                const stepTime = 20; 
+                const steps = duration / stepTime;
+                const increment = target / steps;
+                let current = 0;
+
+                const updateCounter = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        counter.innerText = target.toFixed(decimals);
+                        clearInterval(updateCounter);
+                    } else {
+                        counter.innerText = current.toFixed(decimals);
+                    }
+                }, stepTime);
+            };
+
+            // IntersectionObserver para Reveal + Ativação dos Contadores
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
-                        // Opcional: descomente a linha abaixo se quiser que a animação ocorra apenas uma vez
-                        // observer.unobserve(entry.target); 
+                        
+                        // Dispara contadores dentro do elemento revelado
+                        const countersInside = entry.target.querySelectorAll('.counter');
+                        countersInside.forEach(c => startCounter(c));
+
+                        observer.unobserve(entry.target); // Anima apenas uma vez
                     }
                 });
             }, { threshold: 0.15 });
 
             document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
             
-            // Força a exibição dos elementos do topo logo no carregamento
+            // Força a exibição inicial
             setTimeout(() => {
                 document.querySelectorAll('main > section:first-child .reveal').forEach(el => {
                     el.classList.add('visible');
+                    const countersInside = el.querySelectorAll('.counter');
+                    countersInside.forEach(c => startCounter(c));
                 });
             }, 50);
         });
