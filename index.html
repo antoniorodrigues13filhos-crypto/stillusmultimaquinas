@@ -287,7 +287,6 @@
         .chat-header-info p { font-size: 11px; color: #D37B42; letter-spacing: 0.05em; margin-top: 2px; display: flex; align-items: center; gap: 6px; }
         .status-dot { width: 6px; height: 6px; background: #2a9d6f; border-radius: 50%; box-shadow: 0 0 8px #2a9d6f; }
         
-        /* Premium Close Button X para o Chat */
         .premium-close-btn { width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,0.05); border: 0.5px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.6); cursor: pointer; transition: all 0.2s ease; }
         .premium-close-btn:hover { background: rgba(211,123,66,0.2); border-color: rgba(211,123,66,0.4); color: #fff; transform: scale(1.05); }
 
@@ -313,6 +312,11 @@
         .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
         .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
         @keyframes blink { 0%, 80%, 100% { opacity: 0.2; } 40% { opacity: 1; } }
+
+        /* Estilos dos Botões de Opção do Chat */
+        .chat-options-container { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; width: 100%; animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; transform: translateY(10px); }
+        .chat-option-btn { background: rgba(211,123,66,0.15); border: 0.5px solid rgba(211,123,66,0.4); color: #D37B42; padding: 12px 16px; border-radius: 12px; font-size: 13px; text-align: left; cursor: pointer; transition: all 0.2s ease; font-family: 'DM Sans', sans-serif; font-weight: 500; line-height: 1.4; }
+        .chat-option-btn:hover { background: rgba(211,123,66,0.25); border-color: rgba(211,123,66,0.6); transform: translateX(4px); }
 
         /* ── MOBILE CSS REGRAS ATUALIZADAS (Proporção Segura para Telas Menores) ── */
         @media (max-width: 768px) {
@@ -784,22 +788,22 @@
 
     <script>
     (() => {
-        const BASE_URL    = 'heroframe/ezgif-frame-';
+        const BASE_URL    = 'heroframe/ezgif-frame-';
         const FRAME_COUNT = 83;
-        const IS_MOBILE   = /iPhone|Android|iPad/i.test(navigator.userAgent) || window.innerWidth <= 1024;
+        const IS_MOBILE   = /iPhone|Android|iPad/i.test(navigator.userAgent) || window.innerWidth <= 1024;
 
         const bitmaps = new Array(FRAME_COUNT);
         let loaded = 0, currentFraction = 0, targetFraction = 0, lastScrollY = window.scrollY, rafId = null;
         let lastWinWidth = window.innerWidth;
 
         const canvas = document.getElementById('hero-canvas');
-        const ctx    = canvas.getContext('2d', { alpha: false, desynchronized: true });
+        const ctx    = canvas.getContext('2d', { alpha: false, desynchronized: true });
         let cW, cH, dpr, drawX, drawY, drawW, drawH;
 
         const blocks = [
             { id: 'copy-1', dot: 'dot-1', start: 0.04, end: 0.26, el: null, dotEl: null, tId: null },
             { id: 'copy-2', dot: 'dot-2', start: 0.33, end: 0.57, el: null, dotEl: null, tId: null },
-            { id: 'copy-3', dot: 'dot-3', start: 0.69, end: 0.98, el: null, dotEl: null, tId: null } 
+            { id: 'copy-3', dot: 'dot-3', start: 0.69, end: 0.98, el: null, dotEl: null, tId: null } 
         ];
 
         function initBlocks() {
@@ -822,11 +826,11 @@
 
         function recalcLayout() {
             dpr = Math.min(window.devicePixelRatio || 1, IS_MOBILE ? 1.5 : 2);
-            cW  = document.documentElement.clientWidth; 
-            cH  = window.innerHeight;
-            canvas.width  = Math.round(cW * dpr);
+            cW  = document.documentElement.clientWidth; 
+            cH  = window.innerHeight;
+            canvas.width  = Math.round(cW * dpr);
             canvas.height = Math.round(cH * dpr);
-            canvas.style.width  = cW + 'px';
+            canvas.style.width  = cW + 'px';
             canvas.style.height = cH + 'px';
             ctx.scale(dpr, dpr);
             const ref = bitmaps.find(Boolean);
@@ -835,18 +839,18 @@
 
         function computeDraw(bmp) {
             const ratio = Math.max(cW / bmp.width, cH / bmp.height);
-            drawW = (bmp.width  * ratio) | 0;
+            drawW = (bmp.width  * ratio) | 0;
             drawH = (bmp.height * ratio) | 0;
             drawX = ((cW - drawW) / 2) | 0;
             drawY = ((cH - drawH) / 2) | 0;
         }
 
         function render(fraction) {
-            const prog  = Math.min(1, fraction / 0.9) * (FRAME_COUNT - 1);
-            const base  = Math.floor(prog);
-            const t      = prog - base;
-            const bmpA  = bitmaps[base];
-            const bmpB  = bitmaps[Math.min(base + 1, FRAME_COUNT - 1)];
+            const prog  = Math.min(1, fraction / 0.9) * (FRAME_COUNT - 1);
+            const base  = Math.floor(prog);
+            const t      = prog - base;
+            const bmpA  = bitmaps[base];
+            const bmpB  = bitmaps[Math.min(base + 1, FRAME_COUNT - 1)];
             if (!bmpA || !bmpB) return;
 
             ctx.globalAlpha = 1;
@@ -871,7 +875,7 @@
 
                 const inRange = fraction >= b.start && fraction <= b.end;
                 if (inRange) {
-                    clearTimeout(b.tId); // Correção do Bug de scroll rápido no mobile
+                    clearTimeout(b.tId);
                     b.el.classList.remove('exiting');
                     b.el.classList.add('active');
                     if (b.dotEl) b.dotEl.classList.add('active');
@@ -891,10 +895,10 @@
                         b.el.classList.add('exiting');
                         
                         clearTimeout(b.tId);
-                        b.tId = setTimeout(() => { 
+                        b.tId = setTimeout(() => { 
                             if (!b.el.classList.contains('active')) {
-                                b.el.classList.remove('exiting'); 
-                                b.el.style.transform = ''; 
+                                b.el.classList.remove('exiting'); 
+                                b.el.style.transform = ''; 
                             }
                         }, 750);
                     }
@@ -904,12 +908,12 @@
 
         function loop() {
             const curScrollY = window.scrollY;
-            const velocity   = Math.abs(curScrollY - lastScrollY);
-            lastScrollY      = curScrollY;
+            const velocity   = Math.abs(curScrollY - lastScrollY);
+            lastScrollY      = curScrollY;
             const delta = targetFraction - currentFraction;
 
             if (Math.abs(delta) > 0.00005) {
-                const base = IS_MOBILE ? 0.12 : 0.08; 
+                const base = IS_MOBILE ? 0.12 : 0.08; 
                 const lerp = Math.min(IS_MOBILE ? 0.35 : 0.15, base + velocity * 0.0008);
                 currentFraction += delta * lerp;
                 render(currentFraction);
@@ -934,8 +938,8 @@
                 const rect = processSection.getBoundingClientRect();
                 const viewH = window.innerHeight;
                 
-                const startY = viewH * 0.8; 
-                let rawProgress = (startY - rect.top) / (rect.height * 0.8); 
+                const startY = viewH * 0.8; 
+                let rawProgress = (startY - rect.top) / (rect.height * 0.8); 
                 rawProgress = Math.max(0, Math.min(1, rawProgress));
                 
                 const fillH = document.getElementById('process-fill-h');
@@ -945,7 +949,7 @@
 
                 const steps = document.querySelectorAll('.process-step');
                 steps.forEach((step, i) => {
-                    const triggerPoint = i * (1 / (steps.length - 1)) * 0.8; 
+                    const triggerPoint = i * (1 / (steps.length - 1)) * 0.8; 
                     if (rawProgress >= triggerPoint) {
                         step.classList.add('active');
                     } else {
@@ -958,7 +962,7 @@
         }
 
         window.addEventListener('scroll', () => {
-            const hero  = document.getElementById('scroll-hero');
+            const hero  = document.getElementById('scroll-hero');
             const total = hero.offsetHeight - window.innerHeight;
             targetFraction = Math.max(0, Math.min(1, window.scrollY / (total || 1)));
 
@@ -971,7 +975,7 @@
             if (IS_MOBILE && window.innerWidth === lastWinWidth) return;
             
             lastWinWidth = window.innerWidth;
-            lockHeroHeight(); 
+            lockHeroHeight(); 
 
             clearTimeout(resizeTimer);
             resizeTimer = setTimeout(recalcLayout, 150);
@@ -979,11 +983,11 @@
 
         const loaderBar = document.getElementById('loader-bar');
         const loaderPct = document.getElementById('loader-pct');
-        const loaderEl  = document.getElementById('loader');
+        const loaderEl  = document.getElementById('loader');
 
         async function loadAll() {
-            initBlocks(); 
-            lockHeroHeight(); 
+            initBlocks(); 
+            lockHeroHeight(); 
 
             const CONCURRENCY = IS_MOBILE ? 4 : 8;
             const queue = [];
@@ -991,10 +995,10 @@
 
             async function worker() {
                 while (queue.length) {
-                    const i   = queue.shift();
+                    const i   = queue.shift();
                     const url = `${BASE_URL}${String(i + 1).padStart(3, '0')}.jpg`;
                     try {
-                        const res  = await fetch(url);
+                        const res  = await fetch(url);
                         const blob = await res.blob();
                         bitmaps[i] = await createImageBitmap(blob, { premultiplyAlpha: 'none', colorSpaceConversion: 'none' });
                     } catch(e) {}
@@ -1015,17 +1019,17 @@
             applyText(0);
 
             loaderEl.style.opacity = '0';
-            setTimeout(() => { 
-                loaderEl.style.display = 'none'; 
-                loop(); 
-                initReveal(); 
+            setTimeout(() => { 
+                loaderEl.style.display = 'none'; 
+                loop(); 
+                initReveal(); 
                 initCounters();
             }, 600);
         }
 
         function initReveal() {
             const els = document.querySelectorAll('.reveal');
-            const io  = new IntersectionObserver((entries) => {
+            const io  = new IntersectionObserver((entries) => {
                 entries.forEach(e => {
                     if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
                 });
@@ -1098,7 +1102,7 @@
         }, 1400);
     }
     
-    // ── MÁQUINA DE ESTADOS DO CHATBOT (MULTIMENSAGENS) ──
+    // ── MÁQUINA DE ESTADOS DO CHATBOT (MULTIMENSAGENS E OPÇÕES INTERATIVAS) ──
     const IS_MOBILE_CHAT = /iPhone|Android|iPad/i.test(navigator.userAgent) || window.innerWidth <= 768;
     
     let chatState = 'IDLE';
@@ -1115,11 +1119,11 @@
                 }
             }, 300);
         }
-        closeChatTooltip(); 
+        closeChatTooltip(); 
     }
 
     function closeChatTooltip(e) {
-        if (e) e.stopPropagation(); 
+        if (e) e.stopPropagation(); 
         const tooltip = document.getElementById('chat-tooltip');
         if (tooltip) {
             tooltip.classList.add('hidden');
@@ -1142,19 +1146,40 @@
             input.focus();
         }
 
-        // Recupera as respostas (pode ser String ou Array de Strings)
-        const responses = generateBotResponse(text);
-        const messagesArray = Array.isArray(responses) ? responses : [responses];
+        const botData = generateBotResponse(text);
+        playBotResponses(botData);
+    }
+
+    function processUserClick(text) {
+        appendMessage(text, 'user');
+        const botData = generateBotResponse(text);
+        playBotResponses(botData);
+    }
+
+    function playBotResponses(botData) {
+        let messagesArray = [];
+        let optionsArray = null;
+
+        if (Array.isArray(botData)) {
+            messagesArray = botData;
+        } else if (typeof botData === 'object' && botData !== null) {
+            messagesArray = botData.messages;
+            optionsArray = botData.options;
+        } else {
+            messagesArray = [botData];
+        }
         
         let i = 0;
         
-        // Função recursiva para enviar múltiplas mensagens com delays naturais
         function sendNext() {
-            if (i >= messagesArray.length) return;
+            if (i >= messagesArray.length) {
+                if (optionsArray && optionsArray.length > 0) {
+                    appendOptions(optionsArray);
+                }
+                return;
+            }
             
             showTypingIndicator();
-            
-            // Delays dinâmicos: rápido se for só lista de tópicos, mais lento se for texto novo
             const isSequence = messagesArray.length > 2 && i > 0;
             const delay = isSequence ? 700 : 1200 + Math.random() * 600;
 
@@ -1163,8 +1188,8 @@
                 appendMessage(messagesArray[i], 'bot');
                 i++;
                 
-                if (i < messagesArray.length) {
-                    setTimeout(sendNext, 200); // Pausa super curta antes de recomeçar a "digitar" o próximo item
+                if (i < messagesArray.length || (optionsArray && optionsArray.length > 0)) {
+                    setTimeout(sendNext, 200);
                 }
             }, delay);
         }
@@ -1179,6 +1204,28 @@
         div.textContent = text;
         chatBox.appendChild(div);
         
+        setTimeout(() => {
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }, 50);
+    }
+
+    function appendOptions(options) {
+        const chatBox = document.getElementById('chat-messages');
+        const optionsDiv = document.createElement('div');
+        optionsDiv.className = 'chat-options-container';
+
+        options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.textContent = opt;
+            btn.className = 'chat-option-btn';
+            btn.onclick = () => {
+                optionsDiv.remove();
+                processUserClick(opt);
+            };
+            optionsDiv.appendChild(btn);
+        });
+        
+        chatBox.appendChild(optionsDiv);
         setTimeout(() => {
             chatBox.scrollTop = chatBox.scrollHeight;
         }, 50);
@@ -1232,33 +1279,37 @@
             else if (lowerMsg.includes('boa noite')) greeting = "Boa noite!";
 
             return `${greeting} Sou a Inteligência Artificial da Stillus Multimáquinas. Como posso ajudar a maximizar a eficiência da sua operação hoje?`;
-        } 
+        } 
 
-        // Listagem de Produtos "Um por Um" (Retorna um Array)
+        // Listagem de Produtos com Botões Interativos
         if (lowerMsg.includes('orçamento') || lowerMsg.includes('valor') || lowerMsg.includes('preço') || lowerMsg.includes('produto') || lowerMsg.includes('quais') || lowerMsg.includes('vende') || lowerMsg.includes('catalogo')) {
             chatState = 'AWAITING_PRODUCT_CHOICE';
-            return [
-                "Depende de qual você estaria interessado(a). Temos as seguintes opções prontas para sua indústria:",
-                "• Cortador de Grama Toyama TLT42-19A",
-                "• Lavadora 2100 PSI Tramontina",
-                "• Motosserra a bateria 20V",
-                "• Kits Completos para Campo",
-                "• Soprador de Folhas Branco 2,3L",
-                "• Motosserra Vulcan Gasolina 26cc",
-                "Qual desses equipamentos chama mais a sua atenção?"
-            ];
-        } 
+            return {
+                messages: [
+                    "Temos várias soluções de alta performance prontas para sua indústria.",
+                    "Por favor, selecione abaixo o equipamento que mais chama sua atenção:"
+                ],
+                options: [
+                    "Cortador de Grama Toyama TLT42-19A",
+                    "Lavadora 2100 PSI Tramontina",
+                    "Motosserra a bateria 20V",
+                    "Kits Completos para Campo",
+                    "Soprador de Folhas Branco 2,3L",
+                    "Motosserra Vulcan Gasolina 26cc"
+                ]
+            };
+        } 
         
         // Acionamento
         if (lowerMsg.includes('emergência') || lowerMsg.includes('urgente') || lowerMsg.includes('parou') || lowerMsg.includes('parada')) {
             return "Entendi a urgência. Para máquinas paradas, nosso acionamento técnico ocorre em até 4 horas (para clientes em contrato). Qual equipamento parou?";
-        } 
+        } 
         if (lowerMsg.includes('weg') || lowerMsg.includes('siemens') || lowerMsg.includes('motor')) {
             return "Sim, somos especialistas e possuímos certificação para atuar com essas marcas industriais. Qual a anomalia técnica que o equipamento está apresentando?";
-        } 
+        } 
         if (lowerMsg.includes('preventiva') || lowerMsg.includes('contrato')) {
             return "Nossos contratos de manutenção preventiva são montados sob medida para reduzir o downtime da sua planta a zero. Quer que eu agende uma visita técnica de avaliação?";
-        } 
+        } 
         
         // Fallback
         return "Entendo. Como sou uma assistente virtual inicial, caso prefira um atendimento técnico mais aprofundado, nossa engenharia está disponível no WhatsApp (62) 98108-5787.";
