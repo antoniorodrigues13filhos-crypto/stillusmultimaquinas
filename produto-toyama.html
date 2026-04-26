@@ -3,264 +3,665 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="Trator Cortador Toyama TLT42-19A 19.5HP. Especificações técnicas, motor 546cc e transmissão CVT. Equipamento profissional para grandes áreas.">
-    <title>Trator Cortador Toyama TLT42-19A | Condição Oficial Stillus</title>
+    <meta name="description" content="Trator Cortador Toyama TLT42-19A 19.5HP. Motor 546cc, CVT automático, plataforma 107cm. Condição oficial Stillus Multimáquinas.">
+    <title>Trator Toyama TLT42-19A | Stillus Multimáquinas</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-    <script src="https://cdn.tailwindcss.com"></script>
-
     <style>
-        :root {
-            --brand-orange: #c8692a;
-            --bg-deep: #050505;
-            --bg-surface: #0a0a0a;
-            --bg-card: #111111;
-            --border-subtle: rgba(255, 255, 255, 0.08);
-            --text-main: #f0f0f0;
-            --text-muted: #888888;
-        }
-
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; background-color: var(--bg-deep); }
+        html { scroll-behavior: smooth; background: #050505; }
+
+        :root {
+            --or: #c8692a;
+            --or-10: rgba(200,105,42,0.1);
+            --or-25: rgba(200,105,42,0.25);
+            --bg:  #050505;
+            --bg2: #0a0a0a;
+            --bg3: #111111;
+            --bd:  #181818;
+            --bd2: #222222;
+            --t1:  #f0f0f0;
+            --t2:  #999999;
+            --t3:  #555555;
+            --t4:  #333333;
+            --gr:  #1aab54;
+            --gr-dk: #148f45;
+        }
 
         body {
-            background-color: var(--bg-deep);
-            color: var(--text-main);
+            background: var(--bg);
+            color: var(--t1);
             font-family: 'Inter', sans-serif;
+            font-weight: 400;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
-            padding-bottom: 70px;
+            padding-bottom: 72px;
         }
 
-        /* ── BACKGROUND GRAIN (Muito sutil) ── */
-        body::before {
-            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            opacity: 0.02; z-index: -1; pointer-events: none;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        .bb { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.05em; }
+
+        /* ─── REVEAL ─── */
+        .rv {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1),
+                        transform 0.7s cubic-bezier(0.22,1,0.36,1);
+        }
+        .rv.on { opacity: 1; transform: none; }
+        .d1 { transition-delay: 0.1s; }
+        .d2 { transition-delay: 0.2s; }
+        .d3 { transition-delay: 0.3s; }
+
+        /* ─── TOP STRIP ─── */
+        .strip {
+            background: var(--bg2);
+            border-bottom: 1px solid var(--bd);
+            padding: 9px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .strip-msg {
+            font-size: 11px;
+            color: var(--t3);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+        .strip-msg b { color: var(--or); font-weight: 500; }
+        .strip-contact {
+            font-size: 11px;
+            color: var(--t3);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .strip-contact:hover { color: var(--t1); }
+
+        /* ─── NAV ─── */
+        nav {
+            background: var(--bg2);
+            border-bottom: 1px solid var(--bd);
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 90;
+        }
+        .nav-back {
+            font-size: 11px;
+            color: var(--t3);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+        .nav-back:hover { color: var(--t1); }
+        .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 19px; letter-spacing: 0.1em; color: var(--t1); }
+        .nav-logo span { color: var(--or); }
+        .nav-cta {
+            font-size: 11px;
+            color: var(--t3);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .nav-cta:hover { color: var(--t1); }
+        .nav-cta span { color: var(--or); }
+
+        /* ─── HERO ─── */
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 580px;
+            border-bottom: 1px solid var(--bd);
         }
 
-        .font-bebas { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.05em; }
-
-        /* ── ANIMATIONS (Cinemático com Blur) ── */
-        .reveal { 
-            opacity: 0; 
-            transform: translateY(25px); 
-            filter: blur(5px);
-            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
-                        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-                        filter 0.8s cubic-bezier(0.16, 1, 0.3, 1); 
-        }
-        .reveal.visible { opacity: 1; transform: translateY(0); filter: blur(0); }
-        .delay-1 { transition-delay: 0.15s; } 
-        .delay-2 { transition-delay: 0.3s; }
-
-        /* ── ESTÉTICA INDUSTRIAL/CLEAN ── */
-        .card-tech {
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            border-radius: 8px;
-            padding: 32px;
-            transition: border-color 0.3s ease;
-        }
-        .card-tech:hover { border-color: rgba(200, 105, 42, 0.3); }
-
-        .btn-primary {
-            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-            background: #1a1a1a; color: #fff;
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 16px 32px; border-radius: 4px;
-            font-size: 13px; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase;
-            text-decoration: none; transition: all 0.2s;
-        }
-        .btn-primary:hover { background: #fff; color: #000; border-color: #fff; }
-
-        /* ── BOTÃO WHATSAPP EM DESTAQUE ── */
-        .btn-wpp {
-            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-            background: #1aab54; color: #fff;
-            padding: 16px 32px; border-radius: 4px;
-            font-size: 13px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
-            text-decoration: none; transition: all 0.3s ease;
+        .hero-vis {
+            background: var(--bg2);
+            border-right: 1px solid var(--bd);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 56px 40px;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 0 20px rgba(26, 171, 84, 0.15); /* Glow verde muito sutil */
         }
-        
-        .btn-wpp:hover { 
-            background: #148f45; 
-            box-shadow: 0 0 30px rgba(26, 171, 84, 0.3);
-            transform: translateY(-2px);
-        }
-
-        /* Efeito de Reflexo (Shimmer) */
-        .btn-wpp::after {
+        .hero-vis::after {
             content: '';
             position: absolute;
-            top: 0;
-            left: -100%;
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transform: skewX(-25deg);
-            animation: shimmer-swipe 4s infinite;
+            inset: 0;
+            background: radial-gradient(ellipse at center, rgba(200,105,42,0.05) 0%, transparent 65%);
+            pointer-events: none;
+        }
+        .hero-vis img {
+            max-width: 100%;
+            max-height: 46vh;
+            object-fit: contain;
+            filter: drop-shadow(0 32px 48px rgba(0,0,0,0.85));
+            position: relative;
+            z-index: 1;
+            transition: transform 0.5s cubic-bezier(0.22,1,0.36,1);
+        }
+        .hero-vis:hover img { transform: translateY(-6px) scale(1.02); }
+
+        .hero-copy {
+            padding: 56px 48px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 28px;
         }
 
-        @keyframes shimmer-swipe {
-            0% { left: -100%; }
-            15% { left: 200%; }
-            100% { left: 200%; }
+        .eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+        .eyebrow-model { color: var(--t3); border: 1px solid var(--bd2); padding: 3px 8px; border-radius: 3px; }
+        .eyebrow-cat { color: var(--or); }
+
+        h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(46px, 4.5vw, 64px);
+            line-height: 0.97;
+            letter-spacing: 0.04em;
+            color: var(--t1);
+        }
+        h1 em { color: var(--t2); font-style: normal; }
+
+        .hero-lead {
+            font-size: 14px;
+            color: var(--t2);
+            line-height: 1.75;
+            font-weight: 300;
+            max-width: 420px;
+        }
+        .hero-lead b { color: var(--t1); font-weight: 500; }
+
+        .price-line {
+            padding-left: 14px;
+            border-left: 2px solid var(--or);
+        }
+        .price-old {
+            font-size: 12px;
+            color: var(--t4);
+            text-decoration: line-through;
+        }
+        .price-cta {
+            font-size: 13px;
+            color: var(--or);
+            font-weight: 500;
+            margin-top: 3px;
         }
 
-        .product-img {
-            max-width: 100%; max-height: 50vh; object-fit: contain;
-            filter: drop-shadow(0 40px 50px rgba(0,0,0,0.9));
+        .feat-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+        .feat-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 13px;
+            color: var(--t2);
+            font-weight: 300;
+            line-height: 1.6;
+        }
+        .feat-list li::before {
+            content: '';
+            width: 4px; height: 4px;
+            background: var(--or);
+            border-radius: 50%;
+            margin-top: 8px;
+            flex-shrink: 0;
+        }
+        .feat-list b { color: #ccc; font-weight: 500; }
+
+        /* ─── BUTTONS ─── */
+        .btn-wpp {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: var(--gr);
+            color: #fff;
+            padding: 15px 28px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: background 0.2s, transform 0.15s;
+            border: none;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            width: 100%;
+        }
+        .btn-wpp:hover { background: var(--gr-dk); transform: translateY(-2px); }
+
+        .btn-ghost {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: transparent;
+            color: var(--t2);
+            padding: 15px 24px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: 1px solid var(--bd2);
+            transition: border-color 0.2s, color 0.2s;
+        }
+        .btn-ghost:hover { border-color: var(--t2); color: var(--t1); }
+
+        .cta-note { font-size: 11px; color: var(--t3); text-align: center; margin-top: 8px; }
+
+        .proof-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-top: 22px;
+            border-top: 1px solid var(--bd);
+            margin-top: 0;
+        }
+        .avs { display: flex; }
+        .av {
+            width: 29px; height: 29px;
+            border-radius: 50%;
+            background: var(--bg3);
+            border: 2px solid var(--bg2);
+            margin-left: -7px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 9px; font-weight: 600; color: var(--t3);
+        }
+        .av:first-child { margin-left: 0; }
+        .proof-copy { font-size: 12px; color: var(--t3); line-height: 1.45; }
+        .proof-copy b { color: var(--t2); font-weight: 500; }
+        .stars { color: var(--or); font-size: 10px; letter-spacing: 2px; }
+
+        /* ─── SPECS STRIP ─── */
+        .specs-strip {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border-bottom: 1px solid var(--bd);
+            background: var(--bg2);
+        }
+        .spec-cell {
+            padding: 28px 24px;
+            border-right: 1px solid var(--bd);
+            text-align: center;
+            transition: background 0.2s;
+        }
+        .spec-cell:last-child { border-right: none; }
+        .spec-cell:hover { background: #0e0e0e; }
+        .spec-val {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 36px;
+            letter-spacing: 0.04em;
+            color: var(--t1);
+            line-height: 1;
+        }
+        .spec-lbl {
+            font-size: 10px;
+            color: var(--t3);
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            margin-top: 5px;
+            font-weight: 500;
         }
 
-        .data-list li {
-            position: relative; padding-left: 16px; margin-bottom: 12px;
-            font-size: 14px; color: var(--text-muted); line-height: 1.6; font-weight: 300;
+        /* ─── TECHNICAL SECTION ─── */
+        .sec-tech {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-bottom: 1px solid var(--bd);
         }
-        .data-list li::before {
-            content: ''; position: absolute; left: 0; top: 8px;
-            width: 4px; height: 4px; background: var(--brand-orange);
-        }
-        .data-list strong { color: #ccc; font-weight: 500; }
 
+        .sec-col {
+            padding: 60px 48px;
+        }
+        .sec-col + .sec-col { border-left: 1px solid var(--bd); }
+
+        .sec-label {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--t3);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 28px;
+        }
+
+        .tbl { width: 100%; border-collapse: collapse; }
+        .tbl tr { border-bottom: 1px solid var(--bd); }
+        .tbl tr:last-child { border-bottom: none; }
+        .tbl td { padding: 11px 0; font-size: 13px; vertical-align: top; }
+        .tk { color: var(--t3); font-weight: 300; width: 45%; }
+        .tv { color: #d8d8d8; font-weight: 500; text-align: right; }
+
+        /* ─── TESTIMONIALS ─── */
+        .testi-list { display: flex; flex-direction: column; gap: 24px; }
+        .testi {
+            border-left: 2px solid var(--bd2);
+            padding-left: 20px;
+            transition: border-color 0.3s;
+        }
+        .testi:hover { border-left-color: var(--or); }
+        .testi-quote {
+            font-size: 13px;
+            color: #c8c8c8;
+            font-weight: 300;
+            line-height: 1.75;
+            font-style: italic;
+        }
+        .testi-author {
+            font-size: 11px;
+            color: var(--t3);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-weight: 500;
+            margin-top: 10px;
+        }
+
+        /* ─── COMMITMENTS ─── */
+        .commit-list { display: flex; flex-direction: column; gap: 20px; }
+        .commit-item { display: flex; align-items: flex-start; gap: 14px; }
+        .commit-icon {
+            width: 36px; height: 36px;
+            background: var(--or-10);
+            border-radius: 6px;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        .commit-title { font-size: 13px; font-weight: 500; color: #d8d8d8; }
+        .commit-sub { font-size: 12px; color: var(--t3); font-weight: 300; margin-top: 2px; line-height: 1.55; }
+
+        .sec-cta {
+            margin-top: 32px;
+            padding-top: 28px;
+            border-top: 1px solid var(--bd);
+        }
+        .link-underline {
+            font-size: 13px;
+            color: var(--t2);
+            text-decoration: none;
+            border-bottom: 1px solid var(--bd2);
+            padding-bottom: 2px;
+            transition: color 0.2s, border-color 0.2s;
+        }
+        .link-underline:hover { color: var(--t1); border-color: var(--t1); }
+
+        /* ─── MAP ─── */
+        .map-wrap {
+            height: 380px;
+            position: relative;
+            border-top: 1px solid var(--bd);
+            border-bottom: 1px solid var(--bd);
+        }
+        .map-wrap iframe {
+            width: 100%; height: 100%; border: none;
+            filter: grayscale(100%) brightness(0.42) contrast(1.1);
+        }
+        .map-tag {
+            position: absolute;
+            bottom: 24px; left: 40px;
+            background: rgba(10,10,10,0.95);
+            border: 1px solid var(--bd2);
+            border-radius: 6px;
+            padding: 14px 18px;
+            z-index: 10;
+        }
+        .map-tag-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 17px;
+            letter-spacing: 0.07em;
+            color: var(--t1);
+            line-height: 1;
+        }
+        .map-tag-addr { font-size: 11px; color: var(--t3); margin-top: 4px; font-weight: 300; }
+
+        /* ─── FOOTER ─── */
+        footer {
+            padding: 28px 40px;
+            background: var(--bg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .foot-logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 16px;
+            letter-spacing: 0.1em;
+            color: var(--t4);
+        }
+        .foot-copy { font-size: 11px; color: var(--t4); }
+
+        /* ─── MOBILE CTA ─── */
+        .mob-cta {
+            display: none;
+            position: fixed;
+            bottom: 0; left: 0; width: 100%;
+            padding: 12px 16px;
+            background: rgba(10,10,10,0.97);
+            border-top: 1px solid var(--or-25);
+            z-index: 200;
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 960px) {
+            .hero { grid-template-columns: 1fr; }
+            .hero-vis { border-right: none; border-bottom: 1px solid var(--bd); padding: 40px 24px; min-height: 300px; }
+            .hero-vis img { max-height: 38vh; }
+            .hero-copy { padding: 36px 24px; gap: 22px; }
+            h1 { font-size: 50px; }
+            .specs-strip { grid-template-columns: repeat(2,1fr); }
+            .specs-strip .spec-cell:nth-child(2) { border-right: none; }
+            .specs-strip .spec-cell:nth-child(3) { border-top: 1px solid var(--bd); }
+            .sec-tech { grid-template-columns: 1fr; }
+            .sec-col + .sec-col { border-left: none; border-top: 1px solid var(--bd); }
+            .sec-col { padding: 44px 24px; }
+            footer { flex-direction: column; gap: 8px; text-align: center; }
+            .strip-contact { display: none; }
+            .mob-cta { display: block; }
+            body { padding-bottom: 72px; }
+        }
+
+        @media (max-width: 480px) {
+            nav { padding: 14px 18px; }
+            .strip { padding: 9px 18px; }
+            .hero-copy { padding: 28px 18px; }
+            .sec-col { padding: 36px 18px; }
+            footer { padding: 22px 18px; }
+            .map-tag { left: 16px; bottom: 16px; }
+        }
     </style>
 </head>
-<body class="antialiased">
+<body>
 
-    <div class="w-full bg-[#0a0a0a] border-b border-[#1a1a1a] py-2 px-4 text-center z-50">
-        <p class="text-[11px] tracking-[0.1em] uppercase text-[#888]">
-            <span class="text-[#c8692a] font-medium mr-2">Disponibilidade:</span> Estoque local. Expedição em até 24h úteis.
-        </p>
+    <!-- TOP STRIP -->
+    <div class="strip">
+        <p class="strip-msg"><b>Disponível:</b> Estoque local · Expedição em até 24h úteis</p>
+        <a href="https://wa.me/5562981085787" target="_blank" class="strip-contact">Falar com consultor →</a>
     </div>
 
-    <nav class="w-full py-5 px-[5%] flex justify-between items-center border-b border-white/5 bg-transparent relative">
-        <a href="index.html" class="text-[11px] uppercase tracking-widest text-[#888] hover:text-white transition-colors flex items-center gap-2">
-            <span class="text-[#c8692a] text-[15px] leading-none mb-[2px]">←</span> Voltar
+    <!-- NAV -->
+    <nav>
+        <a href="index.html" class="nav-back">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+            Voltar
         </a>
-        
-        <div class="font-bebas text-[18px] sm:text-[20px] text-white tracking-widest absolute left-1/2 -translate-x-1/2">
-            STILLUS <span class="text-[#c8692a]">MULTIMÁQUINAS</span>
-        </div>
-
-        <a href="https://wa.me/5562981085787" target="_blank" class="text-[11px] uppercase tracking-widest text-[#888] hover:text-white transition-colors items-center gap-2 hidden sm:flex">
-            Falar com Consultor <span class="text-[#c8692a]">→</span>
+        <div class="nav-logo">Stillus <span>Multimáquinas</span></div>
+        <a href="https://wa.me/5562981085787" target="_blank" class="nav-cta">
+            Consultor <span>→</span>
         </a>
     </nav>
 
     <main>
-        <section class="py-16 md:py-24 px-[5%] relative">
-            <div class="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                
-                <div class="reveal flex justify-center lg:justify-start order-1 lg:order-1 relative">
-                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] bg-[#c8692a] opacity-[0.03] blur-[80px] rounded-full pointer-events-none"></div>
-                    <img src="produto.png" alt="Trator Cortador Toyama TLT42-19A" class="product-img relative z-10">
-                </div>
 
-                <div class="flex flex-col justify-center order-2 lg:order-2">
-                    <div class="flex items-center gap-3 mb-6 reveal">
-                        <span class="border border-[#1a1a1a] text-[#888] text-[10px] px-2 py-1 rounded uppercase tracking-widest bg-[#0a0a0a]">Toyama TLT42-19A</span>
-                        <span class="text-[10px] tracking-[0.15em] text-[#c8692a] uppercase font-medium">Uso Profissional</span>
-                    </div>
-                    
-                    <h1 class="font-bebas text-[clamp(42px,5vw,64px)] text-white mb-4 reveal leading-[0.95]">
-                        Eficiência operacional <br><span class="text-[#888]">em grandes áreas.</span>
-                    </h1>
-
-                    <p class="text-[15px] text-[#888] font-light leading-relaxed max-w-[480px] mb-8 reveal delay-1">
-                        Projetado para suportar regimes intensos de trabalho. O casamento perfeito entre um motor de <span class="text-white font-medium">546</span>cc com lubrificação otimizada e uma transmissão automática responsiva.
-                    </p>
-                    
-                    <ul class="data-list mb-10 reveal delay-1">
-                        <li><strong>Torque Sustentado:</strong> Motor monocilíndrico OHV que não perde rotação em capim denso.</li>
-                        <li><strong>Produtividade:</strong> Plataforma de <span class="text-white font-medium">42</span> polegadas (<span class="text-white font-medium">107</span>cm) com sistema anti-scalp.</li>
-                        <li><strong>Durabilidade:</strong> Câmbio CVT Integrado, reduzindo trancos e desgaste de correias.</li>
-                    </ul>
-
-                    <div class="flex flex-col sm:flex-row gap-4 reveal delay-2">
-                        <a href="https://wa.me/5562981085787?text=Ol%C3%A1.%20Tenho%20interesse%20no%20Trator%20Toyama%2019.5HP.%20Gostaria%20de%20receber%20a%20proposta%20comercial." target="_blank" class="btn-wpp w-full sm:w-auto">
-                            Solicitar Proposta Comercial
-                        </a>
-                        <a href="#especificacoes" class="btn-primary w-full sm:w-auto">
-                            Ficha Técnica
-                        </a>
-                    </div>
-                    
-                    <p class="text-[11px] text-[#666] mt-4 reveal delay-2">Valores especiais faturados direto para CNPJ ou Produtor Rural.</p>
-                </div>
+        <!-- HERO -->
+        <section class="hero">
+            <div class="hero-vis rv">
+                <img src="produtos page/cortador de grama toyama tlt42-19a.png" alt="Trator Cortador Toyama TLT42-19A 19.5HP" loading="eager">
             </div>
-        </section>
 
-        <section id="especificacoes" class="py-20 px-[5%] bg-[#0a0a0a] border-t border-white/5">
-            <div class="max-w-[1200px] mx-auto">
-                <div class="mb-12 reveal">
-                    <h2 class="font-bebas text-3xl text-white tracking-wide">Arquitetura da <span class="text-[#c8692a]">Máquina</span></h2>
-                    <p class="text-[13px] text-[#888] mt-2 font-light">Especificações rigorosas para tomada de decisão técnica.</p>
+            <div class="hero-copy">
+                <div class="eyebrow rv d1">
+                    <span class="eyebrow-model">Toyama TLT42-19A</span>
+                    <span class="eyebrow-cat">Uso Profissional</span>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div class="card-tech reveal">
-                        <span class="text-[10px] uppercase tracking-[0.15em] text-[#666] block mb-2">Unidade de Potência</span>
-                        <strong class="font-bebas text-4xl text-white block"><span class="counter" data-target="19.5" data-decimals="1">0</span> HP</strong>
-                        <p class="text-[12px] text-[#888] mt-3 font-light leading-relaxed">Cilindrada de 546cc. Arquitetura OHV garante menor temperatura operacional e maior vida útil do óleo.</p>
-                    </div>
-                    
-                    <div class="card-tech reveal delay-1">
-                        <span class="text-[10px] uppercase tracking-[0.15em] text-[#666] block mb-2">Sistema de Transmissão</span>
-                        <strong class="font-bebas text-4xl text-white block">Auto CVT</strong>
-                        <p class="text-[12px] text-[#888] mt-3 font-light leading-relaxed">Ajuste infinito de velocidade no pedal. Permite manobras precisas ao redor de obstáculos sem uso de embreagem.</p>
-                    </div>
+                <h1 class="rv d1">
+                    Eficiência operacional <em>em grandes áreas.</em>
+                </h1>
 
-                    <div class="card-tech reveal delay-2">
-                        <span class="text-[10px] uppercase tracking-[0.15em] text-[#666] block mb-2">Deck de Corte</span>
-                        <strong class="font-bebas text-4xl text-white block"><span class="counter" data-target="42">0</span>" (<span class="counter" data-target="107">0</span> cm)</strong>
-                        <p class="text-[12px] text-[#888] mt-3 font-light leading-relaxed">Aço estampado reforçado com 2 lâminas. Equipado com rodas antideslizantes (anti-scalp) para preservar o relevo.</p>
-                    </div>
+                <p class="hero-lead rv d2">
+                    Motor monocilíndrico OHV <b>546cc</b> com lubrificação otimizada para regimes intensos. Transmissão CVT automática e plataforma de <b>42" (107cm)</b> com sistema anti-scalp para terrenos irregulares.
+                </p>
 
-                    <div class="card-tech reveal delay-2">
-                        <span class="text-[10px] uppercase tracking-[0.15em] text-[#666] block mb-2">Capacidade Tanque</span>
-                        <strong class="font-bebas text-4xl text-white block"><span class="counter" data-target="5.7" data-decimals="1">0</span> Litros</strong>
-                        <p class="text-[12px] text-[#888] mt-3 font-light leading-relaxed">Autonomia projetada para cobrir extensas áreas de pasto e gramado sem necessidade de reabastecimento constante.</p>
+                <div class="price-line rv d2">
+                    <div class="price-old">Preço em loja física: R$ 26.900</div>
+                    <div class="price-cta">Condição de fábrica — solicite proposta pelo WhatsApp</div>
+                </div>
+
+                <ul class="feat-list rv d2">
+                    <li><b>Torque sustentado:</b> não perde rotação em capim denso ou úmido</li>
+                    <li><b>Produtividade:</b> plataforma 107cm cobre 40% mais área por passagem</li>
+                    <li><b>CVT integrado:</b> manobras precisas sem embreagem, menor desgaste de correia</li>
+                    <li><b>Partida elétrica</b> por chave, autonomia de 5,7L de gasolina</li>
+                </ul>
+
+                <div class="rv d3" style="display:flex;flex-direction:column;gap:8px;">
+                    <a href="https://wa.me/5562981085787?text=Ol%C3%A1.%20Tenho%20interesse%20no%20Trator%20Toyama%20TLT42-19A%2019.5HP.%20Gostaria%20de%20receber%20a%20proposta%20comercial." target="_blank" class="btn-wpp">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.123.557 4.116 1.532 5.845L0 24l6.335-1.509C8.05 23.447 9.991 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.659-.525-5.166-1.437l-.371-.22-3.762.896.93-3.638-.242-.381C2.525 15.61 2 13.869 2 12 2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+                        Solicitar proposta comercial
+                    </a>
+                    <a href="#ficha" class="btn-ghost">Ver ficha técnica completa</a>
+                    <p class="cta-note">Valores especiais faturados direto para CNPJ ou Produtor Rural</p>
+                </div>
+
+                <div class="proof-row rv d3">
+                    <div class="avs">
+                        <div class="av">GO</div>
+                        <div class="av">MG</div>
+                        <div class="av">MS</div>
+                        <div class="av">SP</div>
+                    </div>
+                    <div class="proof-copy">
+                        <div class="stars">★★★★★</div>
+                        <b>4.9/5</b> · Mais de <b>340 unidades</b> entregues
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="py-20 px-[5%] border-t border-white/5">
-            <div class="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16">
-                
-                <div class="reveal">
-                    <h3 class="text-[12px] text-[#c8692a] uppercase tracking-widest font-medium mb-6">Validação de Campo</h3>
-                    <div class="space-y-8">
-                        <div class="border-l border-[#222] pl-6">
-                            <p class="text-[14px] text-[#ccc] font-light italic mb-3 leading-relaxed">
-                                "Nossa operação cobre 120.000 m² de áreas verdes por semana em condomínios horizontais. O gargalo diário era a perda de rotação da lâmina no capim úmido do início da manhã, o que nos forçava a trabalhar em marcha lenta. Com esse motor de 546cc, mantemos o avanço constante sem engasgar. O tempo do ciclo de corte diminuiu e fechamos a semana com um consumo de combustível 15% menor em comparação com a nossa frota antiga."
-                            </p>
-                            <span class="text-[11px] text-[#666] uppercase tracking-wider font-medium">— Gestor de Operações, Empresa de Manutenção de Loteamentos (GO)</span>
+        <!-- SPECS STRIP -->
+        <div class="specs-strip rv" id="ficha">
+            <div class="spec-cell">
+                <div class="spec-val">19.5 HP</div>
+                <div class="spec-lbl">Potência nominal</div>
+            </div>
+            <div class="spec-cell">
+                <div class="spec-val">546 cc</div>
+                <div class="spec-lbl">Cilindrada OHV</div>
+            </div>
+            <div class="spec-cell">
+                <div class="spec-val">107 cm</div>
+                <div class="spec-lbl">Largura de corte</div>
+            </div>
+            <div class="spec-cell">
+                <div class="spec-val">5,7 L</div>
+                <div class="spec-lbl">Tanque gasolina</div>
+            </div>
+        </div>
+
+        <!-- FICHA + DEPOIMENTOS -->
+        <section class="sec-tech">
+
+            <div class="sec-col rv">
+                <div class="sec-label">Ficha técnica completa</div>
+                <table class="tbl">
+                    <tr><td class="tk">Modelo</td><td class="tv">TLT42-19A</td></tr>
+                    <tr><td class="tk">Motor</td><td class="tv">Toyama monocilíndrico OHV</td></tr>
+                    <tr><td class="tk">Potência bruta</td><td class="tv">19.5 HP / 546cc</td></tr>
+                    <tr><td class="tk">Transmissão</td><td class="tv">CVT automática (pedal)</td></tr>
+                    <tr><td class="tk">Plataforma de corte</td><td class="tv">42" · 107 cm · 2 lâminas</td></tr>
+                    <tr><td class="tk">Anti-scalp</td><td class="tv">Rodas ajustáveis de série</td></tr>
+                    <tr><td class="tk">Altura de corte</td><td class="tv">6 posições</td></tr>
+                    <tr><td class="tk">Coleta</td><td class="tv">Bag coletora + mulching</td></tr>
+                    <tr><td class="tk">Partida</td><td class="tv">Elétrica por chave</td></tr>
+                    <tr><td class="tk">Combustível</td><td class="tv">Gasolina · 5,7 L</td></tr>
+                    <tr><td class="tk">Garantia</td><td class="tv">Oficial Toyama + NF</td></tr>
+                </table>
+            </div>
+
+            <div class="sec-col">
+
+                <div class="rv">
+                    <div class="sec-label">Validação de campo</div>
+                    <div class="testi-list">
+                        <div class="testi">
+                            <p class="testi-quote">"Nossa operação cobre 120.000 m² por semana em condomínios horizontais. Com esse motor de 546cc mantemos o avanço constante sem engasgar no capim úmido do início da manhã. Fechamos a semana com consumo 15% menor em relação à nossa frota anterior."</p>
+                            <div class="testi-author">Gestor de Operações · Empresa de manutenção de loteamentos (GO)</div>
                         </div>
-                        <div class="border-l border-[#222] pl-6">
-                            <p class="text-[14px] text-[#ccc] font-light italic mb-3 leading-relaxed">
-                                "A área de piquetes tem cerca de 4 hectares com relevo bastante irregular. O problema crônico que tínhamos era a plataforma raspar os declives, danificando a raiz do gramado e o fio das lâminas. As rodas anti-scalp da plataforma de 42 polegadas acompanham bem as ondulações do solo sem marcar a terra. Além disso, a resposta do câmbio CVT eliminou os trancos durante as manobras contínuas rentes às cercas de madeira."
-                            </p>
-                            <span class="text-[11px] text-[#666] uppercase tracking-wider font-medium">— Administrador de Propriedade Rural, Haras (MG)</span>
+                        <div class="testi">
+                            <p class="testi-quote">"Área de piquetes com 4 hectares e relevo irregular. O problema crônico era a plataforma raspar os declives e marcar a raiz do gramado. As rodas anti-scalp acompanham as ondulações sem danificar o solo. O CVT também eliminou os trancos nas manobras rentes às cercas."</p>
+                            <div class="testi-author">Administrador · Haras (MG)</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="reveal lg:pl-10 lg:border-l border-white/5">
-                    <h3 class="text-[12px] text-[#c8692a] uppercase tracking-widest font-medium mb-6">Compromisso Stillus</h3>
-                    <ul class="data-list">
-                        <li><strong>Fornecedor Credenciado:</strong> Somos revenda e assistência técnica autorizada Toyama. Seu equipamento com rastreabilidade total.</li>
-                        <li><strong>Garantia Oficial:</strong> Faturamento direto com Nota Fiscal e cobertura do fabricante aplicável em todo território nacional.</li>
-                        <li><strong>Logística:</strong> Mais de <span class="counter text-white font-medium" data-target="340">0</span> unidades entregues. Estrutura de CD e Loja Física para pronto envio.</li>
-                    </ul>
-                    <div class="mt-8">
-                        <a href="https://wa.me/5562981085787" target="_blank" class="text-[13px] text-white border-b border-[#333] pb-1 hover:border-white transition-colors">
+                <div class="rv d2" style="margin-top: 40px; padding-top: 36px; border-top: 1px solid var(--bd);">
+                    <div class="sec-label">Compromisso Stillus</div>
+                    <div class="commit-list">
+                        <div class="commit-item">
+                            <div class="commit-icon">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#c8692a" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            </div>
+                            <div>
+                                <div class="commit-title">Revenda autorizada Toyama</div>
+                                <div class="commit-sub">Rastreabilidade total, garantia oficial aplicável em todo o Brasil.</div>
+                            </div>
+                        </div>
+                        <div class="commit-item">
+                            <div class="commit-icon">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#c8692a" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                            </div>
+                            <div>
+                                <div class="commit-title">Nota fiscal emitida</div>
+                                <div class="commit-sub">Faturamento direto para CNPJ ou Produtor Rural com condições especiais.</div>
+                            </div>
+                        </div>
+                        <div class="commit-item">
+                            <div class="commit-icon">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#c8692a" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </div>
+                            <div>
+                                <div class="commit-title">Loja física + CD próprio</div>
+                                <div class="commit-sub">Estoque físico em Anápolis/GO. Expedição em até 24h úteis confirmado o pedido.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sec-cta">
+                        <a href="https://wa.me/5562981085787?text=Ol%C3%A1.%20Gostaria%20de%20consultar%20o%20prazo%20de%20entrega%20para%20minha%20regi%C3%A3o." target="_blank" class="link-underline">
                             Consultar prazo de entrega para sua região →
                         </a>
                     </div>
@@ -269,89 +670,51 @@
             </div>
         </section>
 
-        <section class="w-full h-[400px] border-t border-white/5 relative bg-[#050505]">
-            <div class="absolute inset-0 z-0">
-                <iframe 
-                    src="https://maps.google.com/maps?q=Stillus%20Multim%C3%A1quinas,%20Av.%20Brasil%20Sul,%202168,%20An%C3%A1polis&t=&z=15&ie=UTF8&iwloc=&output=embed" 
-                    style="width: 100%; height: 100%; border: none; filter: grayscale(100%) invert(90%) hue-rotate(180deg) brightness(1.1) contrast(0.95);" 
-                    loading="lazy"
-                    title="Localização Stillus Multimáquinas">
-                </iframe>
+        <!-- MAP -->
+        <div class="map-wrap">
+            <iframe
+                src="https://maps.google.com/maps?q=Stillus%20Multim%C3%A1quinas,%20Av.%20Brasil%20Sul,%202168,%20An%C3%A1polis&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                loading="lazy"
+                title="Stillus Multimáquinas — Localização">
+            </iframe>
+            <div class="map-tag">
+                <div class="map-tag-name">Centro Operacional</div>
+                <div class="map-tag-addr">Av. Brasil Sul, 2168 · Anápolis/GO</div>
             </div>
-            <div class="absolute inset-0 bg-[#050505]/40 pointer-events-none z-10"></div>
-            
-            <div class="absolute bottom-6 left-6 md:left-[5%] z-20 bg-[#0a0a0a] border border-[#222] p-4 rounded text-left">
-                <p class="font-bebas text-lg text-white tracking-wide leading-none mb-1">Centro Operacional</p>
-                <p class="text-[11px] text-[#888] font-light">Av. Brasil Sul, 2168 - Anápolis/GO</p>
-            </div>
-        </section>
+        </div>
 
     </main>
 
-    <footer class="py-8 border-t border-white/5 bg-[#0a0a0a] flex flex-col items-center justify-center gap-3">
-        <div class="font-bebas text-[16px] text-[#444] tracking-widest">
-            STILLUS MULTIMÁQUINAS
-        </div>
-        <p class="text-[10px] text-[#555] uppercase tracking-wider text-center px-4">
-            © 2026. CNPJ sob consulta. Vendas exclusivas sujeitas à disponibilidade de estoque.
-        </p>
+    <footer>
+        <div class="foot-logo">Stillus Multimáquinas</div>
+        <div class="foot-copy">© 2026 · CNPJ sob consulta · Vendas sujeitas a disponibilidade</div>
     </footer>
 
-    <div class="fixed bottom-0 left-0 w-full bg-[#0a0a0a] border-t border-[#222] p-3 z-[100] md:hidden">
-        <a href="https://wa.me/5562981085787?text=Ol%C3%A1.%20Tenho%20interesse%20no%20Trator%20Toyama%2019.5HP." target="_blank" class="btn-wpp w-full !text-[12px] !py-3">
-            Consultar Condição Comercial
+    <!-- MOBILE STICKY CTA -->
+    <div class="mob-cta">
+        <a href="https://wa.me/5562981085787?text=Ol%C3%A1.%20Tenho%20interesse%20no%20Trator%20Toyama%2019.5HP.%20Gostaria%20de%20receber%20a%20proposta%20comercial." target="_blank" class="btn-wpp" style="font-size:12px;padding:13px 16px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.123.557 4.116 1.532 5.845L0 24l6.335-1.509C8.05 23.447 9.991 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.659-.525-5.166-1.437l-.371-.22-3.762.896.93-3.638-.242-.381C2.525 15.61 2 13.869 2 12 2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+            Solicitar proposta comercial
         </a>
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            
-            // Função do Contador (Efeito Apple)
-            const startCounter = (counter) => {
-                const target = +counter.getAttribute('data-target');
-                const decimals = counter.getAttribute('data-decimals') ? parseInt(counter.getAttribute('data-decimals')) : 0;
-                const duration = 1500; 
-                const stepTime = 20; 
-                const steps = duration / stepTime;
-                const increment = target / steps;
-                let current = 0;
+        const obs = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('on');
+                    obs.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.08 });
 
-                const updateCounter = setInterval(() => {
-                    current += increment;
-                    if (current >= target) {
-                        counter.innerText = target.toFixed(decimals);
-                        clearInterval(updateCounter);
-                    } else {
-                        counter.innerText = current.toFixed(decimals);
-                    }
-                }, stepTime);
-            };
+        document.querySelectorAll('.rv').forEach(el => obs.observe(el));
 
-            // IntersectionObserver para Reveal + Ativação dos Contadores
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        
-                        // Dispara contadores dentro do elemento revelado
-                        const countersInside = entry.target.querySelectorAll('.counter');
-                        countersInside.forEach(c => startCounter(c));
-
-                        observer.unobserve(entry.target); // Anima apenas uma vez
-                    }
-                });
-            }, { threshold: 0.15 });
-
-            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-            
-            // Força a exibição inicial
+        // Hero reveals on load
+        window.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
-                document.querySelectorAll('main > section:first-child .reveal').forEach(el => {
-                    el.classList.add('visible');
-                    const countersInside = el.querySelectorAll('.counter');
-                    countersInside.forEach(c => startCounter(c));
-                });
-            }, 50);
+                document.querySelectorAll('.hero .rv, .hero-vis.rv').forEach(el => el.classList.add('on'));
+            }, 60);
         });
     </script>
 </body>
