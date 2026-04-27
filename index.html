@@ -1303,9 +1303,14 @@
         if (chatState === 'AWAITING_PHONE') {
             if (lowerMsg === 'falar com a equipe agora') {
                 chatState = 'FINISHED';
+                
+                const mensagem = `Olá, equipe Stillus! Me chamo ${userData.name}, sou de ${userData.city} e tenho interesse no equipamento: ${userData.product}. Podemos falar a respeito?`;
+                const linkWhatsApp = `https://wa.me/5562981085787?text=${encodeURIComponent(mensagem)}`;
+
                 setTimeout(() => {
-                    window.open('https://wa.me/5562981085787', '_blank');
+                    window.open(linkWhatsApp, '_blank');
                 }, 1500);
+                
                 return "Perfeito! Estou te redirecionando para o nosso WhatsApp. Nossa equipe já está pronta para te atender!";
             }
             userData.phone = msg;
