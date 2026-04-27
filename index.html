@@ -109,6 +109,14 @@
         .dot { width: 4px; height: 4px; background: #fff; border-radius: 50%; opacity: 0.15; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform, opacity; }
         .dot.active { opacity: 1; transform: scale(2.5); background: var(--brand-orange); box-shadow: 0 0 15px var(--brand-orange); }
 
+        /* ── INDICADOR DE SCROLL ── */
+        .scroll-indicator { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; z-index: 30; opacity: 0.6; transition: opacity 0.4s ease; pointer-events: none; }
+        .scroll-indicator.hidden { opacity: 0; }
+        .mouse-icon { width: 22px; height: 34px; border: 1.5px solid rgba(255,255,255,0.6); border-radius: 12px; position: relative; }
+        .wheel-icon { width: 2px; height: 6px; background: #D37B42; border-radius: 2px; position: absolute; top: 6px; left: 50%; transform: translateX(-50%); animation: scroll-wheel 1.5s infinite; }
+        @keyframes scroll-wheel { 0% { top: 6px; opacity: 1; } 100% { top: 18px; opacity: 0; } }
+        .scroll-text { font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(255,255,255,0.6); font-weight: 500; font-family: 'DM Sans', sans-serif; }
+
         /* ── ANIMAÇÕES ULTRA-FLUIDAS (HERO) ── */
         .hero-block { position: absolute; left: 8%; right: 8%; z-index: 20; pointer-events: none; will-change: transform; backface-visibility: hidden; }
         
@@ -409,6 +417,11 @@
                     <a href="#produtos" class="cta-btn">Ver cat&aacute;logo</a>
                     <a href="#contato" class="cta-btn-outline hide-on-mobile">Falar com especialista</a>
                 </div>
+            </div>
+
+            <div id="scroll-indicator" class="scroll-indicator">
+                <div class="mouse-icon"><div class="wheel-icon"></div></div>
+                <div class="scroll-text">Role</div>
             </div>
         </div>
     </section>
@@ -968,6 +981,13 @@
 
             const nav = document.getElementById('main-nav');
             if (window.scrollY > 60) nav.classList.add('scrolled'); else nav.classList.remove('scrolled');
+
+            // ── LÓGICA DO INDICADOR DE SCROLL ──
+            const scrollInd = document.getElementById('scroll-indicator');
+            if (scrollInd) {
+                if (window.scrollY > 50) scrollInd.classList.add('hidden');
+                else scrollInd.classList.remove('hidden');
+            }
         }, { passive: true });
 
         let resizeTimer;
