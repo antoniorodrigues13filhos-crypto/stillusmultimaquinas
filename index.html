@@ -1126,7 +1126,7 @@
     const IS_MOBILE_CHAT = /iPhone|Android|iPad/i.test(navigator.userAgent) || window.innerWidth <= 768;
     
     let chatState = 'IDLE';
-    let userData = { product: '', name: '', city: '', email: '' };
+    let userData = { product: '', name: '', city: '', phone: '' };
 
     function toggleChat() {
         const chat = document.getElementById('chatbot');
@@ -1200,8 +1200,15 @@
             }
             
             showTypingIndicator();
-            const isSequence = messagesArray.length > 2 && i > 0;
-            const delay = isSequence ? 700 : 1200 + Math.random() * 600;
+            
+            // Calcula o delay para dar tempo de leitura para o usuário baseado no tamanho da última mensagem
+            let delay = 1000;
+            if (i > 0) {
+                const prevMsgLength = messagesArray[i - 1].length;
+                delay = Math.max(2000, prevMsgLength * 45); // Aumenta o tempo de leitura para as opções e mensagens
+            } else {
+                delay = 1000 + Math.random() * 500;
+            }
 
             setTimeout(() => {
                 removeTypingIndicator();
@@ -1209,7 +1216,7 @@
                 i++;
                 
                 if (i < messagesArray.length || (optionsArray && optionsArray.length > 0)) {
-                    setTimeout(sendNext, 200);
+                    setTimeout(sendNext, 400);
                 }
             }, delay);
         }
@@ -1282,13 +1289,28 @@
         }
         if (chatState === 'AWAITING_CITY') {
             userData.city = msg;
-            chatState = 'AWAITING_EMAIL';
-            return `Ótimo! Para finalizar seu cadastro e eu te enviar a cotação oficial, qual é o seu melhor e-mail?`;
+            chatState = 'AWAITING_PHONE';
+            return {
+                messages: [
+                    `Ótimo! Para finalizar seu cadastro e eu te enviar a cotação oficial, qual é o seu número de celular ou WhatsApp?`,
+                    `Caso esteja com pressa e queira atendimento imediato, clique no botão abaixo. Já temos um membro da equipe disponível para atendê-lo agora!`
+                ],
+                options: [
+                    "Falar com a equipe agora"
+                ]
+            };
         }
-        if (chatState === 'AWAITING_EMAIL') {
-            userData.email = msg;
+        if (chatState === 'AWAITING_PHONE') {
+            if (lowerMsg === 'falar com a equipe agora') {
+                chatState = 'FINISHED';
+                setTimeout(() => {
+                    window.open('https://wa.me/5562981085787', '_blank');
+                }, 1500);
+                return "Perfeito! Estou te redirecionando para o nosso WhatsApp. Nossa equipe já está pronta para te atender!";
+            }
+            userData.phone = msg;
             chatState = 'FINISHED';
-            return `Tudo certo, ${userData.name}! Nossa equipe de engenharia avaliará sua solicitação para a cidade de ${userData.city} e entrará em contato em breve no e-mail fornecido. Posso ajudar com mais alguma dúvida técnica no momento?`;
+            return `Tudo certo, ${userData.name}! Nossa equipe de engenharia avaliará sua solicitação para a cidade de ${userData.city} e entrará em contato em breve no número fornecido. Posso ajudar com mais alguma dúvida técnica no momento?`;
         }
 
         // Saudações
