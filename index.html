@@ -1292,12 +1292,11 @@
                 const scriptUrl = "https://script.google.com/macros/s/AKfycbySgNTFwzT_2TmAY1YN0dnl71sGSxzNaHbb14EqGsYxUK6aSO_BaeyyG8YGqEgmScmNhg/exec";
                 
                 const payload = {
+                    data: new Date().toLocaleString('pt-BR'),
                     nome: leadData.nome,
                     telefone: telefone,
                     cidade: leadData.cidade, 
-                    interesse: leadData.interesse, 
-                    detalhe: leadData.detalhe,
-                    data: new Date().toLocaleString('pt-BR')
+                    produto: leadData.interesse + " - " + leadData.detalhe
                 };
 
                 fetch(scriptUrl, {
