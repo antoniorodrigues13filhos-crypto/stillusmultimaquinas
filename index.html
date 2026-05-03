@@ -160,6 +160,8 @@
 
         .section-label { font-size: 10px; letter-spacing: 0.5em; color: #D37B42; text-transform: uppercase; font-weight: 500; display: block; margin-bottom: 16px; }
         .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(40px, 8vw, 88px); letter-spacing: 0.05em; line-height: 0.92; color: #F8F8F8; }
+        .section-title br { display: none; }
+        @media (min-width: 768px) { .section-title br { display: block; } }
         .section-body { font-size: clamp(14px, 1.6vw, 16px); color: rgba(255,255,255,0.38); font-weight: 300; line-height: 1.7; }
         
         .reveal { opacity: 0; transform: translate3d(0, 32px, 0); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); will-change: transform, opacity; }
@@ -244,8 +246,11 @@
         footer { background: #050505; border-top: 0.5px solid rgba(255,255,255,0.06); }
         .footer-logo { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.15em; font-size: 22px; color: rgba(255,255,255,0.8); }
         .footer-logo span { color: #D37B42; }
+        .footer-col-title { font-family: 'Bebas Neue', sans-serif; font-size: 14px; letter-spacing: 0.15em; color: #fff; margin-bottom: 20px; }
         .footer-link { font-size: 12px; color: rgba(255,255,255,0.25); text-decoration: none; display: block; margin-bottom: 12px; transition: color 0.2s ease; }
         .footer-link:hover { color: rgba(255,255,255,0.6); }
+        .social-icon { width: 32px; height: 32px; border-radius: 50%; border: 0.5px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.2); transition: all 0.2s ease; text-decoration: none; }
+        .social-icon:hover { border-color: rgba(211,123,66,0.4); color: #D37B42; background: rgba(211,123,66,0.05); transform: translateY(-2px); }
 
         .visible { opacity: 1 !important; pointer-events: all !important; }
         .orange-stripe { position: relative; background: linear-gradient(135deg, #D37B42 0%, #B55A22 100%); overflow: hidden; padding: 80px 8%; }
@@ -290,12 +295,17 @@
         .chat-container { position: fixed; bottom: 110px; right: 30px; width: 350px; max-height: 500px; height: 60vh; background: rgba(8, 8, 8, 0.65); backdrop-filter: blur(24px) saturate(160%); -webkit-backdrop-filter: blur(24px) saturate(160%); border: 0.5px solid rgba(255,255,255,0.12); border-radius: 20px; z-index: 9998; display: flex; flex-direction: column; overflow: hidden; opacity: 0; pointer-events: none; transform: translateY(20px) scale(0.95); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 20px rgba(211,123,66,0.1); }
         .chat-container.open { opacity: 1; pointer-events: all; transform: translateY(0) scale(1); }
         
-        .chat-header { padding: 18px 24px; border-bottom: 0.5px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.02); }
-        .chat-header-info h4 { font-family: 'DM Sans', sans-serif; font-size: 15px; color: #F8F8F8; font-weight: 500; }
-        .chat-header-info p { font-size: 11px; color: #D37B42; letter-spacing: 0.05em; margin-top: 2px; display: flex; align-items: center; gap: 6px; }
+        .chat-header { padding: 14px 20px; border-bottom: 0.5px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.02); gap: 12px; }
+        
+        /* Estilos do Avatar da Atendente */
+        .chat-avatar { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 1.5px solid rgba(211,123,66,0.5); box-shadow: 0 0 10px rgba(211,123,66,0.2); flex-shrink: 0; }
+        
+        .chat-header-info { flex: 1; }
+        .chat-header-info h4 { font-family: 'DM Sans', sans-serif; font-size: 14px; color: #F8F8F8; font-weight: 500; }
+        .chat-header-info p { font-size: 11px; color: #D37B42; letter-spacing: 0.05em; margin-top: 1px; display: flex; align-items: center; gap: 5px; }
         .status-dot { width: 6px; height: 6px; background: #2a9d6f; border-radius: 50%; box-shadow: 0 0 8px #2a9d6f; }
         
-        .premium-close-btn { width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,0.05); border: 0.5px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.6); cursor: pointer; transition: all 0.2s ease; }
+        .premium-close-btn { width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,0.05); border: 0.5px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.6); cursor: pointer; transition: all 0.2s ease; flex-shrink: 0; }
         .premium-close-btn:hover { background: rgba(211,123,66,0.2); border-color: rgba(211,123,66,0.4); color: #fff; transform: scale(1.05); }
 
         .chat-messages { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
@@ -328,10 +338,10 @@
 
         /* ── MOBILE CSS REGRAS ATUALIZADAS (Proporção Segura para Telas Menores) ── */
         @media (max-width: 768px) {
-            .nav-inner { justify-content: space-between; } 
+            .nav-inner { justify-content: space-between; padding: 12px 20px; } 
             .nav-links { display: none; }
             .scroll-dots { right: 20px; }
-            .service-item { grid-template-columns: 30px 1fr; }
+            .service-item { grid-template-columns: 30px 1fr; gap: 20px; padding: 24px 0; }
             .service-arrow { display: none; }
             .stats-grid, .services-grid, .faq-grid, .contact-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
             .services-grid > div:first-child, .faq-grid > div:first-child { position: static !important; }
@@ -344,7 +354,7 @@
             /* Ajustes Finos do Chat para Mobile */
             .chat-container { width: calc(100vw - 40px); bottom: 95px; right: 20px; height: calc(100svh - 130px); max-height: 500px; }
             .whatsapp-float { bottom: 20px; right: 20px; width: 60px; height: 60px; }
-            .chat-tooltip { bottom: 95px; right: 25px; } 
+            .chat-tooltip { bottom: 95px; right: 25px; padding: 10px 14px; gap: 12px; } 
 
             .process-line-bg, .process-line-fill { display: none; }
             .process-line-v-bg, .process-line-v-fill { display: block; }
@@ -376,9 +386,9 @@
                 <a href="#faq">FAQ</a>
                 <a href="#contato" class="nav-cta">Solicitar orçamento</a>
             </div>
-            <div class="nav-icons" style="display:flex;gap:16px;">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9a2 2 0 0 1-2 2H6l-4 4V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2z"></path><path d="M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1"></path></svg>
+            <div class="nav-icons" style="display:flex;gap:16px;align-items:center;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9a2 2 0 0 1-2 2H6l-4 4V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2z"></path><path d="M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1"></path></svg>
             </div>
         </div>
     </nav>
@@ -412,7 +422,7 @@
                 </div>
                 <p class="hero-sub" style="margin-bottom:36px;opacity:0;transform:translateY(18px);transition:opacity 0.8s ease 0.35s,transform 0.8s ease 0.35s;font-size:clamp(13px,1.8vw,17px);color:rgba(255,255,255,0.85);font-weight:300;line-height:1.6;max-width:380px;">
                     Equipamentos que não param. Produção que não cessa.
-                </p>
+                </                </p>
                 <div class="hero-sub" style="opacity:0;transform:translateY(18px);transition:opacity 0.8s ease 0.5s,transform 0.8s ease 0.5s;display:flex;gap:16px;flex-wrap:wrap;">
                     <a href="#produtos" class="cta-btn">Ver catálogo</a>
                     <a href="#contato" class="cta-btn-outline hide-on-mobile">Falar com especialista</a>
@@ -436,98 +446,104 @@
             </div>
 
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;">
+                <!-- Produto 1 -->
                 <div class="product-card" onclick="window.location.href='produto-toyama.html'">
                     <div style="width: 100%; height: 220px; overflow: hidden; flex-shrink: 0; position: relative;">
                         <img src="produtos/cortador de grama toyama tlt42-19a.png" alt="Cortador de Grama Toyama TLT42-19A" class="product-image" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.16,1,0.3,1);">
                     </div>
                     <div style="padding: 32px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
                         <div>
-                            <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 0.05em; color: #F8F8F8; margin-bottom: 8px; line-height: 0.92;">LINHA JARDIM PROFISSIONAL</h3>
+                            <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.05em; color: #F8F8F8; margin-bottom: 8px; line-height: 1.1;">LINHA JARDIM PROFISSIONAL</h3>
                             <p style="color: rgba(255,255,255,0.4); font-size: 13px; font-weight: 300; line-height: 1.7; margin-bottom: 20px;">Corte preciso e alta performance para manutenção eficiente de áreas verdes.</p>
                         </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span style="color: #D37B42; font-family: monospace; font-size: 11px; letter-spacing: 0.1em; font-weight: bold;">PRONTO_ENVIO</span>
-                            <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: rgba(255,255,255,0.2); transition: color 0.5s ease;"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 0.5px solid rgba(255,255,255,0.06); padding-top: 16px;">
+                            <span style="color: #D37B42; font-family: monospace; font-size: 10px; letter-spacing: 0.1em; font-weight: bold;">PRONTO_ENVIO</span>
+                            <svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: rgba(255,255,255,0.2); transition: color 0.5s ease;"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
                         </div>
                     </div>
                 </div>
 
+                <!-- Produto 2 -->
                 <div class="product-card" onclick="window.location.href='produto-lavadora.html'">
                     <div style="width: 100%; height: 220px; overflow: hidden; flex-shrink: 0; position: relative;">
                         <img src="produtos/Lavadora 2100 psi tramontina.png" alt="Lavadora 2100 PSI Tramontina" class="product-image" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.16,1,0.3,1);">
                     </div>
                     <div style="padding: 32px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
                         <div>
-                            <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 0.05em; color: #F8F8F8; margin-bottom: 8px; line-height: 0.92;">SISTEMAS DE LIMPEZA DE ALTA PRESSÃO</h3>
+                            <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.05em; color: #F8F8F8; margin-bottom: 8px; line-height: 1.1;">LIMPEZA DE ALTA PRESSÃO</h3>
                             <p style="color: rgba(255,255,255,0.4); font-size: 13px; font-weight: 300; line-height: 1.7; margin-bottom: 20px;">Potência ideal para remoção de sujeiras pesadas com eficiência e rapidez.</p>
                         </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span style="color: #D37B42; font-family: monospace; font-size: 11px; letter-spacing: 0.1em; font-weight: bold;">EM_ESTOQUE</span>
-                            <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: rgba(255,255,255,0.2); transition: color 0.5s ease;"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 0.5px solid rgba(255,255,255,0.06); padding-top: 16px;">
+                            <span style="color: #D37B42; font-family: monospace; font-size: 10px; letter-spacing: 0.1em; font-weight: bold;">EM_ESTOQUE</span>
+                            <svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: rgba(255,255,255,0.2); transition: color 0.5s ease;"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
                         </div>
                     </div>
                 </div>
 
+                <!-- Produto 3 -->
                 <div class="product-card" onclick="window.location.href='produto-motosserra.html'">
                     <div style="width: 100%; height: 220px; overflow: hidden; flex-shrink: 0; position: relative;">
                         <img src="produtos/Motosserra a bateria com sabre de 6 polegadas Tensão da bateria 20V.png" alt="Motosserra a bateria 20V" class="product-image" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.16,1,0.3,1);">
                     </div>
                     <div style="padding: 32px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
                         <div>
-                            <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 0.05em; color: #F8F8F8; margin-bottom: 8px; line-height: 0.92;">LINHA PORTÁTIL A BATERIA</h3>
+                            <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.05em; color: #F8F8F8; margin-bottom: 8px; line-height: 1.1;">LINHA PORTÁTIL A BATERIA</h3>
                             <p style="color: rgba(255,255,255,0.4); font-size: 13px; font-weight: 300; line-height: 1.7; margin-bottom: 20px;">Mobilidade total com corte preciso para trabalhos rápidos e eficientes.</p>
                         </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span style="color: #D37B42; font-family: monospace; font-size: 11px; letter-spacing: 0.1em; font-weight: bold;">PRONTO_ENVIO</span>
-                            <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: rgba(255,255,255,0.2); transition: color 0.5s ease;"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 0.5px solid rgba(255,255,255,0.06); padding-top: 16px;">
+                            <span style="color: #D37B42; font-family: monospace; font-size: 10px; letter-spacing: 0.1em; font-weight: bold;">PRONTO_ENVIO</span>
+                            <svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: rgba(255,255,255,0.2); transition: color 0.5s ease;"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
                         </div>
                     </div>
                 </div>
 
+                <!-- Produto 4 -->
                 <div class="product-card" onclick="window.location.href='produto-kit-fazendeiro.html'">
                     <div style="width: 100%; height: 220px; overflow: hidden; flex-shrink: 0; position: relative;">
                         <img src="produtos/O kit perfeito para você fazendeiro.png" alt="Kit Completo para Fazendeiro" class="product-image" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.16,1,0.3,1);">
                     </div>
                     <div style="padding: 32px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
                         <div>
-                            <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 0.05em; color: #F8F8F8; margin-bottom: 8px; line-height: 0.92;">KITS COMPLETOS PARA CAMPO</h3>
+                            <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.05em; color: #F8F8F8; margin-bottom: 8px; line-height: 1.1;">KITS COMPLETOS PARA CAMPO</h3>
                             <p style="color: rgba(255,255,255,0.4); font-size: 13px; font-weight: 300; line-height: 1.7; margin-bottom: 20px;">Soluções práticas e versáteis para o dia a dia no ambiente rural.</p>
                         </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span style="color: #D37B42; font-family: monospace; font-size: 11px; letter-spacing: 0.1em; font-weight: bold;">LINHA_PREMIUM</span>
-                            <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: rgba(255,255,255,0.2); transition: color 0.5s ease;"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 0.5px solid rgba(255,255,255,0.06); padding-top: 16px;">
+                            <span style="color: #D37B42; font-family: monospace; font-size: 10px; letter-spacing: 0.1em; font-weight: bold;">LINHA_PREMIUM</span>
+                            <svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: rgba(255,255,255,0.2); transition: color 0.5s ease;"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
                         </div>
                     </div>
                 </div>
 
+                <!-- Produto 5 -->
                 <div class="product-card" onclick="window.location.href='produto-soprador.html'">
                     <div style="width: 100%; height: 220px; overflow: hidden; flex-shrink: 0; position: relative;">
                         <img src="produtos/soprador de folhas.png" alt="Soprador de Folhas Branco 2,3L" class="product-image" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.16,1,0.3,1);">
                     </div>
                     <div style="padding: 32px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
                         <div>
-                            <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 0.05em; color: #F8F8F8; margin-bottom: 8px; line-height: 0.92;">EQUIPAMENTOS DE LIMPEZA EXTERNA</h3>
+                            <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.05em; color: #F8F8F8; margin-bottom: 8px; line-height: 1.1;">LIMPEZA EXTERNA</h3>
                             <p style="color: rgba(255,255,255,0.4); font-size: 13px; font-weight: 300; line-height: 1.7; margin-bottom: 20px;">Alta capacidade de sopro para limpeza rápida de folhas e resíduos.</p>
                         </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span style="color: #D37B42; font-family: monospace; font-size: 11px; letter-spacing: 0.1em; font-weight: bold;">EM_ESTOQUE</span>
-                            <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: rgba(255,255,255,0.2); transition: color 0.5s ease;"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 0.5px solid rgba(255,255,255,0.06); padding-top: 16px;">
+                            <span style="color: #D37B42; font-family: monospace; font-size: 10px; letter-spacing: 0.1em; font-weight: bold;">EM_ESTOQUE</span>
+                            <svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: rgba(255,255,255,0.2); transition: color 0.5s ease;"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
                         </div>
                     </div>
                 </div>
 
+                <!-- Produto 6 -->
                 <div class="product-card" onclick="window.location.href='produto-motosserra-vulcan.html'">
                     <div style="width: 100%; height: 220px; overflow: hidden; flex-shrink: 0; position: relative;">
                         <img src="produtos/motosserra de 25cc da Vulcan.png" alt="Motosserra Vulcan 25cc" class="product-image" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.16,1,0.3,1);">
                     </div>
                     <div style="padding: 32px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
                         <div>
-                            <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 0.05em; color: #F8F8F8; margin-bottom: 8px; line-height: 0.92;">MOTOSSERRA VULCAN 26CC</h3>
-                            <p style="color: rgba(255,255,255,0.4); font-size: 13px; font-weight: 300; line-height: 1.7; margin-bottom: 20px;">Motor a gasolina 2 tempos com sabre de 12 polegadas. Força e agilidade para trabalhos pesados e cortes precisos.</p>
+                            <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.05em; color: #F8F8F8; margin-bottom: 8px; line-height: 1.1;">MOTOSSERRA VULCAN 26CC</h3>
+                            <p style="color: rgba(255,255,255,0.4); font-size: 13px; font-weight: 300; line-height: 1.7; margin-bottom: 20px;">Motor a gasolina 2 tempos com sabre de 12 polegadas. Força e agilidade.</p>
                         </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span style="color: #D37B42; font-family: monospace; font-size: 11px; letter-spacing: 0.1em; font-weight: bold;">LINHA_FLORESTAL</span>
-                            <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: rgba(255,255,255,0.2); transition: color 0.5s ease;"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 0.5px solid rgba(255,255,255,0.06); padding-top: 16px;">
+                            <span style="color: #D37B42; font-family: monospace; font-size: 10px; letter-spacing: 0.1em; font-weight: bold;">LINHA_FLORESTAL</span>
+                            <svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: rgba(255,255,255,0.2); transition: color 0.5s ease;"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
                         </div>
                     </div>
                 </div>
@@ -553,6 +569,7 @@
             <span class="brand-item">DANFOSS</span><div class="brand-dot"></div>
             <span class="brand-item">EATON</span><div class="brand-dot"></div>
             <span class="brand-item">HYDRALMEC</span><div class="brand-dot"></div>
+            <!-- Duplicados para o loop infinito -->
             <span class="brand-item">SIEMENS</span><div class="brand-dot"></div>
             <span class="brand-item">WEG</span><div class="brand-dot"></div>
             <span class="brand-item">BOSCH REXROTH</span><div class="brand-dot"></div>
@@ -576,10 +593,10 @@
                     <a href="#contato" class="cta-btn reveal reveal-delay-3 hide-on-mobile">Solicitar diagnóstico</a>
                 </div>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;">
-                    <div style="background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.07);padding:40px 32px;" class="reveal"><div class="stat-num">+<span>18</span></div><div style="font-size:12px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-top:8px;">Anos de mercado</div></div>
-                    <div style="background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.07);padding:40px 32px;" class="reveal reveal-delay-1"><div class="stat-num"><span>98</span>%</div><div style="font-size:12px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-top:8px;">Uptime garantido</div></div>
-                    <div style="background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.07);padding:40px 32px;" class="reveal reveal-delay-2"><div class="stat-num">+<span>2.4</span><span style="font-size:clamp(28px,4vw,48px);">k</span></div><div style="font-size:12px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-top:8px;">Equipamentos revisados</div></div>
-                    <div style="background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.07);padding:40px 32px;" class="reveal reveal-delay-3"><div class="stat-num"><span>4</span>h</div><div style="font-size:12px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-top:8px;">Tempo médio de resposta</div></div>
+                    <div style="background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.07);padding:40px 32px;" class="reveal"><div class="stat-num">+<span>18</span></div><div style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-top:8px;">Anos de mercado</div></div>
+                    <div style="background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.07);padding:40px 32px;" class="reveal reveal-delay-1"><div class="stat-num"><span>98</span>%</div><div style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-top:8px;">Uptime garantido</div></div>
+                    <div style="background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.07);padding:40px 32px;" class="reveal reveal-delay-2"><div class="stat-num">+<span>2.4</span><span style="font-size:clamp(28px,4vw,48px);">k</span></div><div style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-top:8px;">Equipamentos revisados</div></div>
+                    <div style="background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.07);padding:40px 32px;" class="reveal reveal-delay-3"><div class="stat-num"><span>4</span>h</div><div style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-top:8px;">Tempo médio de resposta</div></div>
                 </div>
             </div>
         </div>
@@ -604,11 +621,11 @@
                     <p class="section-body reveal reveal-delay-2">Da manutenção preventiva ao retrofit completo — cobertura técnica total para sua planta industrial.</p>
                 </div>
                 <div>
-                    <div class="service-item reveal"><span class="service-num">01</span><div><div class="service-name">MANUTENÇÃO PREVENTIVA</div><div class="service-desc">Planos periódicos que eliminam falhas antes que ocorram. Redução comprovada de custos operacionais e extensão da vida útil dos ativos.</div></div><svg class="service-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></div>
-                    <div class="service-item reveal reveal-delay-1"><span class="service-num">02</span><div><div class="service-name">DIAGNÓSTICO AVANÇADO</div><div class="service-desc">Análise de vibração, termografia e ultrassom para identificar falhas ocultas com precisão cirúrgica, sem necessidade de parar a produção.</div></div><svg class="service-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></div>
-                    <div class="service-item reveal reveal-delay-2"><span class="service-num">03</span><div><div class="service-name">REFORMA E RETROFIT</div><div class="service-desc">Modernização de equipamentos legados com tecnologia atual. Desempenho de máquina nova com uma fração do custo de reposição.</div></div><svg class="service-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></div>
-                    <div class="service-item reveal reveal-delay-3"><span class="service-num">04</span><div><div class="service-name">SUPORTE DE EMERGÊNCIA</div><div class="service-desc">Equipe técnica disponível 24 horas por dia, 7 dias por semana. Atendimento em campo em até 4 horas para clientes com contrato ativo.</div></div><svg class="service-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></div>
-                    <div class="service-item reveal reveal-delay-4"><span class="service-num">05</span><div><div class="service-name">TREINAMENTO TÉCNICO</div><div class="service-desc">Capacitação da sua equipe interna para operação segura e manutenção de primeiro nível, reduzindo dependência externa e aumentando autonomia operacional.</div></div><svg class="service-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></div>
+                    <div class="service-item reveal"><span class="service-num">01</span><div><div class="service-name">MANUTENÇÃO PREVENTIVA</div><div class="service-desc">Planos periódicos que eliminam falhas antes que ocorram. Redução comprovada de custos operacionais.</div></div><svg class="service-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></div>
+                    <div class="service-item reveal reveal-delay-1"><span class="service-num">02</span><div><div class="service-name">DIAGNÓSTICO AVANÇADO</div><div class="service-desc">Análise de vibração e termografia para identificar falhas ocultas com precisão cirúrgica.</div></div><svg class="service-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></div>
+                    <div class="service-item reveal reveal-delay-2"><span class="service-num">03</span><div><div class="service-name">REFORMA E RETROFIT</div><div class="service-desc">Modernização de equipamentos legados com tecnologia atual. Desempenho de máquina nova.</div></div><svg class="service-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></div>
+                    <div class="service-item reveal reveal-delay-3"><span class="service-num">04</span><div><div class="service-name">SUPORTE DE EMERGÊNCIA</div><div class="service-desc">Equipe técnica disponível 24/7. Atendimento em campo em até 4 horas para contratados.</div></div><svg class="service-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></div>
+                    <div class="service-item reveal reveal-delay-4"><span class="service-num">05</span><div><div class="service-name">TREINAMENTO TÉCNICO</div><div class="service-desc">Capacitação da sua equipe interna para operação segura e manutenção de primeiro nível.</div></div><svg class="service-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></div>
                 </div>
             </div>
         </div>
@@ -634,7 +651,7 @@
                         <div class="process-icon-wrap"><div class="process-dot"></div></div>
                         <div>
                             <div class="process-title">CONTATO</div>
-                            <p class="process-desc">Você nos aciona por telefone, WhatsApp ou formulário.</p>
+                            <p class="process-desc">Acionamento por telefone, WhatsApp ou formulário.</p>
                         </div>
                     </div>
                     
@@ -642,7 +659,7 @@
                         <div class="process-icon-wrap"><div class="process-dot"></div></div>
                         <div>
                             <div class="process-title">DIAGNÓSTICO</div>
-                            <p class="process-desc">Técnico especializado avalia o equipamento pessoalmente.</p>
+                            <p class="process-desc">Avaliação técnica presencial e especializada.</p>
                         </div>
                     </div>
 
@@ -658,7 +675,7 @@
                         <div class="process-icon-wrap"><div class="process-dot"></div></div>
                         <div>
                             <div class="process-title">EXECUÇÃO</div>
-                            <p class="process-desc">Serviço executado com componentes certificados.</p>
+                            <p class="process-desc">Serviço com componentes certificados e rigor técnico.</p>
                         </div>
                     </div>
 
@@ -679,9 +696,9 @@
         <div style="max-width:1200px;margin:0 auto;">
             <div style="text-align:center;margin-bottom:64px;"><span class="section-label reveal">O que dizem nossos clientes</span><h2 class="section-title reveal reveal-delay-1">Confiança construída<br><span style="color:#D37B42;">na prática</span></h2></div>
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;">
-                <div class="testimonial-card reveal"><div class="stars">★★★★★</div><p class="testimonial-quote">"Tínhamos uma prensa parada há três dias e ninguém conseguia diagnosticar. A Stillus enviou um técnico em menos de quatro horas e o equipamento voltou a operar no mesmo dia."</p><div class="testimonial-author">Ricardo Fonseca</div><div class="testimonial-role">Gerente de Manutenção · Metalúrgica Triângulo</div></div>
-                <div class="testimonial-card reveal reveal-delay-1"><div class="stars">★★★★★</div><p class="testimonial-quote">"O contrato de manutenção preventiva reduziu nossas paradas não planejadas em 70%. O ROI foi evidente logo no primeiro semestre de parceria."</p><div class="testimonial-author">Fernanda Luz</div><div class="testimonial-role">Diretora Industrial · Agro Cerrado S.A.</div></div>
-                <div class="testimonial-card reveal reveal-delay-2"><div class="stars">★★★★★</div><p class="testimonial-quote">"Retrofit completo de uma linha de embalagem de 2008. O custo foi 30% do que seria um equipamento novo e o desempenho está acima do esperado."</p><div class="testimonial-author">Paulo Magalhães</div><div class="testimonial-role">CEO · Indústria Mineira de Alimentos</div></div>
+                <div class="testimonial-card reveal"><div class="stars">★★★★★</div><p class="testimonial-quote">"Prensa parada há três dias. A Stillus enviou técnico em menos de 4h e o equipamento operou no mesmo dia."</p><div class="testimonial-author">Ricardo Fonseca</div><div class="testimonial-role">Metalúrgica Triângulo</div></div>
+                <div class="testimonial-card reveal reveal-delay-1"><div class="stars">★★★★★</div><p class="testimonial-quote">"Preventiva reduziu paradas não planejadas em 70%. ROI evidente logo no primeiro semestre."</p><div class="testimonial-author">Fernanda Luz</div><div class="testimonial-role">Agro Cerrado S.A.</div></div>
+                <div class="testimonial-card reveal reveal-delay-2"><div class="stars">★★★★★</div><p class="testimonial-quote">"Retrofit de linha de embalagem. Custo foi 30% de uma nova e desempenho está acima do esperado."</p><div class="testimonial-author">Paulo Magalhães</div><div class="testimonial-role">Indústria Mineira de Alimentos</div></div>
             </div>
         </div>
     </section>
@@ -695,11 +712,10 @@
                 <div style="margin-top:32px;" class="reveal reveal-delay-3"><a href="#contato" class="cta-btn-outline" style="display:inline-block;">Falar com especialista</a></div>
             </div>
             <div id="faq-list">
-                <div class="faq-item reveal"><button class="faq-trigger" onclick="toggleFaq(this)"><span class="faq-question">Qual o prazo de atendimento em caso de emergência?</span><span class="faq-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></span></button><div class="faq-body"><p class="faq-answer">Para clientes com contrato ativo, garantimos presença em campo em até 4 horas úteis a partir do acionamento. Para regiões próximas a Anápolis - GO, o tempo médio histórico é de 2,5 horas. Clientes sem contrato são atendidos conforme disponibilidade da equipe técnica.</p></div></div>
-                <div class="faq-item reveal reveal-delay-1"><button class="faq-trigger" onclick="toggleFaq(this)"><span class="faq-question">Vocês trabalham com equipamentos de qualquer fabricante?</span><span class="faq-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></span></button><div class="faq-body"><p class="faq-answer">Sim. Nossa equipe tem certificações para as principais marcas do mercado industrial: WEG, Siemens, ABB, Bosch Rexroth, Parker, SEW-Eurodrive, Schneider Electric, entre outras. Para equipamentos mais específicos, consulte nossa equipe para verificar disponibilidade.</p></div></div>
-                <div class="faq-item reveal reveal-delay-2"><button class="faq-trigger" onclick="toggleFaq(this)"><span class="faq-question">Como funciona o contrato de manutenção preventiva?</span><span class="faq-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></span></button><div class="faq-body"><p class="faq-answer">Fazemos um levantamento completo dos seus ativos, classificamos por criticidade e criamos um plano de manutenção com frequências definidas. O contrato inclui visitas periódicas, relatórios técnicos, prioridade de atendimento emergencial e desconto nos peças e kits de reparo.</p></div></div>
-                <div class="faq-item reveal reveal-delay-3"><button class="faq-trigger" onclick="toggleFaq(this)"><span class="faq-question">Os componentes utilizados são originais?</span><span class="faq-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></span></button><div class="faq-body"><p class="faq-answer">Utilizamos exclusivamente componentes originais ou equivalentes certificados, com rastreabilidade de origem. Nunca utilizamos peças genéricas sem certificação. Toda reposição é documentada no relatório técnico do serviço e acompanhada de nota fiscal.</p></div></div>
-                <div class="faq-item reveal reveal-delay-4"><button class="faq-trigger" onclick="toggleFaq(this)"><span class="faq-question">Qual é a área de atuação da Stillus?</span><span class="faq-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></span></button><div class="faq-body"><p class="faq-answer">Nossa base é em Anápolis - GO, com cobertura em todo o Triângulo Mineiro, Alto Paranaíba e parte do interior de Goiás e São Paulo. Para projetos de grande porte, atendemos em âmbito nacional mediante avaliação e proposta específica.</p></div></div>
+                <div class="faq-item reveal"><button class="faq-trigger" onclick="toggleFaq(this)"><span class="faq-question">Qual o prazo de atendimento em caso de emergência?</span><span class="faq-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></span></button><div class="faq-body"><p class="faq-answer">Para contratados, garantimos presença em campo em até 4 horas úteis. Região de Anápolis tem média histórica de 2,5h.</p></div></div>
+                <div class="faq-item reveal reveal-delay-1"><button class="faq-trigger" onclick="toggleFaq(this)"><span class="faq-question">Vocês trabalham com equipamentos de qualquer fabricante?</span><span class="faq-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></span></button><div class="faq-body"><p class="faq-answer">Sim. Temos certificações para marcas líderes: WEG, Siemens, ABB, Bosch Rexroth, Parker, SEW, Schneider, etc.</p></div></div>
+                <div class="faq-item reveal reveal-delay-2"><button class="faq-trigger" onclick="toggleFaq(this)"><span class="faq-question">Como funciona o contrato de manutenção preventiva?</span><span class="faq-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></span></button><div class="faq-body"><p class="faq-answer">Levantamento de ativos, classificação de criticidade e plano com frequências definidas. Inclui relatórios e prioridade emergencial.</p></div></div>
+                <div class="faq-item reveal reveal-delay-3"><button class="faq-trigger" onclick="toggleFaq(this)"><span class="faq-question">Os componentes utilizados são originais?</span><span class="faq-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></span></button><div class="faq-body"><p class="faq-answer">Utilizamos exclusivamente componentes originais ou equivalentes certificados, com rastreabilidade total.</p></div></div>
             </div>
         </div>
     </section>
@@ -709,16 +725,16 @@
             <div>
                 <span class="section-label reveal">Fale conosco</span>
                 <h2 class="section-title reveal reveal-delay-1" style="margin-bottom:24px;">Vamos resolver<br><span style="color:#D37B42;">seu problema.</span></h2>
-                <p class="section-body reveal reveal-delay-2" style="margin-bottom:48px;">Descreva o equipamento e a situação. Nossa equipe técnica analisa e retorna com diagnóstico inicial em até 2 horas úteis.</p>
+                <p class="section-body reveal reveal-delay-2" style="margin-bottom:48px;">Descreva o equipamento e a situação. Retorno com diagnóstico inicial em até 2 horas úteis.</p>
                 <div style="display:flex;flex-direction:column;gap:24px;" class="reveal reveal-delay-3">
-                    <div style="display:flex;align-items:center;gap:16px;"><div style="width:40px;height:40px;border-radius:50%;border:0.5px solid rgba(211,123,66,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D37B42" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></div><div><div style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:3px;">Telefone</div><div style="font-size:15px;color:rgba(255,255,255,0.75);">(62) 98108-5787</div></div></div>
-                    <div style="display:flex;align-items:center;gap:16px;"><div style="width:40px;height:40px;border-radius:50%;border:0.5px solid rgba(211,123,66,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D37B42" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></div><div><div style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:3px;">E-mail</div><div style="font-size:15px;color:rgba(255,255,255,0.75);">contato@stillusmulti.com.br</div></div></div>
-                    <div style="display:flex;align-items:center;gap:16px;"><div style="width:40px;height:40px;border-radius:50%;border:0.5px solid rgba(211,123,66,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D37B42" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></div><div><div style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:3px;">Endereço</div><div style="font-size:15px;color:rgba(255,255,255,0.75);">Em frente ao Estádio Jonas Duarte - Av. Brasil Sul, 2168 - Loja 02 - Jardim Goncalves, Anápolis - GO, 75123-390</div></div></div>
+                    <div style="display:flex;align-items:center;gap:16px;"><div style="width:40px;height:40px;border-radius:50%;border:0.5px solid rgba(211,123,66,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D37B42" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></div><div><div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:3px;">Telefone</div><div style="font-size:15px;color:rgba(255,255,255,0.75);">(62) 98108-5787</div></div></div>
+                    <div style="display:flex;align-items:center;gap:16px;"><div style="width:40px;height:40px;border-radius:50%;border:0.5px solid rgba(211,123,66,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D37B42" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></div><div><div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:3px;">E-mail</div><div style="font-size:15px;color:rgba(255,255,255,0.75);">contato@stillusmulti.com.br</div></div></div>
+                    <div style="display:flex;align-items:center;gap:16px;"><div style="width:40px;height:40px;border-radius:50%;border:0.5px solid rgba(211,123,66,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D37B42" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></div><div><div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:3px;">Endereço</div><div style="font-size:14px;color:rgba(255,255,255,0.75);line-height:1.6;">Av. Brasil Sul, 2168 - Loja 02<br>Anápolis - GO, 75123-390</div></div></div>
                 </div>
                 <div style="margin-top:40px;display:flex;gap:12px;" class="reveal reveal-delay-4">
-                    <a href="#" class="social-icon" aria-label="Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
-                    <a href="#" class="social-icon" aria-label="LinkedIn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
-                    <a href="https://wa.me/5562981085787" target="_blank" class="social-icon" aria-label="WhatsApp"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg></a>
+                    <a href="#" class="social-icon" aria-label="Instagram"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+                    <a href="#" class="social-icon" aria-label="LinkedIn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
+                    <a href="https://wa.me/5562981085787" target="_blank" class="social-icon" aria-label="WhatsApp"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg></a>
                 </div>
             </div>
             <div class="reveal reveal-delay-1" style="background:rgba(255,255,255,0.02);border:0.5px solid rgba(255,255,255,0.08);border-radius:24px;padding:40px;">
@@ -728,7 +744,7 @@
                 </div>
                 <div style="margin-bottom:20px;"><label class="contact-form-label">Telefone / WhatsApp</label><input type="tel" class="contact-form-input" placeholder="(00) 0 0000-0000"></div>
                 <div style="margin-bottom:20px;"><label class="contact-form-label">Equipamento</label><input type="text" class="contact-form-input" placeholder="Ex.: Motor WEG 15cv, Prensa..."></div>
-                <div style="margin-bottom:28px;"><label class="contact-form-label">Descreva o problema</label><textarea class="contact-form-input" placeholder="Descreva os sintomas, tempo de parada..."></textarea></div>
+                <div style="margin-bottom:28px;"><label class="contact-form-label">Descreva o problema</label><textarea class="contact-form-input" placeholder="Sintomas, tempo de parada..."></textarea></div>
                 <button onclick="handleFormSubmit(this)" class="cta-btn" style="width:100%;border-radius:12px;">Enviar mensagem</button>
             </div>
         </div>
@@ -739,66 +755,67 @@
             <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px;" class="footer-grid">
                 <div>
                     <div class="footer-logo" style="margin-bottom:16px;">Stillus <span>Multimáquinas</span></div>
-                    <p style="font-size:13px;color:rgba(255,255,255,0.25);font-weight:300;line-height:1.7;max-width:280px;margin-bottom:24px;">Engenharia industrial de alta performance para manter sua operação sempre no limite máximo de produtividade.</p>
+                    <p style="font-size:13px;color:rgba(255,255,255,0.25);font-weight:300;line-height:1.7;max-width:280px;">Engenharia industrial de alta performance.</p>
                 </div>
                 <div>
                     <div class="footer-col-title">Empresa</div>
                     <a href="#sobre" class="footer-link">Sobre nós</a>
                     <a href="#servicos" class="footer-link">Serviços</a>
                     <a href="#produtos" class="footer-link">Produtos</a>
-                    <a href="#contato" class="footer-link hide-on-mobile">Contato</a>
                 </div>
                 <div>
                     <div class="footer-col-title">Serviços</div>
-                    <a href="#servicos" class="footer-link">Manutenção preventiva</a>
-                    <a href="#servicos" class="footer-link">Diagnóstico avançado</a>
-                    <a href="#servicos" class="footer-link">Reforma e retrofit</a>
-                    <a href="#servicos" class="footer-link">Suporte emergencial</a>
+                    <a href="#servicos" class="footer-link">Manutenção</a>
+                    <a href="#servicos" class="footer-link">Diagnóstico</a>
+                    <a href="#servicos" class="footer-link">Retrofit</a>
                 </div>
                 <div>
                     <div class="footer-col-title">Contato</div>
                     <a href="tel:+5562981085787" class="footer-link">(62) 98108-5787</a>
                     <a href="mailto:contato@stillusmulti.com.br" class="footer-link">contato@stillusmulti.com.br</a>
-                    <span class="footer-link" style="cursor:default;">Anápolis - GO</span>
                 </div>
             </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+            <div style="border-top:0.5px solid rgba(255,255,255,0.06);padding-top:24px;text-align:center;">
                 <p style="font-size:11px;color:rgba(255,255,255,0.15);">© 2026 Stillus Multimáquinas. Todos os direitos reservados.</p>
             </div>
         </div>
     </footer>
 
+    <!-- Botão Flutuante e Janela do Chat -->
     <div class="whatsapp-float" onclick="toggleChat()">
         <img src="assetschat/whatsapp-apps-logo-3d-icon.png" alt="Chat Assistente IA">
     </div>
 
     <div class="chat-tooltip" id="chat-tooltip" onclick="toggleChat()">
         <span class="status-dot"></span>
-        <span>Assistência IA Online</span>
+        <span>Fale com a engenharia</span>
         <svg class="tooltip-close" onclick="closeChatTooltip(event)" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
     </div>
 
     <div class="chat-container" id="chatbot">
         <div class="chat-header">
+            <!-- FOTO DA ATENDENTE ADICIONADA AQUI -->
+            <img src="close-up-portrait-smiling-short-haired-business-woman-white-t-shirt-posing-with-arms-crossed-white-office.jpg" alt="Atendente Fernanda" class="chat-avatar">
+            
             <div class="chat-header-info">
-                <h4>Assistente Virtual Stillus</h4>
-                <p><span class="status-dot"></span> Online agora</p>
+                <!-- NOME DA ATENDENTE DEFINIDO COMO FERNANDA -->
+                <h4>Fernanda</h4>
+                <p><span class="status-dot"></span> Engenharia Stillus</p>
             </div>
             <button class="premium-close-btn" onclick="toggleChat()">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
         </div>
-        <div class="chat-messages" id="chat-messages">
-            <!-- As mensagens serão inseridas via JavaScript -->
-        </div>
+        <div class="chat-messages" id="chat-messages"></div>
         <div class="chat-input-area">
             <input type="text" id="chat-input" placeholder="Digite sua mensagem..." onkeypress="handleChatEnter(event)">
             <button class="chat-send-btn" onclick="sendChatMessage()">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
             </button>
         </div>
     </div>
 
+    <!-- Scripts Originais Mantidos -->
     <script>
     (() => {
         const BASE_URL    = 'heroframe/ezgif-frame-';
@@ -982,7 +999,6 @@
             const nav = document.getElementById('main-nav');
             if (window.scrollY > 60) nav.classList.add('scrolled'); else nav.classList.remove('scrolled');
 
-            // ── LÓGICA DO INDICADOR DE SCROLL ──
             const scrollInd = document.getElementById('scroll-indicator');
             if (scrollInd) {
                 if (window.scrollY > 50) scrollInd.classList.add('hidden');
@@ -1122,7 +1138,7 @@
         }, 1400);
     }
     
-    // ── MÁQUINA DE ESTADOS DO CHATBOT (LÓGICA CENTER NET ADAPTADA E APRIMORADA) ──
+    // ── LÓGICA DO CHATBOT MANTIDA ──
     const IS_MOBILE_CHAT = /iPhone|Android|iPad/i.test(navigator.userAgent) || window.innerWidth <= 768;
     
     let chatOpen = false;
@@ -1141,8 +1157,7 @@
                 if (!IS_MOBILE_CHAT) chatInput.focus();
             }, 300);
             
-            if (chatMessages.children.length <= 1) {
-                chatMessages.innerHTML = '';
+            if (chatMessages.children.length <= 0) {
                 apresentarBot();
             }
         }
@@ -1208,10 +1223,11 @@
 
     function apresentarBot() {
         botTyping(() => {
-            addMessage(`${getSaudacao()}! Sou a assistente de engenharia da Stillus. No que posso ajudar hoje?`, 'bot');
+            // SAUDAÇÃO INICIAL USANDO O NOME DEFINIDO (FERNANDA)
+            addMessage(`${getSaudacao()}! Sou a Fernanda, especialista da Stillus Multimáquinas. Como posso te ajudar hoje?`, 'bot');
             addOptions([
-                { text: "📦 Quero saber sobre produtos e ofertas", val: "produtos" },
-                { text: "🛠️ Quero assistência técnica", val: "manutencao" }
+                { text: "📦 Orçamento de Produtos", val: "produtos" },
+                { text: "🛠️ Agendar Manutenção / Assistência", val: "manutencao" }
             ]);
         });
     }
@@ -1222,25 +1238,22 @@
         if (opt.val === 'produtos') {
             leadData.interesse = "Produtos";
             botTyping(() => {
-                addMessage("Perfeito! Temos máquinas de alta performance. Qual linha você quer?", "bot");
+                addMessage("Ótimo! Temos equipamentos de engenharia de elite. Qual linha você busca?", "bot");
                 addOptions([
-                    { text: "🌱 Cortador de Grama Toyama", val: "Cortador de Grama Toyama" },
-                    { text: "💧 Lavadora Alta Pressão", val: "Lavadora Alta Pressão" },
-                    { text: "🔋 Motosserra a Bateria", val: "Motosserra a Bateria" },
-                    { text: "🌾 Kits para Campo", val: "Kits para Campo" },
-                    { text: "💨 Soprador de Folhas", val: "Soprador de Folhas" },
-                    { text: "🪓 Motosserra Vulcan", val: "Motosserra Vulcan" }
+                    { text: "🌱 Jardim Profissional", val: "Linha Jardim" },
+                    { text: "💧 Alta Pressão", val: "Lavadoras" },
+                    { text: "🔋 Bateria 20V", val: "Linha Bateria" },
+                    { text: "🪓 Florestal / Vulcan", val: "Motoserras" }
                 ]);
             });
         } else if (opt.val === 'manutencao') {
-            leadData.interesse = "Assistência Técnica";
+            leadData.interesse = "Assistência";
             botTyping(() => {
-                addMessage("Entendido. Qual aparelho precisa de reparo?", "bot");
+                addMessage("Entendido. Somos especialistas em multimáquinas. Qual equipamento precisa de suporte?", "bot");
                 addOptions([
-                    { text: "⚙️ Motores Industriais", val: "Motores Industriais" },
-                    { text: "🔧 Sistemas Hidráulicos / Prensas", val: "Sistemas Hidráulicos e Prensas" },
-                    { text: "🪓 Linha Florestal e Jardim", val: "Linha Florestal e Jardim" },
-                    { text: "❓ Outro equipamento", val: "Outro Equipamento" }
+                    { text: "⚙️ Motor Industrial / Hidráulica", val: "Industrial" },
+                    { text: "🌿 Equipamento de Jardim/Campo", val: "Jardim/Campo" },
+                    { text: "❓ Outro", val: "Outro" }
                 ]);
             });
         } else {
@@ -1251,13 +1264,7 @@
 
     function pedirNome() {
         botTyping(() => {
-            let feedback = "";
-            if(leadData.interesse === "Produtos") {
-                feedback = `Excelente escolha! A linha de <b>${leadData.detalhe}</b> traz muita eficiência para a operação.`;
-            } else {
-                feedback = `Perfeito! Nossos técnicos resolvem problemas em <b>${leadData.detalhe}</b> rapidamente.`;
-            }
-            addMessage(feedback + "<br><br>Para eu te passar as informações, <b>qual o seu nome?</b>", "bot");
+            addMessage("Perfeito. Para te passar as informações corretas e conectar com o técnico especialista, <b>qual o seu nome?</b>", "bot");
             chatInput.placeholder = "Digite seu nome...";
             chatInput.focus();
         });
@@ -1273,22 +1280,23 @@
         if (!leadData.nome) {
             leadData.nome = text;
             botTyping(() => {
-                addMessage(`Muito prazer, ${leadData.nome}! Em qual <b>cidade</b> você se encontra?`, "bot");
-                chatInput.placeholder = "Sua cidade...";
+                addMessage(`Prazer, ${leadData.nome}! Em qual <b>cidade e estado</b> você está?`, "bot");
+                chatInput.placeholder = "Ex: Anápolis - GO...";
                 chatInput.focus();
             });
         } else if (!leadData.cidade) {
             leadData.cidade = text;
             botTyping(() => {
-                addMessage(`Certo. E por fim, me informe seu <b>WhatsApp com DDD</b> para enviarmos para o especialista de ${leadData.cidade}:`, "bot");
+                addMessage(`Certo, ${leadData.cidade}. Me informe seu <b>WhatsApp com DDD</b> para enviarmos o orçamento/suporte:`, "bot");
                 chatInput.placeholder = "(00) 00000-0000";
                 chatInput.focus();
             });
         } else {
             const telefone = text;
             botTyping(() => {
-                addMessage("Obrigada! Registrando suas informações e redirecionando para o WhatsApp... 🚀", "bot");
+                addMessage("Obrigada! Estamos transferindo para o especialista no WhatsApp agora... 🚀", "bot");
                 
+                // URL do Google Apps Script (mantenha a sua original)
                 const scriptUrl = "https://script.google.com/macros/s/AKfycbySgNTFwzT_2TmAY1YN0dnl71sGSxzNaHbb14EqGsYxUK6aSO_BaeyyG8YGqEgmScmNhg/exec";
                 
                 const payload = {
@@ -1304,12 +1312,9 @@
                     mode: "no-cors",
                     headers: { "Content-Type": "text/plain;charset=utf-8" }, 
                     body: JSON.stringify(payload)
-                }).catch(err => console.error("Erro na planilha:", err));
+                }).catch(err => console.error("Erro planilha:", err));
                 
-                if(typeof fbq === 'function') fbq('track', 'Lead');
-                if(typeof gtag === 'function') gtag('event', 'generate_lead', {'event_category': 'WhatsApp', 'event_label': 'Chatbot_Stillus'});
-                
-                const msgFinal = encodeURIComponent(`Olá, equipe Stillus! Aqui é ${leadData.nome}, da cidade de ${leadData.cidade}. Vim pelo site e tenho interesse em ${leadData.interesse} para: ${leadData.detalhe}. Meu contato é: ${telefone}`);
+                const msgFinal = encodeURIComponent(`Olá, Stillus! Sou ${leadData.nome}, de ${leadData.cidade}. Interesse em ${leadData.interesse} (${leadData.detalhe}). Aguardo retorno.`);
                 
                 setTimeout(() => { 
                     const waUrl = `https://wa.me/5562981085787?text=${msgFinal}`;
