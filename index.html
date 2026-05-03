@@ -390,11 +390,11 @@
 
             <div id="copy-1" class="hero-block" style="top:28%;">
                 <div class="h-display">
-                    <div><span class="word-wrap"><span class="hero-word">M&Aacute;QUINAS</span></span></div>
+                    <div><span class="word-wrap"><span class="hero-word">MÁQUINAS</span></span></div>
                     <div><span class="word-wrap"><span class="hero-word">PARADAS,</span></span></div>
                     <div><span class="word-wrap"><span class="hero-word animated-stroke">LUCRO ZERO.</span></span></div>
                 </div>
-                <p class="hero-sub side-line">A inatividade t&eacute;cnica &eacute; o maior dreno financeiro da sua opera&ccedil;&atilde;o.</p>
+                <p class="hero-sub side-line">A inatividade técnica é o maior dreno financeiro da sua operação.</p>
             </div>
 
             <div id="copy-2" class="hero-block" style="top:32%;">
@@ -402,19 +402,19 @@
                     <div><span class="word-wrap"><span class="hero-word">ENGENHARIA</span></span></div>
                     <div><span class="word-wrap"><span class="hero-word">DE</span></span> <span class="word-wrap"><span class="hero-word accent">ELITE.</span></span></div>
                 </div>
-                <p class="hero-sub side-line">Manuten&ccedil;&atilde;o especializada com diagn&oacute;stico avan&ccedil;ado e resposta imediata.</p>
+                <p class="hero-sub side-line">Manutenção especializada com diagnóstico avançado e resposta imediata.</p>
             </div>
 
             <div id="copy-3" class="hero-block" style="top:30%;">
                 <div class="h-display">
-                    <div><span class="word-wrap"><span class="hero-word">M&Aacute;XIMA</span></span></div>
-                    <div><span class="word-wrap"><span class="hero-word accent">EFICI&Ecirc;NCIA.</span></span></div>
+                    <div><span class="word-wrap"><span class="hero-word">MÁXIMA</span></span></div>
+                    <div><span class="word-wrap"><span class="hero-word accent">EFICIÊNCIA.</span></span></div>
                 </div>
                 <p class="hero-sub" style="margin-bottom:36px;opacity:0;transform:translateY(18px);transition:opacity 0.8s ease 0.35s,transform 0.8s ease 0.35s;font-size:clamp(13px,1.8vw,17px);color:rgba(255,255,255,0.85);font-weight:300;line-height:1.6;max-width:380px;">
-                    Equipamentos que n&atilde;o param. Produ&ccedil;&atilde;o que n&atilde;o cessa.
+                    Equipamentos que não param. Produção que não cessa.
                 </p>
                 <div class="hero-sub" style="opacity:0;transform:translateY(18px);transition:opacity 0.8s ease 0.5s,transform 0.8s ease 0.5s;display:flex;gap:16px;flex-wrap:wrap;">
-                    <a href="#produtos" class="cta-btn">Ver cat&aacute;logo</a>
+                    <a href="#produtos" class="cta-btn">Ver catálogo</a>
                     <a href="#contato" class="cta-btn-outline hide-on-mobile">Falar com especialista</a>
                 </div>
             </div>
@@ -789,7 +789,7 @@
             </button>
         </div>
         <div class="chat-messages" id="chat-messages">
-            <div class="msg-bubble msg-bot">Olá! Sou a assistente de engenharia da Stillus Multimáquinas. Como posso ajudar a maximizar a eficiência da sua operação hoje?</div>
+            <!-- As mensagens serão inseridas via JavaScript -->
         </div>
         <div class="chat-input-area">
             <input type="text" id="chat-input" placeholder="Digite sua mensagem..." onkeypress="handleChatEnter(event)">
@@ -861,7 +861,7 @@
         function render(fraction) {
             const prog  = Math.min(1, fraction / 0.9) * (FRAME_COUNT - 1);
             const base  = Math.floor(prog);
-            const t      = prog - base;
+            const t     = prog - base;
             const bmpA  = bitmaps[base];
             const bmpB  = bitmaps[Math.min(base + 1, FRAME_COUNT - 1)];
             if (!bmpA || !bmpB) return;
@@ -1122,22 +1122,29 @@
         }, 1400);
     }
     
-    // ── MÁQUINA DE ESTADOS DO CHATBOT (MULTIMENSAGENS E OPÇÕES INTERATIVAS) ──
+    // ── MÁQUINA DE ESTADOS DO CHATBOT (LÓGICA CENTER NET ADAPTADA) ──
     const IS_MOBILE_CHAT = /iPhone|Android|iPad/i.test(navigator.userAgent) || window.innerWidth <= 768;
     
-    let chatState = 'IDLE';
-    let userData = { product: '', name: '', city: '', phone: '' };
+    let chatOpen = false;
+    const chatMessages = document.getElementById('chat-messages');
+    const chatInput = document.getElementById('chat-input');
+    
+    let leadData = { nome: "", interesse: "", detalhe: "" };
 
     function toggleChat() {
         const chat = document.getElementById('chatbot');
         chat.classList.toggle('open');
+        chatOpen = chat.classList.contains('open');
         
-        if (chat.classList.contains('open')) {
+        if (chatOpen) {
             setTimeout(() => {
-                if (!IS_MOBILE_CHAT) {
-                    document.getElementById('chat-input').focus();
-                }
+                if (!IS_MOBILE_CHAT) chatInput.focus();
             }, 300);
+            
+            if (chatMessages.children.length <= 1) {
+                chatMessages.innerHTML = '';
+                apresentarBot();
+            }
         }
         closeChatTooltip(); 
     }
@@ -1145,223 +1152,164 @@
     function closeChatTooltip(e) {
         if (e) e.stopPropagation(); 
         const tooltip = document.getElementById('chat-tooltip');
-        if (tooltip) {
-            tooltip.classList.add('hidden');
-        }
+        if (tooltip) tooltip.classList.add('hidden');
     }
 
     function handleChatEnter(e) {
         if (e.key === 'Enter') sendChatMessage();
     }
 
-    function sendChatMessage() {
-        const input = document.getElementById('chat-input');
-        const text = input.value.trim();
-        if (!text) return;
-
-        appendMessage(text, 'user');
-        input.value = '';
-        
-        if (!IS_MOBILE_CHAT) {
-            input.focus();
-        }
-
-        const botData = generateBotResponse(text);
-        playBotResponses(botData);
+    function getSaudacao() {
+        const hora = new Date().getHours();
+        if (hora >= 5 && hora < 12) return "Bom dia";
+        if (hora >= 12 && hora < 18) return "Boa tarde";
+        return "Boa noite";
     }
 
-    function processUserClick(text) {
-        appendMessage(text, 'user');
-        const botData = generateBotResponse(text);
-        playBotResponses(botData);
+    function addMessage(text, type) {
+        const msg = document.createElement('div');
+        msg.className = type === 'bot' ? 'msg-bubble msg-bot' : 'msg-bubble msg-user';
+        msg.innerHTML = text;
+        chatMessages.appendChild(msg);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        return msg;
     }
 
-    function playBotResponses(botData) {
-        let messagesArray = [];
-        let optionsArray = null;
-
-        if (Array.isArray(botData)) {
-            messagesArray = botData;
-        } else if (typeof botData === 'object' && botData !== null) {
-            messagesArray = botData.messages;
-            optionsArray = botData.options;
-        } else {
-            messagesArray = [botData];
-        }
+    function addOptions(options) {
+        const container = document.createElement('div');
+        container.className = 'chat-options-container';
         
-        let i = 0;
-        
-        function sendNext() {
-            if (i >= messagesArray.length) {
-                if (optionsArray && optionsArray.length > 0) {
-                    appendOptions(optionsArray);
-                }
-                return;
-            }
-            
-            showTypingIndicator();
-            
-            // Calcula o delay para dar tempo de leitura para o usuário baseado no tamanho da última mensagem
-            let delay = 1000;
-            if (i > 0) {
-                const prevMsgLength = messagesArray[i - 1].length;
-                delay = Math.max(2000, prevMsgLength * 45); // Aumenta o tempo de leitura para as opções e mensagens
-            } else {
-                delay = 1000 + Math.random() * 500;
-            }
-
-            setTimeout(() => {
-                removeTypingIndicator();
-                appendMessage(messagesArray[i], 'bot');
-                i++;
-                
-                if (i < messagesArray.length || (optionsArray && optionsArray.length > 0)) {
-                    setTimeout(sendNext, 400);
-                }
-            }, delay);
-        }
-        
-        sendNext();
-    }
-
-    function appendMessage(text, sender) {
-        const chatBox = document.getElementById('chat-messages');
-        const div = document.createElement('div');
-        div.className = `msg-bubble msg-${sender}`;
-        div.textContent = text;
-        chatBox.appendChild(div);
-        
-        setTimeout(() => {
-            chatBox.scrollTop = chatBox.scrollHeight;
-        }, 50);
-    }
-
-    function appendOptions(options) {
-        const chatBox = document.getElementById('chat-messages');
-        const optionsDiv = document.createElement('div');
-        optionsDiv.className = 'chat-options-container';
-
         options.forEach(opt => {
             const btn = document.createElement('button');
-            btn.textContent = opt;
+            btn.innerText = opt.text;
             btn.className = 'chat-option-btn';
             btn.onclick = () => {
-                optionsDiv.remove();
-                processUserClick(opt);
+                container.remove();
+                handleUserChoice(opt);
             };
-            optionsDiv.appendChild(btn);
+            container.appendChild(btn);
         });
+        chatMessages.appendChild(container);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function botTyping(callback, delay = 1200) {
+        chatInput.disabled = true;
+        const typingId = 'typing-' + Date.now();
+        const typingHtml = '<div class="typing-indicator" id="' + typingId + '"><span></span><span></span><span></span></div>';
+        const msgDiv = addMessage(typingHtml, 'bot');
         
-        chatBox.appendChild(optionsDiv);
         setTimeout(() => {
-            chatBox.scrollTop = chatBox.scrollHeight;
-        }, 50);
+            msgDiv.remove();
+            chatInput.disabled = false;
+            callback();
+        }, delay);
     }
 
-    function showTypingIndicator() {
-        const chatBox = document.getElementById('chat-messages');
-        const div = document.createElement('div');
-        div.className = 'msg-bubble msg-bot typing-indicator-container';
-        div.id = 'typing-indicator';
-        div.innerHTML = '<div class="typing-indicator"><span></span><span></span><span></span></div>';
-        chatBox.appendChild(div);
-        chatBox.scrollTop = chatBox.scrollHeight;
+    function apresentarBot() {
+        botTyping(() => {
+            addMessage(`${getSaudacao()}! Sou a assistente de engenharia da Stillus. No que posso ajudar hoje?`, 'bot');
+            addOptions([
+                { text: "📦 Quero saber sobre produtos e ofertas", val: "produtos" },
+                { text: "🛠️ Quero assistência técnica", val: "manutencao" }
+            ]);
+        });
     }
 
-    function removeTypingIndicator() {
-        const indicator = document.getElementById('typing-indicator');
-        if (indicator) indicator.remove();
-    }
-
-    function generateBotResponse(msg) {
-        const lowerMsg = msg.toLowerCase();
+    function handleUserChoice(opt) {
+        addMessage(opt.text, 'user');
         
-        // Fluxo de Captura de Lead
-        if (chatState === 'AWAITING_PRODUCT_CHOICE') {
-            userData.product = msg;
-            chatState = 'AWAITING_NAME';
-            return `Excelente escolha. Para agilizarmos seu atendimento técnico focado nesse equipamento, preciso de alguns dados rápidos. Qual é o seu primeiro nome?`;
+        if (opt.val === 'produtos') {
+            leadData.interesse = "Produtos";
+            botTyping(() => {
+                addMessage("Perfeito! Temos máquinas de alta performance. Qual linha você quer?", "bot");
+                addOptions([
+                    { text: "🌱 Cortador de Grama Toyama", val: "Cortador de Grama Toyama" },
+                    { text: "💧 Lavadora Alta Pressão", val: "Lavadora Alta Pressão" },
+                    { text: "🔋 Motosserra a Bateria", val: "Motosserra a Bateria" },
+                    { text: "🌾 Kits para Campo", val: "Kits para Campo" },
+                    { text: "💨 Soprador de Folhas", val: "Soprador de Folhas" },
+                    { text: "🪓 Motosserra Vulcan", val: "Motosserra Vulcan" }
+                ]);
+            });
+        } else if (opt.val === 'manutencao') {
+            leadData.interesse = "Assistência Técnica";
+            botTyping(() => {
+                addMessage("Entendido. Qual aparelho precisa de reparo?", "bot");
+                addOptions([
+                    { text: "⚙️ Motores Industriais", val: "Motores Industriais" },
+                    { text: "🔧 Sistemas Hidráulicos / Prensas", val: "Sistemas Hidráulicos e Prensas" },
+                    { text: "🪓 Linha Florestal e Jardim", val: "Linha Florestal e Jardim" },
+                    { text: "❓ Outro equipamento", val: "Outro Equipamento" }
+                ]);
+            });
+        } else {
+            leadData.detalhe = opt.val;
+            pedirNome();
         }
-        if (chatState === 'AWAITING_NAME') {
-            userData.name = msg;
-            chatState = 'AWAITING_CITY';
-            return `Muito prazer, ${msg}! Para verificarmos a logística e o atendimento na sua região, em qual cidade você se encontra?`;
-        }
-        if (chatState === 'AWAITING_CITY') {
-            userData.city = msg;
-            chatState = 'AWAITING_PHONE';
-            return {
-                messages: [
-                    `Ótimo! Para finalizar seu cadastro e eu te enviar a cotação oficial, qual é o seu número de celular ou WhatsApp?`,
-                    `Caso esteja com pressa e queira atendimento imediato, clique no botão abaixo. Já temos um membro da equipe disponível para atendê-lo agora!`
-                ],
-                options: [
-                    "Falar com a equipe agora"
-                ]
-            };
-        }
-        if (chatState === 'AWAITING_PHONE') {
-            if (lowerMsg === 'falar com a equipe agora') {
-                chatState = 'FINISHED';
-                
-                const mensagem = `Olá, equipe Stillus! Me chamo ${userData.name}, sou de ${userData.city} e tenho interesse no equipamento: ${userData.product}. Podemos falar a respeito?`;
-                const linkWhatsApp = `https://wa.me/5562981085787?text=${encodeURIComponent(mensagem)}`;
+    }
 
-                setTimeout(() => {
-                    window.open(linkWhatsApp, '_blank');
-                }, 1500);
-                
-                return "Perfeito! Estou te redirecionando para o nosso WhatsApp. Nossa equipe já está pronta para te atender!";
+    function pedirNome() {
+        botTyping(() => {
+            let feedback = "";
+            if(leadData.interesse === "Produtos") {
+                feedback = `Excelente escolha! A linha de <b>${leadData.detalhe}</b> traz muita eficiência para a operação.`;
+            } else {
+                feedback = `Perfeito! Nossos técnicos resolvem problemas em <b>${leadData.detalhe}</b> rapidamente.`;
             }
-            userData.phone = msg;
-            chatState = 'FINISHED';
-            return `Tudo certo, ${userData.name}! Nossa equipe de engenharia avaliará sua solicitação para a cidade de ${userData.city} e entrará em contato em breve no número fornecido. Posso ajudar com mais alguma dúvida técnica no momento?`;
+            addMessage(feedback + "<br><br>Para eu te passar as informações, <b>qual o seu nome?</b>", "bot");
+            chatInput.placeholder = "Digite seu nome...";
+            chatInput.focus();
+        });
+    }
+
+    function sendChatMessage() {
+        const text = chatInput.value.trim();
+        if (!text) return;
+
+        addMessage(text, 'user');
+        chatInput.value = "";
+
+        if (!leadData.nome) {
+            leadData.nome = text;
+            botTyping(() => {
+                addMessage(`Prazer, ${leadData.nome}! Me informe seu <b>WhatsApp com DDD</b> para enviarmos para o especialista:`, "bot");
+                chatInput.placeholder = "(00) 00000-0000";
+                chatInput.focus();
+            });
+        } else {
+            const telefone = text;
+            botTyping(() => {
+                addMessage("Obrigada! Registrando suas informações e redirecionando para o WhatsApp... 🚀", "bot");
+                
+                const scriptUrl = "https://script.google.com/macros/s/AKfycbySgNTFwzT_2TmAY1YN0dnl71sGSxzNaHbb14EqGsYxUK6aSO_BaeyyG8YGqEgmScmNhg/exec";
+                
+                const payload = {
+                    nome: leadData.nome,
+                    telefone: telefone,
+                    cidade: leadData.interesse, 
+                    produto: leadData.detalhe,
+                    data: new Date().toLocaleString('pt-BR')
+                };
+
+                fetch(scriptUrl, {
+                    method: "POST",
+                    mode: "no-cors",
+                    headers: { "Content-Type": "text/plain;charset=utf-8" }, 
+                    body: JSON.stringify(payload)
+                }).catch(err => console.error("Erro na planilha:", err));
+                
+                if(typeof fbq === 'function') fbq('track', 'Lead');
+                if(typeof gtag === 'function') gtag('event', 'generate_lead', {'event_category': 'WhatsApp', 'event_label': 'Chatbot_Stillus'});
+                
+                const msgFinal = encodeURIComponent(`Olá, equipe Stillus! Aqui é ${leadData.nome}. Vim pelo site e tenho interesse em ${leadData.interesse} para: ${leadData.detalhe}. Meu contato é: ${telefone}`);
+                
+                setTimeout(() => { 
+                    window.open(`https://wa.me/5562981085787?text=${msgFinal}`, '_blank'); 
+                }, 1500);
+            });
         }
-
-        // Saudações
-        if (lowerMsg.match(/(bom dia|boa tarde|boa noite|olá|ola|oi)/)) {
-            let greeting = "Olá!";
-            if (lowerMsg.includes('bom dia')) greeting = "Bom dia!";
-            else if (lowerMsg.includes('boa tarde')) greeting = "Boa tarde!";
-            else if (lowerMsg.includes('boa noite')) greeting = "Boa noite!";
-
-            return `${greeting} Sou a Inteligência Artificial da Stillus Multimáquinas. Como posso ajudar a maximizar a eficiência da sua operação hoje?`;
-        } 
-
-        // Listagem de Produtos com Botões Interativos
-        if (lowerMsg.includes('orçamento') || lowerMsg.includes('valor') || lowerMsg.includes('preço') || lowerMsg.includes('produto') || lowerMsg.includes('quais') || lowerMsg.includes('vende') || lowerMsg.includes('catalogo')) {
-            chatState = 'AWAITING_PRODUCT_CHOICE';
-            return {
-                messages: [
-                    "Temos várias soluções de alta performance prontas para sua indústria.",
-                    "Por favor, selecione abaixo o equipamento que mais chama sua atenção:"
-                ],
-                options: [
-                    "Cortador de Grama Toyama TLT42-19A",
-                    "Lavadora 2100 PSI Tramontina",
-                    "Motosserra a bateria 20V",
-                    "Kits Completos para Campo",
-                    "Soprador de Folhas Branco 2,3L",
-                    "Motosserra Vulcan Gasolina 26cc"
-                ]
-            };
-        } 
-        
-        // Acionamento
-        if (lowerMsg.includes('emergência') || lowerMsg.includes('urgente') || lowerMsg.includes('parou') || lowerMsg.includes('parada')) {
-            return "Entendi a urgência. Para máquinas paradas, nosso acionamento técnico ocorre em até 4 horas (para clientes em contrato). Qual equipamento parou?";
-        } 
-        if (lowerMsg.includes('weg') || lowerMsg.includes('siemens') || lowerMsg.includes('motor')) {
-            return "Sim, somos especialistas e possuímos certificação para atuar com essas marcas industriais. Qual a anomalia técnica que o equipamento está apresentando?";
-        } 
-        if (lowerMsg.includes('preventiva') || lowerMsg.includes('contrato')) {
-            return "Nossos contratos de manutenção preventiva são montados sob medida para reduzir o downtime da sua planta a zero. Quer que eu agende uma visita técnica de avaliação?";
-        } 
-        
-        // Fallback
-        return "Entendo. Como sou uma assistente virtual inicial, caso prefira um atendimento técnico mais aprofundado, nossa engenharia está disponível no WhatsApp (62) 98108-5787.";
     }
     </script>
-
 </body>
 </html>
