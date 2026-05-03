@@ -1129,7 +1129,7 @@
     const chatMessages = document.getElementById('chat-messages');
     const chatInput = document.getElementById('chat-input');
     
-    let leadData = { nome: "", interesse: "", detalhe: "" };
+    let leadData = { nome: "", cidade: "", detalhe: "", interesse: "" };
 
     function toggleChat() {
         const chat = document.getElementById('chatbot');
@@ -1273,7 +1273,14 @@
         if (!leadData.nome) {
             leadData.nome = text;
             botTyping(() => {
-                addMessage(`Prazer, ${leadData.nome}! Me informe seu <b>WhatsApp com DDD</b> para enviarmos para o especialista:`, "bot");
+                addMessage(`Muito prazer, ${leadData.nome}! Em qual <b>cidade</b> você se encontra?`, "bot");
+                chatInput.placeholder = "Sua cidade...";
+                chatInput.focus();
+            });
+        } else if (!leadData.cidade) {
+            leadData.cidade = text;
+            botTyping(() => {
+                addMessage(`Certo. E por fim, me informe seu <b>WhatsApp com DDD</b> para enviarmos para o especialista de ${leadData.cidade}:`, "bot");
                 chatInput.placeholder = "(00) 00000-0000";
                 chatInput.focus();
             });
@@ -1287,8 +1294,9 @@
                 const payload = {
                     nome: leadData.nome,
                     telefone: telefone,
-                    cidade: leadData.interesse, 
-                    produto: leadData.detalhe,
+                    cidade: leadData.cidade, 
+                    interesse: leadData.interesse, 
+                    detalhe: leadData.detalhe,
                     data: new Date().toLocaleString('pt-BR')
                 };
 
@@ -1302,7 +1310,7 @@
                 if(typeof fbq === 'function') fbq('track', 'Lead');
                 if(typeof gtag === 'function') gtag('event', 'generate_lead', {'event_category': 'WhatsApp', 'event_label': 'Chatbot_Stillus'});
                 
-                const msgFinal = encodeURIComponent(`Olá, equipe Stillus! Aqui é ${leadData.nome}. Vim pelo site e tenho interesse em ${leadData.interesse} para: ${leadData.detalhe}. Meu contato é: ${telefone}`);
+                const msgFinal = encodeURIComponent(`Olá, equipe Stillus! Aqui é ${leadData.nome}, da cidade de ${leadData.cidade}. Vim pelo site e tenho interesse em ${leadData.interesse} para: ${leadData.detalhe}. Meu contato é: ${telefone}`);
                 
                 setTimeout(() => { 
                     const waUrl = `https://wa.me/5562981085787?text=${msgFinal}`;
