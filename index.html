@@ -1122,7 +1122,7 @@
         }, 1400);
     }
     
-    // ── MÁQUINA DE ESTADOS DO CHATBOT (LÓGICA CENTER NET ADAPTADA) ──
+    // ── MÁQUINA DE ESTADOS DO CHATBOT (LÓGICA CENTER NET ADAPTADA E APRIMORADA) ──
     const IS_MOBILE_CHAT = /iPhone|Android|iPad/i.test(navigator.userAgent) || window.innerWidth <= 768;
     
     let chatOpen = false;
@@ -1305,7 +1305,12 @@
                 const msgFinal = encodeURIComponent(`Olá, equipe Stillus! Aqui é ${leadData.nome}. Vim pelo site e tenho interesse em ${leadData.interesse} para: ${leadData.detalhe}. Meu contato é: ${telefone}`);
                 
                 setTimeout(() => { 
-                    window.open(`https://wa.me/5562981085787?text=${msgFinal}`, '_blank'); 
+                    const waUrl = `https://wa.me/5562981085787?text=${msgFinal}`;
+                    if (/iPhone|Android|iPad/i.test(navigator.userAgent)) {
+                        window.location.href = waUrl;
+                    } else {
+                        window.open(waUrl, '_blank'); 
+                    }
                 }, 1500);
             });
         }
